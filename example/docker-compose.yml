@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  apisix:
+    build:
+      context: ./..
+      dockerfile: alpine/Dockerfile
+      args:
+        APISIX_GITHUB_REPO: https://github.com/iresty/apisix
+        APISIX_VERSION: master
+        APISIX_DOWNLOAD_SHA256: SKIP
+    restart: always
+    volumes:
+      - ./apisix_log:/usr/local/apisix/logs
+      - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    depends_on:
+      - etcd
+    network_mode: host
+
+  etcd:
+    image: gcr.io/etcd-development/etcd
+    command: /usr/local/bin/etcd --advertise-client-urls http://0.0.0.0:2379 --listen-client-urls http://0.0.0.0:2379
+    restart: always
+    volumes:
+      - ./etcd_data:/etcd_data
+    environment:
+      ETCD_DATA_DIR: /etcd_data
+    ports:
+      - "127.0.0.1:2379:2379/tcp"
+    networks:
+      - apisix
+
+  web1:
+    image: ruby:2-alpine
+    command: sh -c "mkdir -p /tmp/www && echo 'web1' > /tmp/www/web1.txt && ruby -run -ehttpd /tmp/www -p8000"
+    restart: always
+    ports:
+      - "127.0.0.1:9081:8000/tcp"
+    networks:
+      - apisix
+
+  web2:
+    image: ruby:2-alpine
+    command: sh -c "mkdir -p /tmp/www && echo 'web2' > /tmp/www/web2.txt && ruby -run -ehttpd /tmp/www -p8000"
+    restart: always
+    ports:
+      - "127.0.0.1:9082:8000/tcp"
+    networks:
+      - apisix
+
+networks:
+  apisix:
+    driver: bridge
