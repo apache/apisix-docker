@@ -5,7 +5,7 @@ apisix:
   enable_admin: true
   enable_debug: true
   allow_admin:
-    - 127.0.0.1/24
+    - 127.0.0.0/24
   port_admin: 9180
   real_ip_header: "X-Real-IP"
   real_ip_from:
