@@ -7,7 +7,7 @@ $ docker-compose -p docker-apisix up -d
 ### Configure
 
 ```
-curl http://127.0.0.1:9180/apisix/admin/services/1 -X PUT -d '
+curl http://127.0.0.1:9080/apisix/admin/services/1 -X PUT -d '
 {
     "upstream": {
         "type": "roundrobin",
@@ -17,7 +17,7 @@ curl http://127.0.0.1:9180/apisix/admin/services/1 -X PUT -d '
     }
 }'
 
-curl http://127.0.0.1:9180/apisix/admin/services/2 -X PUT -d '
+curl http://127.0.0.1:9080/apisix/admin/services/2 -X PUT -d '
 {
     "upstream": {
         "type": "roundrobin",
@@ -27,42 +27,42 @@ curl http://127.0.0.1:9180/apisix/admin/services/2 -X PUT -d '
     }
 }'
 
-curl http://127.0.0.1:9180/apisix/admin/routes/11 -X PUT -d '
+curl http://127.0.0.1:9080/apisix/admin/routes/11 -X PUT -d '
 {
     "uri": "/",
     "host": "web1.lvh.me",
     "service_id": "1"
 }'
 
-curl http://127.0.0.1:9180/apisix/admin/routes/12 -X PUT -d '
+curl http://127.0.0.1:9080/apisix/admin/routes/12 -X PUT -d '
 {
     "uri": "/{:.*}",
     "host": "web1.lvh.me",
     "service_id": "1"
 }'
 
-curl http://127.0.0.1:9180/apisix/admin/routes/21 -X PUT -d '
+curl http://127.0.0.1:9080/apisix/admin/routes/21 -X PUT -d '
 {
     "uri": "/",
     "host": "web2.lvh.me",
     "service_id": "2"
 }'
 
-curl http://127.0.0.1:9180/apisix/admin/routes/22 -X PUT -d '
+curl http://127.0.0.1:9080/apisix/admin/routes/22 -X PUT -d '
 {
     "uri": "/{:.*}",
     "host": "web2.lvh.me",
     "service_id": "2"
 }'
 
-curl http://127.0.0.1:9180/apisix/admin/ssl/1 -X PUT -d "
+curl http://127.0.0.1:9080/apisix/admin/ssl/1 -X PUT -d "
 {
     \"cert\": \"$( cat './mkcert/lvh.me+1.pem')\",
     \"key\": \"$( cat './mkcert/lvh.me+1-key.pem')\",
     \"sni\": \"lvh.me\"
 }"
 
-curl http://127.0.0.1:9180/apisix/admin/ssl/2 -X PUT -d "
+curl http://127.0.0.1:9080/apisix/admin/ssl/2 -X PUT -d "
 {
     \"cert\": \"$( cat './mkcert/lvh.me+1.pem')\",
     \"key\": \"$( cat './mkcert/lvh.me+1-key.pem')\",
