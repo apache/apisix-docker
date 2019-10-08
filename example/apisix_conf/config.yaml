@@ -1,10 +1,12 @@
 apisix:
-  node_listen: 9080             # APISIX listening port
+  node_listen: 9080               # APISIX listening port
   node_ssl_listen: 9443
   enable_heartbeat: true
   enable_admin: true
   enable_debug: false
   enable_ipv6: true
+  config_center: etcd             # etcd: use etcd to store the config value
+                                  # yaml: fetch the config value from local yaml file `/your_path/conf/apisix.yaml`
   # allow_admin:                  # http://nginx.org/en/docs/http/ngx_http_access_module.html#allow
   #   - 127.0.0.0/24              # If we don't set any IP list, then any IP access is allowed by default.
   #   - "::/64"
@@ -20,6 +22,17 @@ apisix:
 
     ssl: 'radixtree_sni'          # r3_sni: match route by SNI(base on r3)
                                   # radixtree_sni: match route by SNI(base on radixtree)
+  # stream_proxy:                 # TCP/UDP proxy
+  #   tcp:                        # TCP proxy port list
+  #     - 9100
+  #     - 9101
+  #   udp:                        # UDP proxy port list
+  #     - 9200
+  #     - 9211
+  dns_resolver:                   # use 114.114.114.114 as default DNS resolver, disable IPv6 and enable local DNS.
+    - 114.114.114.114
+  error_log:
+    level: warn
 
 etcd:
   host: "http://127.0.0.1:2379"   # etcd address
@@ -41,3 +54,7 @@ plugins:                          # plugin list
   - serverless-pre-function
   - serverless-post-function
   - openid-connect
+  - proxy-rewrite
+
+stream_plugins:
+  - mqtt-proxy

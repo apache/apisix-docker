@@ -8,18 +8,19 @@ MAINTAINER vkill <vkill.net@gmail.com>
 #
 # docker build -t apisix:v0.5-alpine --build-arg APISIX_VERSION=v0.5 --build-arg APISIX_DOWNLOAD_SHA256=e6f14dcd58c5ba286ee48f8482a669893560bc2fbc90d6bf52881493ce720fb7 -f alpine/Dockerfile alpine
 # docker build -t apisix:v0.6-alpine --build-arg APISIX_VERSION=v0.6 --build-arg APISIX_DOWNLOAD_SHA256=8d3bfc03dce13ef2ee795ae3809c7e16dc8ebf952dbb9b93c5f82c5ec28b5cb7 -f alpine/Dockerfile alpine
-# docker build -t apisix:v0.7-alpine -f alpine/Dockerfile alpine
+# docker build -t apisix:v0.7-alpine --build-arg APISIX_VERSION=v0.7 --build-arg APISIX_DOWNLOAD_SHA256=98900a5d43ee637a578059602a443668ae1318045dabacf34efad885ec9d3029 -f alpine/Dockerfile alpine
+# docker build -t apisix:v0.8-alpine -f alpine/Dockerfile alpine
 # docker build -t apisix:dev-alpine --build-arg APISIX_VERSION=master --build-arg APISIX_DOWNLOAD_SHA256=SKIP --build-arg APISIX_DASHBOARD_BUILT_VERSION=master --build-arg APISIX_DASHBOARD_BUILTDOWNLOAD_SHA256=SKIP -f alpine/Dockerfile alpine
 # docker build -t apisix:my-alpine --build-arg APISIX_GITHUB_REPO=https://github.com/YOU/apisix --build-arg APISIX_VERSION=BRANCHNAME --build-arg APISIX_DOWNLOAD_SHA256=SKIP -f alpine/Dockerfile alpine
 #
-ARG APISIX_VERSION=v0.7
+ARG APISIX_VERSION=v0.8
 ENV APISIX_VERSION=${APISIX_VERSION}
 ARG APISIX_GITHUB_REPO=https://github.com/iresty/apisix
 ENV APISIX_DOWNLOAD_URL ${APISIX_GITHUB_REPO}/archive/${APISIX_VERSION}.zip
-ARG APISIX_DOWNLOAD_SHA256=98900a5d43ee637a578059602a443668ae1318045dabacf34efad885ec9d3029
+ARG APISIX_DOWNLOAD_SHA256=d46e016a763bce3b63159918e3dd15cdc27a3ffc
 ENV APISIX_DOWNLOAD_SHA256=${APISIX_DOWNLOAD_SHA256}
 
-ARG APISIX_DASHBOARD_BUILT_VERSION=a0b49ae9f75b62b6dd1215a5a42074bbaef685ed
+ARG APISIX_DASHBOARD_BUILT_VERSION=9dabb12b9c949bb1c5387a4e7b73a0c99ac8c946
 ENV APISIX_DASHBOARD_BUILT_VERSION=${APISIX_DASHBOARD_BUILT_VERSION}
 ENV APISIX_DASHBOARD_BUILTDOWNLOAD_URL https://github.com/iresty/apisix_dashboard_built/archive/${APISIX_DASHBOARD_BUILT_VERSION}.zip
 ARG APISIX_DASHBOARD_BUILTDOWNLOAD_SHA256=SKIP
