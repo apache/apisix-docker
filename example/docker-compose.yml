@@ -5,10 +5,6 @@ services:
     build:
       context: ./..
       dockerfile: alpine/Dockerfile
-      args:
-        APISIX_GITHUB_REPO: https://github.com/iresty/apisix
-        APISIX_VERSION: v0.7
-        APISIX_DOWNLOAD_SHA256: SKIP
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
