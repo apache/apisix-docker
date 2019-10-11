@@ -3,10 +3,6 @@ ARG RESTY_IMAGE_TAG="alpine-fat"
 
 FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
 
-# docker build -t apisix:0.8-alpine -f alpine/Dockerfile alpine
-# docker build -t apisix:0.7-alpine --build-arg APISIX_VERSION=0.7 -f alpine/Dockerfile alpine
-# docker build -t apisix:master-alpine --build-arg APISIX_VERSION=master -f alpine/Dockerfile alpine
-
 ARG APISIX_VERSION=0.8
 
 LABEL apisix_version="${APISIX_VERSION}"
