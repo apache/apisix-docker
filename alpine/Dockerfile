@@ -1,7 +1,4 @@
-ARG RESTY_IMAGE_BASE="openresty/openresty"
-ARG RESTY_IMAGE_TAG="alpine-fat"
-
-FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
+FROM openresty/openresty:alpine-fat
 
 ARG APISIX_VERSION=0.8
 
