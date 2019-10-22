@@ -24,7 +24,7 @@ You need etcd docker to work with APISIX. You can refer to
 
 Or you can run APISIX with Docker directly(Docker name is test-api-gateway):
 ```
-docker run  --name test-api-gateway  -v ./example/config.yaml:/usr/local/apisix/conf/config.yaml  -v./example/apisix_log:/usr/local/apisix/logs  -p 8080:9080 -p  8083:9443 -d  iresty/apisix
+docker run  --name test-api-gateway  -v ./example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml  -v./example/apisix_log:/usr/local/apisix/logs  -p 8080:9080 -p  8083:9443 -d  iresty/apisix
 ```
 
 NOTE: macOS not supports `host` network mode, so Linux is recommended.
