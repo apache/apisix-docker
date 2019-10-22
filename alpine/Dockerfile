@@ -51,7 +51,8 @@ ARG _RESTY_CONFIG_DEPS="--with-pcre \
 
 # Volume for temporary files
 VOLUME ["/var/run/openresty"]
-
+# 改国内镜像源。适用中国国情
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
 # for openresty
 RUN apk add --no-cache --virtual .build-deps \
         build-base \
