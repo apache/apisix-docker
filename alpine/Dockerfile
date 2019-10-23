@@ -1,6 +1,6 @@
 FROM alpine:3.9
 
-ARG APISIX_VERSION=0.8
+ARG APISIX_VERSION=master
 LABEL apisix_version="${APISIX_VERSION}"
 
 ARG RESTY_LUAROCKS_VERSION="3.2.1"
@@ -51,8 +51,10 @@ ARG _RESTY_CONFIG_DEPS="--with-pcre \
 
 # Volume for temporary files
 VOLUME ["/var/run/openresty"]
-# 改国内镜像源。适用中国国情
+
+# If you are not in Mainland China, you can comment the following line of code
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+
 # for openresty
 RUN apk add --no-cache --virtual .build-deps \
         build-base \
@@ -173,9 +175,6 @@ RUN apk add --no-cache --virtual .builddeps \
     pkgconfig \
     cmake \
     git \
-    && if [ ${APISIX_VERSION} = "master" ] ; then \
-        APISIX_VERSION="dev-1.0"; \
-    fi \
     && luarocks install https://github.com/iresty/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps \
     && cp /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
     && bin='#! /usr/local/openresty/luajit/bin/luajit' \
