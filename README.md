@@ -2,19 +2,14 @@
 
 You can install multiple versions of APISIX through docker:
 
-1. install the latest stable version:
+1. install master branch version, which has latest code:
 ```
-docker build -t iresty/apisix -f alpine/Dockerfile alpine
-```
-
-2. install master branch version, which has latest code:
-```
-docker build -t apisix:master-alpine --build-arg APISIX_VERSION=master -f alpine/Dockerfile alpine
+docker build -t apisix:master-alpine -f alpine/Dockerfile alpine
 ```
 
-3. install history versions:
+2. install release versions:
 ```
-docker build -t apisix:0.7-alpine --build-arg APISIX_VERSION=0.7 -f alpine/Dockerfile alpine
+docker build -t apisix:0.8-alpine --build-arg APISIX_VERSION=0.8 -f alpine/Dockerfile alpine
 ```
 
 
