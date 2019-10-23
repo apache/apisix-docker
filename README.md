@@ -27,23 +27,31 @@ docker run -it --name etcd-server \
 --env ALLOW_NONE_AUTHENTICATION=yes bitnami/etcd:3.3.13-r80
 ```
 
-> windows systems use absolute paths to hang in the configuration file
+> Note:
 >
-> eg：`-v /e/github/docker-apisix/example/etcd_conf/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml`
+> 1. windows OS use absolute paths to hang in the configuration file.
+> 2. e.g：windows dir path `E:\GitHub\docker-apisix `，configuration  file hang path is `-v /e/github/docker-apisix/example/etcd_conf/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml`
 
-## Run APISIX with etcd
+## Run APISIX server
 
-You need etcd docker to work with APISIX. You can refer to
- [the docker-compose example](example/README.md).
+You need etcd docker to work with APISIX. You can refer to [the docker-compose example](example/README.md).
 
-Or you can run APISIX with Docker directly(Docker name is test-api-gateway):
+Or you can run APISIX with Docker directly（Docker name is test-api-gateway）:
 ```
-docker run  --name test-api-gateway \
+docker run --name test-api-gateway \
 -v ./example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml \ 
 -v ./example/apisix_log:/usr/local/apisix/logs  \
 -p 8080:9080 \ 
 -p 8083:9443 \
--d  iresty/apisix
+-d iresty/apisix
 ```
 
-NOTE: macOS not supports `host` network mode, so Linux is recommended.
+> Note:
+>
+> 1. mac OS not supports `host` network mode, so Linux is recommended.
+>
+> 2. windows OS use absolute paths to hang in the configuration file and log dir.
+>
+> 3. if the official image pull timeout : `request canceled (Client.Timeout exceeded while awaiting headers)`,  it is recommended to use AliYun primary container registry 
+>
+>     mirror `docker pull registry.cn-beijing.aliyuncs.com/tinywan/apisix:alpine `
