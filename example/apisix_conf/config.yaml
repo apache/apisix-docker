@@ -1,5 +1,6 @@
 apisix:
   node_listen: 9080              # APISIX listening port
+  node_ssl_listen: 9443
   enable_heartbeat: true
   enable_admin: true
   enable_debug: false
