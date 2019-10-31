@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  apisix:
+    # image: iresty/apisix:latest
+    # if you are in the mainland China, please use China mirror
+    image: registry.cn-beijing.aliyuncs.com/tinywan/apisix:alpine
+    restart: always
+    volumes:
+      - ./example/apisix_log:/usr/local/apisix/logs
+      - ./example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+    ports:
+      - 8080:9080
+      - 8083:9443
+    container_name: apisix-gateway-server   
+    depends_on:
+      - etcd
+  etcd:
+    image: bitnami/etcd:3.3.13-r80
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+    volumes:
+      - ./example/etcd_data:/bitnami
+      - ./example/etcd_conf/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml
+    ports:
+      - 2379:2379
+      - 2380:2380
+    container_name: apisix-etcd-server      
+    networks:
+      - apisix
+networks:
+  apisix:
+    driver: bridge
