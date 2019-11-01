@@ -15,9 +15,6 @@ $ docker pull bitnami/etcd:3.3.13-r80
 ```
 $ docker pull iresty/apisix:latest
 ```
-> if you are in the mainland China, use mirror
->  `docker pull registry.cn-beijing.aliyuncs.com/tinywan/apisix:alpine`
-
 If you wish, you can also build the image yourself.
 
 > 1.install master branch version, which has latest code:
@@ -66,7 +63,7 @@ $ docker run --name test-api-gateway \
 > Note:
 > 1. mac OS not supports `host` network mode, so Linux is recommended.
 > 2. windows OS use absolute paths to hang in the configuration file and log dir.
-> 3. if the official image pull timeout : `request canceled (Client.Timeout exceeded while awaiting headers)`,  it is recommended to use AliYun primary container registry mirror `docker pull registry.cn-beijing.aliyuncs.com/tinywan/apisix:alpine `
+> 3. if the official image pull timeout : `request canceled (Client.Timeout exceeded while awaiting headers)`,  it is recommended to use AliYun primary container registry mirror 
 
 #### Step 4: This Open Demo Dashboard
 
