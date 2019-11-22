@@ -16,7 +16,7 @@ docker build -t apisix:0.8-alpine --build-arg APISIX_VERSION=0.8 -f alpine/Docke
 
 ```
 docker run -it --name etcd-server \
--v ./example/etcd_conf/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml \
+-v `pwd`/example/etcd_conf/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml \
 -p 2379:2379 \
 -p 2380:2380  \
 --env ALLOW_NONE_AUTHENTICATION=yes bitnami/etcd:3.3.13-r80
@@ -34,8 +34,8 @@ You need etcd docker to work with APISIX. You can refer to [the docker-compose e
 Or you can run APISIX with Docker directly（Docker name is test-api-gateway）:
 ```
 docker run --name test-api-gateway \
--v ./example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml \ 
--v ./example/apisix_log:/usr/local/apisix/logs  \
+-v `pwd`/example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml \ 
+-v `pwd`/example/apisix_log:/usr/local/apisix/logs  \
 -p 8080:9080 \ 
 -p 8083:9443 \
 -d iresty/apisix
