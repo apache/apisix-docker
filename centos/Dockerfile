@@ -1,12 +1,12 @@
 FROM centos:7
 
-ARG APISIX_VERSION=0.8
+ARG APISIX_VERSION=1.1
 LABEL apisix_version="${APISIX_VERSION}"
 
 RUN yum -y install yum-utils\
     && yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo \
 	&& yum install -y openresty \
-	&& yum install -y https://github.com/iresty/apisix/releases/download/v$APISIX_VERSION/apisix-$APISIX_VERSION-0.el7.noarch.rpm \
+	&& yum install -y https://github.com/apache/incubator-apisix/releases/download/$APISIX_VERSION/apisix-$APISIX_VERSION-0.el7.noarch.rpm \
 	&& yum clean all
 
 WORKDIR /usr/local/apisix
