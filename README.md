@@ -1,16 +1,17 @@
 ## Docker distribution for Apache APISIX
 
-You can install multiple versions of Apache APISIX through docker:
+**Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
 
-1. install master branch version, which has latest code:
+1. install release version (Apache releases are beginning from version 0.9):
+```
+docker build -t apisix:1.1-alpine --build-arg APISIX_VERSION=1.1 -f alpine/Dockerfile alpine
+```
+
+2. install master branch version, which has latest code(ONLY for the developer's convenience):
 ```
 docker build -t apisix:master-alpine -f alpine/Dockerfile alpine
 ```
 
-2. install release versions:
-```
-docker build -t apisix:1.1-alpine --build-arg APISIX_VERSION=1.1 -f alpine/Dockerfile alpine
-```
 
 ## Run etcd server
 
