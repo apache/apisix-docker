@@ -35,7 +35,7 @@ RUN set -x \
 
 FROM alpine:3.11 AS last-stage
 
-# add runtime for Apache Apisix
+# add runtime for Apache APISIX
 RUN set -x \
     && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
     && apk add --no-cache bash libstdc++ curl
