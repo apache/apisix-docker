@@ -5,7 +5,7 @@ ARG APISIX_VERSION=1.1
 RUN set -x \
     && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
     && apk add --no-cache --virtual .build-deps git \
-    && git clone -b v${APISIX_VERSION} https://github.com/apache/incubator-apisix.git /tmp/apisix \
+    && git clone -b ${APISIX_VERSION} https://github.com/apache/incubator-apisix.git /tmp/apisix \
     && cd /tmp/apisix \
     && git submodule init \
     && git submodule update \
