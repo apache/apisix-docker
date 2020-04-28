@@ -1,0 +1,5 @@
+#!/bin/bash
+# hooks/build
+# https://docs.docker.com/docker-cloud/builds/advanced/
+
+docker build --build-arg APISIX_VERSION=$APISIX_VERSION -t $IMAGE_NAME:${APISIX_VERSION}-alpine .
