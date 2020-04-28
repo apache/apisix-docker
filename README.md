@@ -4,7 +4,10 @@
 
 1. install release version (Apache releases are beginning from version 0.9):
 ```
-docker build -t apisix:1.1-alpine --build-arg APISIX_VERSION=1.1 -f alpine/Dockerfile alpine
+# Assign Apache release version number to variable `APISIX_VERSION`, for example: 1.2 . The latest version can be find at `https://github.com/apache/incubator-apisix/releases`
+
+APISIX_VERSION=1.2
+docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
 ```
 
 2. install master branch version, which has latest code(ONLY for the developer's convenience):
