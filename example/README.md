@@ -12,7 +12,7 @@ curl http://127.0.0.1:9080/apisix/admin/services/1 -X PUT -d '
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "127.0.0.1:9081": 1
+            "172.18.5.12:8000": 1
         }
     }
 }'
@@ -22,7 +22,7 @@ curl http://127.0.0.1:9080/apisix/admin/services/2 -X PUT -d '
     "upstream": {
         "type": "roundrobin",
         "nodes": {
-            "127.0.0.1:9082": 1
+            "172.18.5.13:8000": 1
         }
     }
 }'
@@ -36,7 +36,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/11 -X PUT -d '
 
 curl http://127.0.0.1:9080/apisix/admin/routes/12 -X PUT -d '
 {
-    "uri": "/{:.*}",
+    "uri": "/*",
     "host": "web1.lvh.me",
     "service_id": "1"
 }'
@@ -50,7 +50,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/21 -X PUT -d '
 
 curl http://127.0.0.1:9080/apisix/admin/routes/22 -X PUT -d '
 {
-    "uri": "/{:.*}",
+    "uri": "/*",
     "host": "web2.lvh.me",
     "service_id": "2"
 }'
