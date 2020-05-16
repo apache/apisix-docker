@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: use docker-compose
-      run: docker-compose -p docker-apisix up -d
+      run: docker-compose -p docker-apisix up
