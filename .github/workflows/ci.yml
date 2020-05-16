@@ -10,8 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: go to example
-      run: cd example
-    - name: use docker-compose
-      run: docker-compose -p docker-apisix up
+    - name: echo
+      run: |
+        echo "Hello World!"
+        
+#    - uses: actions/checkout@v2
+#    - name: go to example
+#      run: cd example
+#    - name: use docker-compose
+#      run: docker-compose -p docker-apisix up
