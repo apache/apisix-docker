@@ -17,5 +17,5 @@ jobs:
     - name: go to example
       run: cd example
     - name: use docker-compose
-      run: docker-compose -v
-#      run: docker-compose -p docker-apisix up
+      run: docker-compose -p docker-apisix up -d
+#      run: docker-compose -v
