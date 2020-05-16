@@ -15,6 +15,6 @@ jobs:
         echo "Hello World!"
     - uses: actions/checkout@v2
     - name: use docker-compose
-      run: echo `pwd`
+      run: echo `pwd` && ls -a
 #      run: docker-compose -p docker-apisix up -d
 #      run: docker-compose -v
