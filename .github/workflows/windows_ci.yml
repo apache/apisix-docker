@@ -1,4 +1,4 @@
-name: Docker compose CI on windows
+name: Docker compose CI on windows (not work yet)
 
 on:
   push:

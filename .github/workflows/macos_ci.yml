@@ -1,4 +1,4 @@
-name: Docker compose CI on macos
+name: Docker compose CI on macos (not work yet)
 
 on:
   push:
