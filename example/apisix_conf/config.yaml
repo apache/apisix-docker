@@ -33,6 +33,7 @@ apisix:
     - 8.8.8.8
   
   dns_resolver_valid: 30          # valid time for dns result 30 seconds
+  resolver_timeout: 5             # resolver timeout
 
   ssl:
     enable: true
