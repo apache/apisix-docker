@@ -13,8 +13,7 @@ jobs:
     - name: echo
       run: |
         echo "Hello World!"
-        
-#    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 #    - name: go to example
 #      run: cd example
 #    - name: use docker-compose
