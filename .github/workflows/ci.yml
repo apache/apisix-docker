@@ -14,5 +14,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: go to example
+      run: cd example
     - name: use docker-compose
       run: docker-compose -p docker-apisix up
