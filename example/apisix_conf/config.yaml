@@ -71,7 +71,6 @@ apisix:
     - 223.5.5.5
     - 1.1.1.1
     - 8.8.8.8
-
   dns_resolver_valid: 30          # valid time for dns result 30 seconds
   resolver_timeout: 5             # resolver timeout
   ssl:
@@ -103,7 +102,7 @@ nginx_config:                     # config for render the template to genarate n
 
 etcd:
   host:                           # it's possible to define multiple etcd hosts addresses of the same etcd cluster.
-    - "http://127.0.0.1:2379"     # multiple etcd address
+    - "http://172.18.5.10:2379"     # multiple etcd address
   prefix: "/apisix"               # apisix configurations prefix
   timeout: 3                      # 3 seconds
 
