@@ -8,13 +8,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
-    - name: echo
-      run: |
-        echo "Hello World!"
     - uses: actions/checkout@v2
     - name: use docker-compose
       run: cd ./example && docker-compose -p docker-apisix up -d
-#      run: docker-compose -p docker-apisix up -d
-#      run: docker-compose -v
