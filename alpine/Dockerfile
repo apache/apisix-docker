@@ -1,6 +1,6 @@
 FROM node:10-alpine3.11 AS build-stage
 
-ARG APISIX_VERSION=1.1
+ARG APISIX_VERSION=1.3
 
 RUN set -x \
     && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
@@ -14,7 +14,7 @@ RUN set -x \
 
 FROM openresty/openresty:alpine-fat AS production-stage
 
-ARG APISIX_VERSION=1.1
+ARG APISIX_VERSION=1.3
 LABEL apisix_version="${APISIX_VERSION}"
 
 RUN set -x \
