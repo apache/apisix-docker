@@ -1,3 +1,5 @@
+**Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
+
 ## QuickStart
 
 **start all modules with docker-compose**
