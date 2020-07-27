@@ -1,6 +1,8 @@
 ### Run
 
 ```
+$ chmod +x config.sh
+$ sh config.sh
 $ docker-compose -p docker-apisix up -d
 ```
 
