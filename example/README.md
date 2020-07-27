@@ -1,8 +1,8 @@
 ### Run
 
 ```
-$ chmod +x config.sh
-$ sh config.sh
+$ chmod +x gen-config-yaml.sh
+$ sh gen-config-yaml.sh
 $ docker-compose -p docker-apisix up -d
 ```
 
