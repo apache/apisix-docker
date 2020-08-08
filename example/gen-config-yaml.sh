@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export etcd_url='http://172.18.5.10:2379'
+export etcd_url='http://etcd:2379'
 
 wget https://raw.githubusercontent.com/apache/incubator-apisix/master/conf/config.yaml
 
