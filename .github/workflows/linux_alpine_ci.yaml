@@ -2,7 +2,7 @@ name: Docker compose CI on linux
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, kv/alpine ]
   pull_request:
     branches: [ master ]
 
@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: use docker-compose
-      run: cd ./example && sh gen-config-yaml.sh && docker-compose -p docker-apisix up -d
+      run: cd ./example && sh gen-config-yaml.sh && docker-compose -f docker-compose-alpine.yml -p docker-apisix up -d
