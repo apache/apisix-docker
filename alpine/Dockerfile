@@ -1,13 +1,3 @@
-FROM node:10-alpine3.11 AS build-stage
-
-ARG APISIX_VERSION=1.3
-
-RUN set -x \
-    && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
-    && apk add --no-cache --virtual .build-deps git \
-    && git clone -b ${APISIX_VERSION} https://github.com/apache/apisix.git /tmp/apisix \
-    && cd /tmp/apisix \
-
 FROM openresty/openresty:alpine-fat AS production-stage
 
 ARG APISIX_VERSION=1.3
