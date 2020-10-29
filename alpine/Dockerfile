@@ -7,10 +7,6 @@ RUN set -x \
     && apk add --no-cache --virtual .build-deps git \
     && git clone -b ${APISIX_VERSION} https://github.com/apache/apisix.git /tmp/apisix \
     && cd /tmp/apisix \
-    && git submodule init \
-    && git submodule update \
-    && cd dashboard \
-    && yarn && yarn build:prod
 
 FROM openresty/openresty:alpine-fat AS production-stage
 
@@ -45,8 +41,6 @@ WORKDIR /usr/local/apisix
 COPY --from=production-stage /usr/local/openresty/ /usr/local/openresty/
 COPY --from=production-stage /usr/local/apisix/ /usr/local/apisix/
 COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
-
-COPY --from=build-stage /tmp/apisix/dashboard/dist/ /usr/local/apisix/dashboard/
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
