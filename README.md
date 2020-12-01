@@ -4,8 +4,6 @@
 
 ### Build an image from source
 
-**Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
-
 1. install release version (Apache releases are beginning from version 0.9):
 ```
 # Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.1 . The latest version can be find at `https://github.com/apache/apisix/releases`
