@@ -12,4 +12,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: use docker-compose
-      run: cd ./example && sh gen-config-yaml.sh && docker-compose -p docker-apisix up -d
+      run: cd ./example && docker-compose -p docker-apisix up -d
