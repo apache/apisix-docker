@@ -23,7 +23,7 @@ docker run -it --name etcd-server \
 -p 2380:2380  \
 --network apisix \
 --ip 172.18.5.10 \
---env ALLOW_NONE_AUTHENTICATION=yes bitnami/etcd:3.3.13-r80
+--env ALLOW_NONE_AUTHENTICATION=yes bitnami/etcd:3.4.9
 ```
 
 > Note:

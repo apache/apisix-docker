@@ -1,6 +1,30 @@
 **Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
 
-## QuickStart
+## How To Build Image
+
+### Build an image from source
+
+**Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
+
+1. install release version (Apache releases are beginning from version 0.9):
+```
+# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.1 . The latest version can be find at `https://github.com/apache/apisix/releases`
+
+export APISIX_VERSION=2.1
+docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
+```
+
+2. install master branch version, which has latest code(ONLY for the developer's convenience):
+```
+export APISIX_VERSION=master
+docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
+```
+
+### Manual deploy apisix via docker
+
+[Manual deploy](manual.md) 
+
+### QuickStart via docker-compose
 
 **start all modules with docker-compose**
 
@@ -11,10 +35,3 @@ $ docker-compose -p docker-apisix up -d
 
 You can refer to [the docker-compose example](example/README.md) for more try.
 
-## How To Build Image
-
-[Build your own image](build.md) 
-
-## Manual deploy apisix via docker
-
-[Manual deploy](manual.md) 
