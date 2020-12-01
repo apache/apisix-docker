@@ -1,5 +1,6 @@
 apisix:
   node_listen: 9080              # APISIX listening port
+  enable_ipv6: false
 
   allow_admin:                  # http://nginx.org/en/docs/http/ngx_http_access_module.html#allow
     - 127.0.0.0/24              # If we don't set any IP list, then any IP access is allowed by default.
@@ -18,5 +19,5 @@ etcd:
   host:                           # it's possible to define multiple etcd hosts addresses of the same etcd cluster.
     - "http://172.18.5.10:2379"     # multiple etcd address
   prefix: "/apisix"               # apisix configurations prefix
-  timeout: 3                      # 3 seconds
+  timeout: 30                     # 30 seconds
 
