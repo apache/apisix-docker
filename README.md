@@ -2,9 +2,11 @@
 
 ## How To Build Image
 
+**The master branch is for the verison of Apache APISIX 2.x . If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.**
+
 ### Build an image from source
 
-1. install release version (Apache releases are beginning from version 0.9):
+1. install release version:
 ```
 # Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.1 . The latest version can be find at `https://github.com/apache/apisix/releases`
 
