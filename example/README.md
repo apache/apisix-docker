@@ -1,7 +1,7 @@
 ### Run
 
 ```
-$ sh gen-config-yaml.sh && docker-compose -p docker-apisix up -d
+$ docker-compose -p docker-apisix up -d
 ```
 
 ### Configure

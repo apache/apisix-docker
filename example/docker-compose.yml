@@ -1,11 +1,12 @@
 version: "3"
 
 services:
-
   apisix:
     build:
       context: ./..
-      dockerfile: centos/Dockerfile
+      dockerfile: alpine/Dockerfile
+      args:
+        APISIX_VERSION: master
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
