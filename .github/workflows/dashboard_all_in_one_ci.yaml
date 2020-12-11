@@ -1,0 +1,20 @@
+name: apisix dashboard all in one docker
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and Test
+        run: |
+          docker build -t apache/apisix-dashboard:whole -f ./all-in-one/apisix-dashboard/Dockerfile .
+          docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
+          sleep 30
+          curl http://127.0.0.1:9080/apisix/admin/schema/service -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'
+          curl http://127.0.0.1:9000
