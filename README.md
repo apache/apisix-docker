@@ -48,6 +48,6 @@ $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/confi
 
 ```shell
 $ docker build -t apache/apisix-dashboard:whole -f ./all-in-one/apisix-dashboard/Dockerfile .
-$ docker run -v `pwd`/all-in-one/apisix-dashboard/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
+$ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
 ```
 
