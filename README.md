@@ -51,3 +51,9 @@ $ docker build -t apache/apisix-dashboard:whole -f ./all-in-one/apisix-dashboard
 $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
 ```
 
+Tips: If there is a port conflict, please modify the host port through `docker run -p`, e.g.
+
+```shell
+$ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 19080:9080 -p 12379:2379 -p 19000:9000 -d apache/apisix-dashboard:whole
+```
+
