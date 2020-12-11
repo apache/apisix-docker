@@ -35,3 +35,19 @@ $ docker-compose -p docker-apisix up -d
 
 You can refer to [the docker-compose example](example/README.md) for more try.
 
+### Quick test with all dependencies in one Docker container
+
+* All in one Docker container for Apache APISIX
+
+```shell
+$ docker build -t apache/apisix:whole -f ./all-in-one/apisix/Dockerfile .
+$ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -p 9080:9080 -p 2379:2379 -d apache/apisix:whole
+```
+
+* All in one Docker container for Apache apisix-dashboard
+
+```shell
+$ docker build -t apache/apisix-dashboard:whole -f ./all-in-one/apisix-dashboard/Dockerfile .
+$ docker run -v `pwd`/all-in-one/apisix-dashboard/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
+```
+
