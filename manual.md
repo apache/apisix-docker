@@ -11,10 +11,9 @@ docker network create \
   apisix
 ```
 
-### Run etcd server with `apisix` network 
+### Run etcd server with `apisix` network
 
-
-Specify ip `172.18.5.10` 
+Specify ip `172.18.5.10`
 
 ```
 docker run -it --name etcd-server \
@@ -29,7 +28,7 @@ docker run -it --name etcd-server \
 > Note:
 >
 > 1. Windows OS use absolute paths to hang in the configuration file.
-> 2. e.g：Windows dir path `E:\GitHub\docker-apisix `，configuration  file hang path is `-v /e/github/docker-apisix/example/etcd_conf/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml`
+> 2. e.g：Windows dir path `E:\GitHub\docker-apisix `，configuration file hang path is `-v /e/github/docker-apisix/example/etcd_conf/etcd.conf.yml:/opt/bitnami/etcd/conf/etcd.conf.yml`
 
 ### Run Apache APISIX server
 
@@ -55,10 +54,9 @@ docker run --name test-api-gateway \
 > 1. Windows OS use absolute paths to hang in the configuration file and log dir.
 >
 
-
 ### Have a test
 
-Test with admin api 
+Test with admin api
 
 e.g. Get route list, should be return  
 
@@ -69,6 +67,7 @@ curl http://127.0.0.1:9080/apisix/admin/routes/
 ```
 
 ### Clean
+
 ```
 docker rm test-api-gateway
 docker rm etcd-server
