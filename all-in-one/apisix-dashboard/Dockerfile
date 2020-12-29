@@ -33,7 +33,7 @@ RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-
 
 FROM alpine:latest as pre-build
 
-ARG APISIX_DASHBOARD_VERSION=v2.0
+ARG APISIX_DASHBOARD_VERSION=master
 
 RUN set -x \
     && wget https://github.com/apache/apisix-dashboard/archive/${APISIX_DASHBOARD_VERSION}.tar.gz -O /tmp/apisix-dashboard.tar.gz \
