@@ -39,21 +39,27 @@ services:
         ipv4_address: 172.18.5.10
 
   web1:
-    image: ruby:2-alpine
-    command: sh -c "mkdir -p /tmp/www && echo 'web1' > /tmp/www/web1.txt && ruby -run -ehttpd /tmp/www -p8000"
+    image: fabiocicerchia/nginx-lua
     restart: always
+    volumes:
+      - ./upstream/web1.conf:/etc/nginx/nginx.conf
     ports:
-      - "9081:8000/tcp"
+      - "9081:80/tcp"
+    environment:
+      - NGINX_PORT=80
     networks:
       apisix:
         ipv4_address: 172.18.5.12
 
   web2:
-    image: ruby:2-alpine
-    command: sh -c "mkdir -p /tmp/www && echo 'web2' > /tmp/www/web2.txt && ruby -run -ehttpd /tmp/www -p8000"
+    image: fabiocicerchia/nginx-lua
     restart: always
+    volumes:
+      - ./upstream/web2.conf:/etc/nginx/nginx.conf
     ports:
-      - "9082:8000/tcp"
+      - "9082:80/tcp"
+    environment:
+      - NGINX_PORT=80
     networks:
       apisix:
         ipv4_address: 172.18.5.13
