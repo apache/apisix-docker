@@ -39,7 +39,7 @@ services:
         ipv4_address: 172.18.5.10
 
   web1:
-    image: nginx
+    image: nginx:1.18.0-alpine
     restart: always
     volumes:
       - ./upstream/web1.conf:/etc/nginx/nginx.conf
@@ -52,7 +52,7 @@ services:
         ipv4_address: 172.18.5.12
 
   web2:
-    image: nginx
+    image: nginx:1.18.0-alpine
     restart: always
     volumes:
       - ./upstream/web2.conf:/etc/nginx/nginx.conf
