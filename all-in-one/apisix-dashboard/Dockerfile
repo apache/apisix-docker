@@ -43,6 +43,7 @@ RUN set -x \
 FROM golang:1.14 as api-builder
 
 ARG ENABLE_PROXY=false
+ARG APISIX_DASHBOARD_VERSION=master
 
 WORKDIR /usr/local/apisix-dashboard
 
@@ -62,7 +63,7 @@ RUN wget https://github.com/api7/dag-to-lua/archive/v1.1.tar.gz -O /tmp/v1.1.tar
 RUN if [ "$ENABLE_PROXY" = "true" ] ; then go env -w GOPROXY=https://goproxy.io,direct ; fi
 
 RUN go env -w GO111MODULE=on \
-    && CGO_ENABLED=0 go build -o ../output/manager-api .
+    && if [ "$APISIX_DASHBOARD_VERSION" = "master" ] || [ "$APISIX_DASHBOARD_VERSION" \> "v2.2" ]; then CGO_ENABLED=0 go build -o ../output/manager-api ./cmd/manager; else CGO_ENABLED=0 go build -o ../output/manager-api . ; fi;
 
 FROM node:14-alpine as fe-builder
 
