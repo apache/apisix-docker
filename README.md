@@ -20,6 +20,8 @@ export APISIX_VERSION=master
 docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
 ```
 
+> Note: For Chinese users, building the image with the build argument `ENABLE_PROXY=true` is always recommended to accelerate the progress.
+
 ### Manual deploy apisix via docker
 
 [Manual deploy](manual.md)
