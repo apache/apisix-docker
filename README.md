@@ -24,6 +24,7 @@ docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${API
 
 ```sh
 $ docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
+```
 
 ### Manual deploy apisix via docker
 
