@@ -1,7 +1,10 @@
+ARG ENABLE_PROXY=false
+
 FROM openresty/openresty:alpine-fat AS production-stage
 
+ARG ENABLE_PROXY
 RUN set -x \
-    && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
+    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
     && apk add --no-cache --virtual .builddeps \
     automake \
     autoconf \
@@ -18,9 +21,10 @@ RUN set -x \
 
 FROM alpine:3.11 AS last-stage
 
+ARG ENABLE_PROXY
 # add runtime for Apache APISIX
 RUN set -x \
-    && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
+    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
     && apk add --no-cache bash libstdc++ curl
 
 WORKDIR /usr/local/apisix

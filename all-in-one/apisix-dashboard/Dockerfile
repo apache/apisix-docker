@@ -1,11 +1,13 @@
+ARG ENABLE_PROXY=false
+
 FROM openresty/openresty:alpine-fat AS production-stage
 
 ARG APISIX_VERSION=master
 LABEL apisix_version="${APISIX_VERSION}"
 
-
+ARG ENABLE_PROXY
 RUN set -x \
-    && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
+    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
     && apk add --no-cache --virtual .builddeps \
     automake \
     autoconf \
@@ -42,7 +44,7 @@ RUN set -x \
 
 FROM golang:1.14 as api-builder
 
-ARG ENABLE_PROXY=false
+ARG ENABLE_PROXY
 ARG APISIX_DASHBOARD_VERSION=master
 
 WORKDIR /usr/local/apisix-dashboard
@@ -84,9 +86,10 @@ RUN yarn build
 
 FROM alpine:3.11 AS last-stage
 
+ARG ENABLE_PROXY
 # add runtime for Apache APISIX
 RUN set -x \
-    && /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories \
+    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
     && apk add --no-cache bash libstdc++ curl
 
 WORKDIR /usr/local/apisix
@@ -101,8 +104,6 @@ COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 # dashboard
-
-ARG ENABLE_PROXY=false
 
 RUN if [ "$ENABLE_PROXY" = "true" ] ; then sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories ; fi
 
