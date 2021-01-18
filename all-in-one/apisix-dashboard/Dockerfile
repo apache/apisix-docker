@@ -1,11 +1,15 @@
 ARG ENABLE_PROXY=false
+ARG ETCD_VERSION=v3.4.14
+ARG APISIX_VERSION=master
+ARG APISIX_DASHBOARD_VERSION=master
 
+# Build Apache APISIX
 FROM openresty/openresty:alpine-fat AS production-stage
 
-ARG APISIX_VERSION=master
+ARG APISIX_VERSION
+ARG ENABLE_PROXY
 LABEL apisix_version="${APISIX_VERSION}"
 
-ARG ENABLE_PROXY
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
     && apk add --no-cache --virtual .builddeps \
@@ -23,9 +27,10 @@ RUN set -x \
     && apk del .builddeps build-base make unzip
 
 
+# Build etcd
 FROM alpine:3.11 AS etcd-stage
 
-ARG ETCD_VERSION=v3.4.14
+ARG ETCD_VERSION
 LABEL etcd_version="${ETCD_VERSION}"
 
 WORKDIR /tmp
@@ -34,20 +39,21 @@ RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-
     && ln -s etcd-${ETCD_VERSION}-linux-amd64 etcd
 
 
+# Build APISIX Dashboard - 1. downlaod source code from github
 FROM alpine:latest as pre-build
 
-ARG APISIX_DASHBOARD_VERSION=master
+ARG APISIX_DASHBOARD_VERSION
 
 RUN set -x \
     && wget https://github.com/apache/apisix-dashboard/archive/${APISIX_DASHBOARD_VERSION}.tar.gz -O /tmp/apisix-dashboard.tar.gz \
     && mkdir /usr/local/apisix-dashboard \
     && tar -xvf /tmp/apisix-dashboard.tar.gz -C /usr/local/apisix-dashboard --strip 1
 
-
+# Build APISIX Dashboard - 2. build manager-api from source code
 FROM golang:1.14 as api-builder
 
+ARG APISIX_DASHBOARD_VERSION
 ARG ENABLE_PROXY
-ARG APISIX_DASHBOARD_VERSION=master
 
 WORKDIR /usr/local/apisix-dashboard
 
@@ -66,10 +72,10 @@ RUN mkdir -p ../output/conf \
     && go env -w GO111MODULE=on \
     && if [ "$APISIX_DASHBOARD_VERSION" = "master" ] || [ "$APISIX_DASHBOARD_VERSION" \> "v2.2" ]; then CGO_ENABLED=0 go build -o ../output/manager-api ./cmd/manager; else CGO_ENABLED=0 go build -o ../output/manager-api . ; fi;
 
-
+# Build APISIX Dashboard - 3. build dashboard web-UI from source code
 FROM node:14-alpine as fe-builder
 
-ARG ENABLE_PROXY=false
+ARG ENABLE_PROXY
 
 WORKDIR /usr/local/apisix-dashboard
 
@@ -81,10 +87,11 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then yarn config set registry https://regi
     && yarn install \
     && yarn build
 
-
+# Finally combine all the resources into one image
 FROM alpine:3.11 AS last-stage
 
 ARG ENABLE_PROXY
+
 # add runtime for Apache APISIX
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
