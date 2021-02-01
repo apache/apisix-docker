@@ -5,13 +5,15 @@ FROM openresty/openresty:alpine-fat AS production-stage
 ARG ENABLE_PROXY
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache --virtual .builddeps \
+    && apk add --no-cache --virtual .builddeps openssl-dev \
     automake \
     autoconf \
     libtool \
     pkgconfig \
     cmake \
     git \
+    && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib/ \
+    && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
     && bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path' \
