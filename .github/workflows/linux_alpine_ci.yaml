@@ -1,4 +1,4 @@
-name: Docker compose CI on linux
+name: Docker compose alpine CI on linux
 
 on:
   push:
