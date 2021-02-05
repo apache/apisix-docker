@@ -12,6 +12,11 @@ RUN yum -y install yum-utils\
 
 WORKDIR /usr/local/apisix
 
+# apisix's logs will output the stdout and stderr. we can use commend `kubectl logs` and `docker logs` review apisix's logs   
+RUN  ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
+
+
 EXPOSE 9080 9443
 
 CMD ["sh", "-c", "/usr/bin/apisix init && /usr/bin/apisix init_etcd && /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'"]
