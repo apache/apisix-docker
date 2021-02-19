@@ -13,7 +13,7 @@ services:
       - "9080:9080/tcp"
       - "9443:9443/tcp"
     networks:
-      apisix
+      - apisix
 
   etcd:
     image: bitnami/etcd:3.4.9
@@ -30,7 +30,7 @@ services:
     ports:
       - "2379:2379/tcp"
     networks:
-      apisix
+      - apisix
 
 networks:
   apisix:
