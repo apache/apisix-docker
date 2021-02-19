@@ -11,22 +11,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      etcd:
-        image: bitnami/etcd:3.4.13
-        ports:
-          - 2379:2379
-          - 2380:2380
-        env:
-          ALLOW_NONE_AUTHENTICATION: yes
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build and Test
+      - name: Build and run
         run: |
           docker build -t apisix:alpine -f ./alpine/Dockerfile .
-          docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -p 9080:9080 -d apisix:alpine
+          docker-compose -f ./alpine/docker-compose.yaml up -d
           sleep 30
+          docker logs docker_apisix_1
+
+      - name: Test
+        run: |
           curl http://127.0.0.1:9080/apisix/admin/schema/service -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'
           code=$(curl -k -i -m 20 -o /dev/null -s -w %{http_code} http://127.0.0.1:9080/apisix/admin/schema/service -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1')
           if [ ! $code -eq 200 ]; then
