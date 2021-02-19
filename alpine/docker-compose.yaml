@@ -5,8 +5,8 @@ services:
     image: apisix:alpine
     restart: always
     volumes:
-      - ./example/apisix_log:/usr/local/apisix/logs
-      - ./example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - example/apisix_log:/usr/local/apisix/logs
+      - example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
     ports:
@@ -20,7 +20,7 @@ services:
     user: root
     restart: always
     volumes:
-      - ./example/etcd_data:/etcd_data
+      - example/etcd_data:/etcd_data
     environment:
       ETCD_DATA_DIR: /etcd_data
       ETCD_ENABLE_V2: "true"
