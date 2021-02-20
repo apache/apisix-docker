@@ -1,4 +1,4 @@
-name: apisix Centos docker Test
+name: APISIX Centos docker Test
 
 on:
   push:
