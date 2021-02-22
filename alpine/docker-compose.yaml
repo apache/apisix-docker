@@ -5,8 +5,8 @@ services:
     image: apisix:alpine
     restart: always
     volumes:
-      - example/apisix_log:/usr/local/apisix/logs
-      - example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ./example/apisix_log:/usr/local/apisix/logs
+      - ./example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
     ports:
