@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build and run
+        working-directory: /home/runner/work/apisix-docker
         run: |
           docker build -t apisix:alpine -f ./alpine/Dockerfile .
           docker-compose -f ./alpine/docker-compose.yaml up -d
