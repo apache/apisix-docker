@@ -18,7 +18,7 @@ jobs:
           docker build -t apisix:alpine -f ./alpine/Dockerfile .
           docker-compose -f ./alpine/docker-compose.yaml up -d
           sleep 30
-          docker logs docker_apisix_1
+          docker logs alpine_apisix_1
 
       - name: Test
         run: |

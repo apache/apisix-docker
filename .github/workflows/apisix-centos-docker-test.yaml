@@ -19,7 +19,7 @@ jobs:
           docker build -t apisix:centos -f ./centos/Dockerfile .
           docker-compose -f ./centos/docker-compose.yaml up -d
           sleep 30
-          docker logs docker_apisix_1
+          docker logs centos_apisix_1
 
       - name: Test
         run: |
