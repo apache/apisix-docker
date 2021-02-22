@@ -32,6 +32,9 @@ services:
     networks:
       - apisix
 
+volumes:
+  example/etcd_data: {}
+
 networks:
   apisix:
     driver: bridge
