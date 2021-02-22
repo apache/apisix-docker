@@ -20,7 +20,7 @@ services:
     user: root
     restart: always
     volumes:
-      - example/etcd_data:/etcd_data
+      - ./example/etcd_data:/etcd_data
     environment:
       ETCD_DATA_DIR: /etcd_data
       ETCD_ENABLE_V2: "true"
@@ -32,8 +32,6 @@ services:
     networks:
       - apisix
 
-volumes:
-  example/etcd_data: {}
 
 networks:
   apisix:
