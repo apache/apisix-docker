@@ -1,0 +1,51 @@
+name: APISIX Centos docker Test
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build and run
+        run: |
+          make build-on-centos
+          docker-compose -f ./centos/docker-compose.yaml up -d
+          sleep 30
+          docker logs centos_apisix_1
+
+      - name: Test
+        run: |
+          curl http://127.0.0.1:9080/apisix/admin/routes/1 \
+          -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+            {
+            "uri": "/get",
+            "upstream": {
+                "type": "roundrobin",
+                "nodes": {
+                    "httpbin.org:80": 1
+                }
+            }
+          }'
+
+          result_code=`curl -I -m 10 -o /dev/null -s -w %{http_code} http://127.0.0.1:9080/get`
+          if [[ $result_code -ne 200 ]];then
+                  printf "result_code: %s\n" "$result_code"
+                  exit 125
+          fi
+
+      - name: Tar Image
+        run: |
+          make save-centos-tar
+
+      - name: Upload Image
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./package
