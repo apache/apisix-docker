@@ -16,7 +16,7 @@ jobs:
 
       - name: Build and run
         run: |
-          docker build -t apisix:centos -f ./centos/Dockerfile .
+          make build-on-centos
           docker-compose -f ./centos/docker-compose.yaml up -d
           sleep 30
           docker logs centos_apisix_1
@@ -29,3 +29,12 @@ jobs:
               echo "failed: failed to start APISIX-centos"
               exit 1
           fi
+
+      - name: Tar Image
+        run: |
+          make save-centos-tar
+
+      - name: Upload Image
+        uses: actions/upload-artifact@v1
+        with:
+          path: ${{ github.workspace }}/package

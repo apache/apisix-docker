@@ -2,7 +2,7 @@ version: "3"
 
 services:
   apisix:
-    image: apisix:centos
+    image: apache/apisix:2.3-centos
     restart: always
     volumes:
       - ../example/apisix_log:/usr/local/apisix/logs
