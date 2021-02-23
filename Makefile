@@ -18,7 +18,7 @@ default: help
 
 APISIX_VERSION ?= 2.3
 IMAGE_NAME = apache/apisix
-IMAGE_TAR_NAME = apache:apisix
+IMAGE_TAR_NAME = apache_apisix
 
 ### build-on-centos:      Build apaceh/apisix:xx-centos image
 build-on-centos:
@@ -31,12 +31,12 @@ build-on-alpine:
 ### save-centos-tar:      tar apaceh/apisix:xx-centos image
 save-centos-tar:
 	mkdir -p package
-	docker save -o ./package/$(IMAGE_TAR_NAME):$(APISIX_VERSION)-centos.tar $(IMAGE_NAME):$(APISIX_VERSION)-centos
+	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-centos.tar $(IMAGE_NAME):$(APISIX_VERSION)-centos
 
 ### save-alpine-tar:      tar apaceh/apisix:xx-alpine image
 save-alpine-tar:
 	mkdir -p package
-	docker save -o ./package/$(IMAGE_TAR_NAME):$(APISIX_VERSION)-alpine.tar $(IMAGE_NAME):$(APISIX_VERSION)-alpine
+	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-alpine.tar $(IMAGE_NAME):$(APISIX_VERSION)-alpine
 
 ### help:             	  Show Makefile rules
 help:
