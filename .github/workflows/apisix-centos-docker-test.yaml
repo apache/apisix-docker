@@ -37,4 +37,5 @@ jobs:
       - name: Upload Image
         uses: actions/upload-artifact@v1
         with:
+          name: *.tar
           path: ${{ github.workspace }}/package
