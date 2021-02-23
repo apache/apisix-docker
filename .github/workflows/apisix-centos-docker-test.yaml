@@ -35,7 +35,6 @@ jobs:
           make save-centos-tar
 
       - name: Upload Image
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
-          name: *.tar
-          path: ${{ github.workspace }}/package
+          path: ./package
