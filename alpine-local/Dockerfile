@@ -15,8 +15,8 @@ RUN set -x \
     git \
     && cd apisix \
     && make deps \
-    && cp bin/apisix /usr/bin/ \
-    && cp -r ../apisix /usr/local/apisix \
+    && cp -v bin/apisix /usr/bin/ \
+    && mv ../apisix /usr/local/apisix \
     && apk del .builddeps build-base make unzip
 
 FROM alpine:3.11 AS last-stage
