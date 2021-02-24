@@ -1,4 +1,4 @@
-name: APISIX Alpine docker Test
+name: APISIX Alpine local docker Test
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           make build-on-alpine-local
           docker-compose -f ./alpine-local/docker-compose.yaml up -d
           sleep 30
-          docker logs alpine_apisix_1
+          docker logs alpine-local_apisix_1
 
       - name: Test
         run: |
