@@ -15,8 +15,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build and run
         run: |
-          make build-on-alpine
-          docker-compose -f ./alpine/docker-compose.yaml up -d
+          git clone http://github.com/apache/apisix
+          export APISIX_PATH="./apisix"
+          make build-on-alpine-local
+          docker-compose -f ./alpine-local/docker-compose.yaml up -d
           sleep 30
           docker logs alpine_apisix_1
 
@@ -39,12 +41,3 @@ jobs:
                   printf "result_code: %s\n" "$result_code"
                   exit 125
           fi
-
-      - name: Tar Image
-        run: |
-          make save-alpine-tar
-
-      - name: Upload Image
-        uses: actions/upload-artifact@v2
-        with:
-          path: ./package
