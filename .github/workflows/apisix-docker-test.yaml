@@ -1,4 +1,4 @@
-name: APISIX Centos docker Test
+name: APISIX Alpine docker Test
 
 on:
   push:
@@ -10,16 +10,31 @@ on:
 
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - alpine
+          - centos
+          - alpine-local
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Build and run
+        if: ${{ matrix.platform == 'alpine-local' }}
         run: |
-          make build-on-centos
-          docker-compose -f ./centos/docker-compose.yaml up -d
+          git clone http://github.com/apache/apisix apisix-local
+          export APISIX_PATH="./apisix-local"
+
+      - name: Build and run
+        run: |
+          make build-on-${{ matrix.platform }}
+          export APISIX_DOCKER_TAG=${{ matrix.platform }}
+          docker-compose -f ./compose/docker-compose.yaml up -d
           sleep 30
-          docker logs centos_apisix_1
+          docker logs ${{ matrix.platform }}_apisix_1
 
       - name: Test
         run: |
@@ -43,7 +58,7 @@ jobs:
 
       - name: Tar Image
         run: |
-          make save-centos-tar
+          make save-alpine-tar
 
       - name: Upload Image
         uses: actions/upload-artifact@v2
