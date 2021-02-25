@@ -6,7 +6,7 @@
 
 ### Build an image from source
 
-1. install release version:
+1. Build from release version:
 ```
 # Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2 . The latest version can be find at `https://github.com/apache/apisix/releases`
 
@@ -14,10 +14,18 @@ export APISIX_VERSION=2.2
 docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
 ```
 
-2. install master branch version, which has latest code(ONLY for the developer's convenience):
+2. Build from master branch version, which has latest code(ONLY for the developer's convenience):
 ```
 export APISIX_VERSION=master
 docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
+```
+
+3. Build from local code:
+```
+# To copy apisix into image, we need to include it in build context
+cd <APISIX-PATH>
+docker build -t apisix:alpine-local --build-arg APISIX_PATH=. -f <APISIX-DOCKER-PATH>/alpine-local/Dockerfile alpine
+# Might need root privilege if encounter "error checking context: 'can't stat'"
 ```
 
 **Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
