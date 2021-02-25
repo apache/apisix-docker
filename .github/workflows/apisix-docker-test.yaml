@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build and run
+      - name: Clone apisix for local test
         if: ${{ matrix.platform == 'alpine-local' }}
         run: |
           git clone http://github.com/apache/apisix apisix-local
