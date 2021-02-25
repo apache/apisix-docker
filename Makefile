@@ -30,7 +30,7 @@ build-on-alpine:
 
 ### build-on-alpine:      Build apaceh/apisix:xx-alpine image
 build-on-alpine-local:
-	docker build -t $(IMAGE_NAME):alpine-local --build-arg APISIX_VERSION=${APISIX_PATH} -f ./alpine-local/Dockerfile .
+	docker build -t $(IMAGE_NAME):alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
 
 ### save-centos-tar:      tar apaceh/apisix:xx-centos image
 save-centos-tar:

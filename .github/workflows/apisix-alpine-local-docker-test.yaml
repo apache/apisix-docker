@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build and run
         run: |
-          git clone http://github.com/apache/apisix
-          export APISIX_PATH="./apisix"
+          git clone http://github.com/apache/apisix apisix-local
+          export APISIX_PATH="./apisix-local"
           make build-on-alpine-local
           docker-compose -f ./alpine-local/docker-compose.yaml up -d
           sleep 30
