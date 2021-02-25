@@ -3,7 +3,7 @@ ARG ENABLE_PROXY=false
 FROM openresty/openresty:alpine-fat AS production-stage
 
 ARG ENABLE_PROXY
-ARG APISIX_PATH
+COPY $APISIX_PATH ./apisix
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
     && apk add --no-cache --virtual .builddeps \
@@ -13,7 +13,7 @@ RUN set -x \
     pkgconfig \
     cmake \
     git \
-    && cd $APISIX_PATH \
+    && cd apisix \
     && make deps \
     && cp -v bin/apisix /usr/bin/ \
     && mv ../apisix /usr/local/apisix \
