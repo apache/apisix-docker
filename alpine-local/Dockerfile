@@ -13,7 +13,7 @@ RUN set -x \
     pkgconfig \
     cmake \
     git \
-    && cd apisix \
+    && cd ${APISIX_PATH##*/} \
     && make deps \
     && cp -v bin/apisix /usr/bin/ \
     && mv ../apisix /usr/local/apisix \
