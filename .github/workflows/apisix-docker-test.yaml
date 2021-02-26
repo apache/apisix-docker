@@ -1,4 +1,4 @@
-name: APISIX Alpine docker Test
+name: APISIX Docker Test
 
 on:
   push:
