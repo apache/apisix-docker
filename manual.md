@@ -58,7 +58,7 @@ docker run --name test-api-gateway \
 
 Test with admin api
 
-e.g. Get route list, should be return  
+e.g. Get route list, should be return
 
 ```
 curl http://127.0.0.1:9080/apisix/admin/routes/

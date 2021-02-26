@@ -4,7 +4,7 @@
 
 1. install release version (Apache releases are beginning from version 0.9):
 ```
-# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2 . The latest version can be find at `https://github.com/apache/apisix/releases`
+# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2. The latest version can be find at `https://github.com/apache/apisix/releases`
 
 APISIX_VERSION=2.2
 docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine

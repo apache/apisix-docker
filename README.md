@@ -2,13 +2,13 @@
 
 ## How To Build Image
 
-**The master branch is for the version of Apache APISIX 2.x . If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.**
+**The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.**
 
 ### Build an image from source
 
 1. Build from release version:
 ```
-# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2 . The latest version can be find at `https://github.com/apache/apisix/releases`
+# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2. The latest version can be find at `https://github.com/apache/apisix/releases`
 
 export APISIX_VERSION=2.2
 docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
