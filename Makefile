@@ -20,7 +20,7 @@ APISIX_VERSION ?= 2.3
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
-### build-on-centos:      Build apaceh/apisix:xx-centos image
+### build-on-centos:      Build apache/apisix:xx-centos image
 build-on-centos:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-centos -f ./centos/Dockerfile .
 
