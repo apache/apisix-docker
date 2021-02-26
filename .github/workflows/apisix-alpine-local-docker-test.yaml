@@ -16,11 +16,10 @@ jobs:
       - name: Build and run
         run: |
           git clone http://github.com/apache/apisix apisix-local
-          export APISIX_PATH="./apisix-local"
-          make build-on-alpine-local
-          docker-compose -f ./alpine-local/docker-compose.yaml up -d
+          cd apisix-local
+          docker build -t apache/apisix:alpine-local --build-arg APISIX_PATH="." -f ../alpine-local/Dockerfile .
+          docker-compose -f ../alpine-local/docker-compose.yaml up -d
           sleep 30
-          docker logs alpine-local_apisix_1
 
       - name: Test
         run: |
