@@ -34,7 +34,7 @@ jobs:
           export APISIX_DOCKER_TAG=${{ matrix.platform }}
           docker-compose -f ./compose/docker-compose.yaml up -d
           sleep 30
-          docker logs ${{ matrix.platform }}_apisix_1
+          docker logs compose_apisix_1
 
       - name: Test
         run: |
