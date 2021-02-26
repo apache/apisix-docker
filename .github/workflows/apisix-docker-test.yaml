@@ -55,12 +55,3 @@ jobs:
                   printf "result_code: %s\n" "$result_code"
                   exit 125
           fi
-
-      - name: Tar Image
-        run: |
-          make save-alpine-tar
-
-      - name: Upload Image
-        uses: actions/upload-artifact@v2
-        with:
-          path: ./package
