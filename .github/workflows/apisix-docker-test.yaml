@@ -19,6 +19,8 @@ jobs:
           - alpine-local
 
     runs-on: ubuntu-latest
+    env:
+      APISIX_PATH: "./apisix-local"
     steps:
       - uses: actions/checkout@v2
 
@@ -26,7 +28,6 @@ jobs:
         if: ${{ matrix.platform == 'alpine-local' }}
         run: |
           git clone http://github.com/apache/apisix apisix-local
-          export APISIX_PATH="./apisix-local"
 
       - name: Build and run
         run: |
