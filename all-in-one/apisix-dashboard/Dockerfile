@@ -41,7 +41,7 @@ RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-
     && ln -s etcd-${ETCD_VERSION}-linux-amd64 etcd
 
 
-# Build APISIX Dashboard - 1. downlaod source code from github
+# Build APISIX Dashboard - 1. download source code from github
 FROM alpine:latest as pre-build
 
 ARG APISIX_DASHBOARD_VERSION
