@@ -29,6 +29,8 @@ build-on-alpine:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine -f ./alpine/Dockerfile .
 
 ### build-on-alpine-local:      Build apache/apisix:xx-alpine-local image
+# Actually it is not build on certain version but on local code
+# Use this name (in the same patterns with others) for convenient CI
 build-on-alpine-local:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
 
