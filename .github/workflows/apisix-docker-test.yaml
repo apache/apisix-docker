@@ -17,12 +17,11 @@ jobs:
           - alpine
           - centos
           - alpine-local
-    env:
-      APISIX_DOCKER_TAG: 2.3-${{ matrix.platform }}
 
     runs-on: ubuntu-latest
     env:
       APISIX_PATH: "./apisix-local"
+      APISIX_DOCKER_TAG: 2.3-${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
 
