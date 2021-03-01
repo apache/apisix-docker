@@ -16,7 +16,7 @@
 #
 default: help
 
-APISIX_VERSION ?= latest
+APISIX_VERSION ?= 2.3
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 

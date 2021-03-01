@@ -17,6 +17,8 @@ jobs:
           - alpine
           - centos
           - alpine-local
+    env:
+      APISIX_DOCKER_TAG: 2.3-${{ matrix.platform }}
 
     runs-on: ubuntu-latest
     env:
@@ -32,7 +34,6 @@ jobs:
       - name: Build and run
         run: |
           make build-on-${{ matrix.platform }}
-          export APISIX_DOCKER_TAG=${{ matrix.platform }}
           docker-compose -f ./compose/docker-compose.yaml up -d
           sleep 30
           docker logs compose_apisix_1
