@@ -24,15 +24,17 @@ IMAGE_TAR_NAME = apache_apisix
 build-on-centos:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-centos -f ./centos/Dockerfile .
 
-### build-on-alpine:      Build apaceh/apisix:xx-alpine image
+### build-on-alpine:      Build apache/apisix:xx-alpine image
 build-on-alpine:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine -f ./alpine/Dockerfile .
 
-### build-on-alpine:      Build apaceh/apisix:xx-alpine image
+### build-on-alpine-local:      Build apache/apisix:xx-alpine-local image
+# Actually it is not build on certain version but on local code
+# Use this name (in the same patterns with others) for convenient CI
 build-on-alpine-local:
-	docker build -t $(IMAGE_NAME):alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
+	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
 
-### save-centos-tar:      tar apaceh/apisix:xx-centos image
+### save-centos-tar:      tar apache/apisix:xx-centos image
 save-centos-tar:
 	mkdir -p package
 	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-centos.tar $(IMAGE_NAME):$(APISIX_VERSION)-centos
