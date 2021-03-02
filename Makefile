@@ -44,6 +44,11 @@ save-alpine-tar:
 	mkdir -p package
 	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-alpine.tar $(IMAGE_NAME):$(APISIX_VERSION)-alpine
 
+### save-alpine-tar:      tar apaceh/apisix:xx-alpine image
+save-alpine-local-tar:
+	mkdir -p package
+	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-alpine-local.tar $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local
+
 ### help:             	  Show Makefile rules
 help:
 	@echo Makefile rules:
