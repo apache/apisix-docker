@@ -58,12 +58,10 @@ jobs:
           fi
 
       - name: Tar Image
-        if: ${{ !endsWith(matrix.platform, 'local') }}
         run: |
           make save-${{ matrix.platform }}-tar
 
       - name: Upload Image
-        if: ${{ !endsWith(matrix.platform, 'local') }}
         uses: actions/upload-artifact@v2
         with:
           path: ./package
