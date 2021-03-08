@@ -2,7 +2,7 @@ ARG ENABLE_PROXY=false
 
 FROM openresty/openresty:alpine-fat AS production-stage
 
-ARG APISIX_VERSION=2.3
+ARG APISIX_VERSION=2.4
 LABEL apisix_version="${APISIX_VERSION}"
 
 ARG ENABLE_PROXY
