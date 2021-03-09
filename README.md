@@ -8,9 +8,9 @@
 
 1. Build from release version:
 ```
-# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2. The latest version can be find at `https://github.com/apache/apisix/releases`
+# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.4. The latest version can be find at `https://github.com/apache/apisix/releases`
 
-export APISIX_VERSION=2.2
+export APISIX_VERSION=2.4
 docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
 ```
 
@@ -63,7 +63,7 @@ $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/confi
 **The latest version of `apisix-dashboard` is 2.4 and should be used with APISIX 2.3.**
 
 ```shell
-$ docker build --build-arg APISIX_VERSION=2.2 --build-arg APISIX_DASHBOARD_VERSION=v2.3 -t apache/apisix-dashboard:whole -f ./all-in-one/apisix-dashboard/Dockerfile .
+$ docker build --build-arg APISIX_VERSION=2.3 --build-arg APISIX_DASHBOARD_VERSION=v2.4 -t apache/apisix-dashboard:whole -f ./all-in-one/apisix-dashboard/Dockerfile .
 $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
 ```
 
