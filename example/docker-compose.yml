@@ -1,6 +1,17 @@
 version: "3"
 
 services:
+  apisix-dashboard:
+    image: apache/apisix-dashboard:2.4
+    restart: always
+    volumes:
+    - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    ports:
+    - "9000:9000"
+    networks:
+      apisix:
+        ipv4_address: 172.18.5.15
+
   apisix:
     image: apache/apisix:2.3-alpine
     restart: always
