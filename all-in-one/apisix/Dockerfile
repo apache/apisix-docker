@@ -58,6 +58,10 @@ COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
 
+# forward request and error logs to docker log driver
+RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
+  && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
+
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 EXPOSE 9080 9443 2379 2380
