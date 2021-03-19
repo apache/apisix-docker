@@ -21,8 +21,8 @@ IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
 APISIX_DASHBOARD_VERSION ?= 2.4
-DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
-DASHBOARD_IMAGE_TAR_NAME = apache_apisix_dashboard
+APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
+APISIX_DASHBOARD_IMAGE_TAR_NAME = apache_apisix_dashboard
 
 ### build-on-centos:      Build apache/apisix:xx-centos image
 build-on-centos:
@@ -50,12 +50,12 @@ save-alpine-tar:
 
 ### build-dashboard:	Build apache/dashboard:tag image
 build-dashboard:
-	docker build -t $(DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
+	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
 
 ### save-dashboard-tar:      tar apaceh/apisix-dashboard:tag image
 save-dashboard-tar:
 	mkdir -p package
-	docker save -o ./package/$(DASHBOARD_IMAGE_TAR_NAME)_$(APISIX_DASHBOARD_VERSION).tar $(DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
+	docker save -o ./package/$(APISIX_DASHBOARD_IMAGE_TAR_NAME)_$(APISIX_DASHBOARD_VERSION).tar $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 
 ### help:             	  Show Makefile rules
 help:
