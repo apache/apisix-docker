@@ -27,7 +27,7 @@ jobs:
 
       - name: check
         run: |
-          wget https://github.com/apache/apisix-dashboard/blob/master/api/test/shell/manager_smoking.sh
+          wget https://raw.githubusercontent.com/apache/apisix-dashboard/master/api/test/shell/manager_smoking.sh
           chmod +x ./manager_smoking.sh
           sh manager_smoking.sh -s true
 
