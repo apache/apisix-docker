@@ -29,7 +29,7 @@ jobs:
         run: |
           wget https://github.com/apache/apisix-dashboard/blob/master/api/test/shell/manager_smoking.sh
           chmod +x ./manager_smoking.sh
-          ./manager_smoking.sh -s true
+          sh manager_smoking.sh -s true
 
       - name: Tar Image
         run: |
