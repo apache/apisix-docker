@@ -20,6 +20,10 @@ APISIX_VERSION ?= 2.4
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
+APISIX_DASHBOARD_VERSION ?= 2.4
+APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
+APISIX_DASHBOARD_IMAGE_TAR_NAME = apache_apisix_dashboard
+
 ### build-on-centos:      Build apache/apisix:xx-centos image
 build-on-centos:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-centos -f ./centos/Dockerfile .
@@ -32,7 +36,7 @@ build-on-alpine:
 # Actually it is not build on certain version but on local code
 # Use this name (in the same patterns with others) for convenient CI
 build-on-alpine-local:
-	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
+	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .	
 
 ### save-centos-tar:      tar apache/apisix:xx-centos image
 save-centos-tar:
@@ -43,6 +47,15 @@ save-centos-tar:
 save-alpine-tar:
 	mkdir -p package
 	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-alpine.tar $(IMAGE_NAME):$(APISIX_VERSION)-alpine
+
+### build-dashboard:	Build apache/dashboard:tag image
+build-dashboard:
+	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
+
+### save-dashboard-tar:      tar apaceh/apisix-dashboard:tag image
+save-dashboard-tar:
+	mkdir -p package
+	docker save -o ./package/$(APISIX_DASHBOARD_IMAGE_TAR_NAME)_$(APISIX_DASHBOARD_VERSION).tar $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 
 ### help:             	  Show Makefile rules
 help:
