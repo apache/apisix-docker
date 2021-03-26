@@ -21,7 +21,6 @@ title: Deploy Apache APISIX with Docker
 #
 -->
 
-
 ## Manual deploy apisix via docker
 
 ### Create a network `apisix`
