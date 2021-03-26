@@ -1,5 +1,5 @@
 ---
-title: Manual deploy apisix via docker
+title: Deploy Apache APISIX with Docker
 ---
 
 <!--

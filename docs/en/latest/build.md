@@ -1,5 +1,5 @@
 ---
-title: Build an image from source
+title: Build an image from the source codes
 ---
 
 <!--
