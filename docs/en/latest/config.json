@@ -1,10 +1,10 @@
 {
-    "version": 1.0,
-    "sidebar": [
-      {
-        "type": "category",
-        "label": "Installation",
-        "items": ["build", "manual", "example"]
-      }
-    ]
-  }
+  "version": 1.0,
+  "sidebar": [
+    {
+      "type": "category",
+      "label": "Installation",
+      "items": [ "build", "manual", "example"]
+    }
+  ]
+}
