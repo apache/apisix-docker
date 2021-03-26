@@ -3,7 +3,7 @@ ARG APISIX_VERSION=master
 ARG ETCD_VERSION=v3.4.14
 
 # Build Apache APISIX
-FROM openresty/openresty:alpine-fat AS production-stage
+FROM openresty/openresty:1.19.3.1-alpine-fat AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"

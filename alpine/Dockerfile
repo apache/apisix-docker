@@ -1,6 +1,6 @@
 ARG ENABLE_PROXY=false
 
-FROM openresty/openresty:alpine-fat AS production-stage
+FROM openresty/openresty:1.19.3.1-alpine-fat AS production-stage
 
 ARG APISIX_VERSION=2.4
 LABEL apisix_version="${APISIX_VERSION}"
