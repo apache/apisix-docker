@@ -26,7 +26,7 @@ ARG ENABLE_PROXY
 # add runtime for Apache APISIX
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache bash libstdc++ curl
+    && apk add --no-cache bash libstdc++ curl tzdata
 
 WORKDIR /usr/local/apisix
 
