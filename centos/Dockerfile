@@ -5,7 +5,7 @@ LABEL apisix_version="${APISIX_VERSION}"
 
 RUN yum -y install yum-utils\
 	&& yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo \
-	&& yum install -y openresty which \
+	&& yum install -y openresty which tzdata \
 	&& yum install -y https://github.com/apache/apisix/releases/download/$APISIX_VERSION/apisix-$APISIX_VERSION-0.x86_64.rpm \
 	&& yum clean all \
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
