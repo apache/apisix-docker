@@ -38,6 +38,14 @@ build-on-alpine:
 build-on-alpine-local:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .	
 
+### push-on-centos:       Push apache/apisix:xx-centos image
+push-on-centos:
+	docker push $(IMAGE_NAME):$(APISIX_VERSION)-centos
+
+### push-on-alpine:       Push apache/apisix:xx-alpine image
+push-on-alpine:
+	docker push $(IMAGE_NAME):$(APISIX_VERSION)-alpine
+
 ### save-centos-tar:      tar apache/apisix:xx-centos image
 save-centos-tar:
 	mkdir -p package
@@ -51,6 +59,10 @@ save-alpine-tar:
 ### build-dashboard:	Build apache/dashboard:tag image
 build-dashboard:
 	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
+
+### push-dashboard:     Push apache/dashboard:tag image
+push-dashboard:
+	docker push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 
 ### save-dashboard-tar:      tar apaceh/apisix-dashboard:tag image
 save-dashboard-tar:
