@@ -51,7 +51,7 @@ save-centos-tar:
 	mkdir -p package
 	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-centos.tar $(IMAGE_NAME):$(APISIX_VERSION)-centos
 
-### save-alpine-tar:      tar apaceh/apisix:xx-alpine image
+### save-alpine-tar:      tar apache/apisix:xx-alpine image
 save-alpine-tar:
 	mkdir -p package
 	docker save -o ./package/$(IMAGE_TAR_NAME)_$(APISIX_VERSION)-alpine.tar $(IMAGE_NAME):$(APISIX_VERSION)-alpine
@@ -64,7 +64,7 @@ build-dashboard:
 push-dashboard:
 	docker push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 
-### save-dashboard-tar:      tar apaceh/apisix-dashboard:tag image
+### save-dashboard-tar:      tar apache/apisix-dashboard:tag image
 save-dashboard-tar:
 	mkdir -p package
 	docker save -o ./package/$(APISIX_DASHBOARD_IMAGE_TAR_NAME)_$(APISIX_DASHBOARD_VERSION).tar $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
