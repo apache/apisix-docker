@@ -2,6 +2,11 @@
   "version": 1.0,
   "sidebar": [
     {
+      "type": "link",
+      "label": "Apache APISIX™ Docker",
+      "href": "https://apisix.apache.org/docs/docker/build/"
+    },
+    {
       "type": "category",
       "label": "Installation",
       "items": [ "build", "manual", "example"]
