@@ -15,7 +15,7 @@ RUN set -x \
     && mkdir ~/.luarocks \
     && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
     && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
-    && (for (( i = 0; i < 10; i++ )); do if [[ "$i" -eq 10 ]]; then echo "failed to make deps in time"; exit 1; fi; luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps && break; done) \
+    && (for (( i = 0; i < 10; i++ )); do if [[ "$i" -eq 10 ]]; then echo "failed to fetch luarocks in time"; exit 1; fi; luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps && break; done;) \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
     && apk del .builddeps build-base make unzip
