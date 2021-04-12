@@ -15,7 +15,7 @@ RUN set -x \
     cmake \
     git \
     && cd apisix \
-    && make deps \
+    && (i=0; while true; do if [[ "$i" -eq 10 ]]; then echo "failed to make deps in time"; exit 1; fi; make deps && break; i=$(( i + 1 )); done;) \
     && cp -v bin/apisix /usr/bin/ \
     && mv ../apisix /usr/local/apisix \
     && apk del .builddeps build-base make unzip
