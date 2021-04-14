@@ -12,29 +12,33 @@
 
 export APISIX_VERSION=2.4
 # alpine
-make build-on-alpine
+$ make build-on-alpine
 # centos
-make build-on-centos
+$ make build-on-centos
 ```
 
 2. Build from master branch version, which has latest code(ONLY for the developer's convenience):
 ```
 export APISIX_VERSION=master
-make -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
+# alpine
+$ make build-on-alpine
+# centos
+$ make build-on-centos
 ```
 
 3. Build from local code:
 ```
 # To copy apisix into image, we need to include it in build context
-cd <APISIX-PATH>
-make -t apisix:alpine-local --build-arg APISIX_PATH=. -f <APISIX-DOCKER-PATH>/alpine-local/Dockerfile alpine
+$ cd <APISIX-PATH>
+# alpine-local
+$ make build-on-alpine-local
 # Might need root privilege if encounter "error checking context: 'can't stat'"
 ```
 
 **Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
 
 ```sh
-$ make -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
+$ make build-on-alpine-cn
 ```
 
 ### Manual deploy apisix via docker
@@ -57,7 +61,7 @@ You can refer to [the docker-compose example](example/README.md) for more try.
 * All in one Docker container for Apache APISIX
 
 ```shell
-$ make -t apache/apisix:whole -f ./all-in-one/apisix/Dockerfile .
+$ make build-all-in-one
 $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -p 9080:9080 -p 2379:2379 -d apache/apisix:whole
 ```
 
@@ -66,7 +70,7 @@ $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/confi
 **The latest version of `apisix-dashboard` is 2.4 and should be used with APISIX 2.3.**
 
 ```shell
-$ make --build-arg APISIX_VERSION=2.3 --build-arg APISIX_DASHBOARD_VERSION=v2.4 -t apache/apisix-dashboard:whole -f ./all-in-one/apisix-dashboard/Dockerfile .
+$ make build-dashboard
 $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
 ```
 
