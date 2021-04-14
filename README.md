@@ -11,7 +11,10 @@
 # Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.4. The latest version can be find at `https://github.com/apache/apisix/releases`
 
 export APISIX_VERSION=2.4
-make -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
+# alpine
+make build-on-alpine
+# centos
+make build-on-centos
 ```
 
 2. Build from master branch version, which has latest code(ONLY for the developer's convenience):
