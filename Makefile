@@ -34,10 +34,12 @@ build-on-alpine:
 build-on-alpine-local:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
 
-# build-on-alpine-cn:		Build apache/apisix:xx-alpine image (for chinese)
-# 	docker build -t $(IMAGE_NAME):${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
+### build-on-alpine-cn:		 Build apache/apisix:xx-alpine image (for chinese)
+build-on-alpine-cn:
+	docker build -t $(IMAGE_NAME):${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
 
-### build-all-in-one:		Build All in one Docker container for Apache APISIX
+### build-all-in-one:		 Build All in one Docker container for Apache APISIX
+build-all-in-one:
 	docker build -t $(IMAGE_NAME):whole -f ./all-in-one/apisix/Dockerfile .
 
 ### save-centos-tar:      tar apache/apisix:xx-centos image

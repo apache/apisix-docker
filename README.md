@@ -7,27 +7,29 @@
 ### Build an image from source
 
 1. Build from release version:
-```
+```sh
 # Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.4. The latest version can be find at `https://github.com/apache/apisix/releases`
 
 export APISIX_VERSION=2.4
 # alpine
 $ make build-on-alpine
+
 # centos
 $ make build-on-centos
 ```
 
 2. Build from master branch version, which has latest code(ONLY for the developer's convenience):
-```
+```sh
 export APISIX_VERSION=master
 # alpine
 $ make build-on-alpine
+
 # centos
 $ make build-on-centos
 ```
 
 3. Build from local code:
-```
+```sh
 # To copy apisix into image, we need to include it in build context
 $ cd <APISIX-PATH>
 
@@ -41,7 +43,7 @@ $ APISIX_PATH=/path/to/apisix make build-on-alpine-local
 **Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
 
 ```sh
-$ docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
+$ make build-on-alpine-cn
 ```
 
 ### Manual deploy apisix via docker
@@ -52,7 +54,7 @@ $ docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${A
 
 **start all modules with docker-compose**
 
-```
+```sh
 $ cd example
 $ docker-compose -p docker-apisix up -d
 ```
