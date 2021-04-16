@@ -30,15 +30,18 @@ $ make build-on-centos
 ```
 # To copy apisix into image, we need to include it in build context
 $ cd <APISIX-PATH>
-# alpine-local
-$ make build-on-alpine-local
+
+# alpine
+
+$ APISIX_PATH=/path/to/apisix make build-on-alpine-local
+
 # Might need root privilege if encounter "error checking context: 'can't stat'"
 ```
 
 **Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
 
 ```sh
-$ make build-on-alpine-cn
+$ docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
 ```
 
 ### Manual deploy apisix via docker
