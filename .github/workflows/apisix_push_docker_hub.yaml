@@ -1,0 +1,24 @@
+name: Push apisix to Docker image
+on:
+  release:
+    types: [ published ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform:
+          - alpine
+          - centos
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Login
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Push apisix image to Docker Hub
+        run:
+          make build-on-${{ matrix.platform }}
+          make push-on-${{ matrix.platform }}
