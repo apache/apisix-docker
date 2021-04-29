@@ -30,7 +30,7 @@ RUN set -x \
 
 
 # Build etcd
-FROM alpine:3.11 AS etcd-stage
+FROM alpine:3.13 AS etcd-stage
 
 ARG ETCD_VERSION
 LABEL etcd_version="${ETCD_VERSION}"
@@ -90,7 +90,7 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then yarn config set registry https://regi
     && yarn build
 
 # Finally combine all the resources into one image
-FROM alpine:3.11 AS last-stage
+FROM alpine:3.13 AS last-stage
 
 ARG ENABLE_PROXY
 
