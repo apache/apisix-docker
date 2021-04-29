@@ -24,7 +24,7 @@ RUN set -x \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
     && apk del .builddeps build-base make unzip
 
-FROM alpine:3.11 AS last-stage
+FROM alpine:3.13 AS last-stage
 
 ARG ENABLE_PROXY
 # add runtime for Apache APISIX
