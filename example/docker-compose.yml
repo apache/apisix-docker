@@ -2,7 +2,7 @@ version: "3"
 
 services:
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.4
+    image: apache/apisix-dashboard:2.6
     restart: always
     volumes:
     - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
@@ -13,7 +13,7 @@ services:
         ipv4_address: 172.18.5.15
 
   apisix:
-    image: apache/apisix:2.3-alpine
+    image: apache/apisix:2.5-alpine
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
@@ -29,7 +29,7 @@ services:
         ipv4_address: 172.18.5.11
 
   etcd:
-    image: bitnami/etcd:3.4.9
+    image: bitnami/etcd:3.4.15
     user: root
     restart: always
     volumes:
@@ -47,7 +47,7 @@ services:
         ipv4_address: 172.18.5.10
 
   web1:
-    image: nginx:1.18.0-alpine
+    image: nginx:1.19.0-alpine
     restart: always
     volumes:
       - ./upstream/web1.conf:/etc/nginx/nginx.conf
@@ -60,7 +60,7 @@ services:
         ipv4_address: 172.18.5.12
 
   web2:
-    image: nginx:1.18.0-alpine
+    image: nginx:1.19.0-alpine
     restart: always
     volumes:
       - ./upstream/web2.conf:/etc/nginx/nginx.conf
