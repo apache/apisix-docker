@@ -10,7 +10,6 @@ services:
     - "9000:9000"
     networks:
       apisix:
-        ipv4_address: 172.18.5.15
 
   apisix:
     image: apache/apisix:2.5-alpine
@@ -26,7 +25,6 @@ services:
       - "9443:9443/tcp"
     networks:
       apisix:
-        ipv4_address: 172.18.5.11
 
   etcd:
     image: bitnami/etcd:3.4.15
@@ -44,7 +42,6 @@ services:
       - "2379:2379/tcp"
     networks:
       apisix:
-        ipv4_address: 172.18.5.10
 
   web1:
     image: nginx:1.19.0-alpine
@@ -57,7 +54,6 @@ services:
       - NGINX_PORT=80
     networks:
       apisix:
-        ipv4_address: 172.18.5.12
 
   web2:
     image: nginx:1.19.0-alpine
@@ -70,11 +66,7 @@ services:
       - NGINX_PORT=80
     networks:
       apisix:
-        ipv4_address: 172.18.5.13
 
 networks:
   apisix:
     driver: bridge
-    ipam:
-      config:
-      - subnet: 172.18.0.0/16
