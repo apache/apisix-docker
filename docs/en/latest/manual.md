@@ -55,7 +55,7 @@ docker run -it --name etcd-server \
 
 ### Run Apache APISIX server
 
-You need etcd docker to work with Apache APISIX. You can refer to [the docker-compose example](example/README.md).
+You need etcd docker to work with Apache APISIX. You can refer to [the docker-compose example](example.md).
 
 Or you can run APISIX with Docker directly（Docker name is test-api-gateway）:
 
