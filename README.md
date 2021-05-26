@@ -31,11 +31,8 @@ $ make build-on-centos
 3. Build from local code:
 ```sh
 # To copy apisix into image, we need to include it in build context
-$ cd <APISIX-PATH>
-
-# alpine
-
-$ APISIX_PATH=/path/to/apisix make build-on-alpine-local
+$ cp -r <APISIX-PATH> ./apisix
+$ APISIX_PATH=./apisix make build-on-alpine-local
 
 # Might need root privilege if encounter "error checking context: 'can't stat'"
 ```
