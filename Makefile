@@ -36,11 +36,13 @@ build-on-alpine:
 # Actually it is not build on certain version but on local code
 # Use this name (in the same patterns with others) for convenient CI
 build-on-alpine-local:
-	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .	
+	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
 
 ### push-on-centos:       Push apache/apisix:xx-centos image
 push-on-centos:
 	docker push $(IMAGE_NAME):$(APISIX_VERSION)-centos
+	docker build -t $(IMAGE_NAME):latest -f ./centos/Dockerfile .
+	docker push $(IMAGE_NAME):latest
 
 ### push-on-alpine:       Push apache/apisix:xx-alpine image
 push-on-alpine:
@@ -71,6 +73,8 @@ build-dashboard:
 ### push-dashboard:     Push apache/dashboard:tag image
 push-dashboard:
 	docker push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
+	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):latest -f ./dashboard/Dockerfile .
+	docker push $(APISIX_DASHBOARD_IMAGE_NAME):latest
 
 ### save-dashboard-tar:      tar apache/apisix-dashboard:tag image
 save-dashboard-tar:

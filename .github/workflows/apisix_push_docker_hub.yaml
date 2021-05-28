@@ -1,7 +1,7 @@
 name: Push apisix to Docker image
 on:
-  release:
-    types: [ published ]
+  push:
+    branches: ['release/apisix-**']
 jobs:
   build:
     runs-on: ubuntu-latest
