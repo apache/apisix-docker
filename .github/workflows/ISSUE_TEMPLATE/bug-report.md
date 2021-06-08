@@ -18,9 +18,6 @@ labels: "bug"
 
 ## Environment
 
-* apisix version (cmd: `apisix version`):
-* OS (cmd: `uname -a`):
-* OpenResty / Nginx version (cmd: `nginx -V` or `openresty -V`):
 * apisix-docker version, you have:
 
 ## Additional context
