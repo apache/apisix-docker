@@ -18,7 +18,7 @@ labels: "bug"
 
 ## Environment
 
-* apisix-docker version, you have:
+* apisix-docker version:
 
 ## Additional context
 <!-- Do you want to solve this issue? or add any other context about the problem here. -->
