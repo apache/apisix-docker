@@ -1,7 +1,10 @@
 name: Push apisix to Docker image
 on:
   push:
-    branches: ['release/apisix-**']
+    branches-ignore:
+      - '**'
+    tags:
+      - 'apisix-*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,6 +15,12 @@ jobs:
           - centos
 
     steps:
+      - name: Prepare
+        id: prepare
+        run: |
+          TAG=${GITHUB_REF#refs/tags/apisix-}
+          echo ::set-output name=tag_name::${TAG}
+
       - name: Check out the repo
         uses: actions/checkout@v2
 
@@ -19,6 +28,13 @@ jobs:
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin
 
       - name: Push apisix image to Docker Hub
-        run:
-          make build-on-${{ matrix.platform }}
-          make push-on-${{ matrix.platform }}
+        env:
+          # fork friendly ^^
+          DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
+        run: |
+          docker build \
+          --build-arg APISIX_VERSION=${{ steps.prepare.outputs.tag_name }} \
+          -t ${DOCKER_REPO:-apisix/apisix}:${{ steps.prepare.outputs.tag_name }}-${{ matrix.platform }} \
+          -f ./${{ matrix.platform }}/Dockerfile \
+          .
+          docker push ${DOCKER_REPO:-apisix/apisix}:${{ steps.prepare.outputs.tag_name }}-${{ matrix.platform }} 
