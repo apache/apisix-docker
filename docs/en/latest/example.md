@@ -26,7 +26,7 @@ title: Example
 ### Run
 
 ```
-$ docker-compose -p docker-apisix up -d
+docker-compose -p docker-apisix up -d
 ```
 
 ### Configure
@@ -99,9 +99,9 @@ curl https://web1.lvh.me:9443/ -v --cacert ./mkcert/rootCA.pem
 ### Clean
 
 ```
-$ docker-compose -p docker-apisix down
+docker-compose -p docker-apisix down
 
-$ sudo rm -rf etcd_data/member
+sudo rm -rf etcd_data/member
 
-$ rm -rf apisix_log/*.log
+rm -rf apisix_log/*.log
 ```
