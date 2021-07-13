@@ -17,7 +17,7 @@
 default: help
 
 APISIX_VERSION ?= 2.7
-IMAGE_NAME = apache/apisix
+IMAGE_NAME = yiyiyimu/apisix
 IMAGE_TAR_NAME = apache_apisix
 
 APISIX_DASHBOARD_VERSION ?= 2.7
