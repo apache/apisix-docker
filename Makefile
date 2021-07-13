@@ -17,7 +17,7 @@
 default: help
 
 APISIX_VERSION ?= 2.7
-IMAGE_NAME = yiyiyimu/apisix
+IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
 APISIX_DASHBOARD_VERSION ?= 2.7
@@ -45,7 +45,7 @@ push-on-centos:
 	docker build -t $(IMAGE_NAME):latest -f ./centos/Dockerfile .
 	docker push $(IMAGE_NAME):latest
 
-### push-multiarch-on-alpine:       Push apache/apisix:xx-alpine image
+### push-on-alpine:       Push apache/apisix:xx-alpine image
 push-multiarch-on-alpine:
 	docker buildx build --push \
 		-t $(IMAGE_NAME):$(APISIX_VERSION)-alpine \
@@ -74,16 +74,11 @@ save-alpine-tar:
 build-dashboard:
 	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
 
-### push-multiarch-dashboard:     Push apache/dashboard:tag image
-push-multiarch-dashboard:
-	docker buildx build --push \
-		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
-		--platform linux/amd64,linux/arm64 \
-		-f ./dashboard/Dockerfile .
-	docker buildx build --push \
-		-t $(APISIX_DASHBOARD_IMAGE_NAME):latest \
-		--platform linux/amd64,linux/arm64 \
-		-f ./dashboard/Dockerfile .
+### push-dashboard:     Push apache/dashboard:tag image
+push-dashboard:
+	docker push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
+	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):latest -f ./dashboard/Dockerfile .
+	docker push $(APISIX_DASHBOARD_IMAGE_NAME):latest
 
 ### save-dashboard-tar:      tar apache/apisix-dashboard:tag image
 save-dashboard-tar:
