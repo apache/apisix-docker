@@ -38,7 +38,7 @@ build-on-alpine:
 build-on-alpine-local:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
 
-### push-on-centos:       Push apache/apisix:xx-centos image
+### push-multiarch-on-centos:       Push apache/apisix:xx-centos image
 push-multiarch-on-centos:
 	docker buildx build --push \
 		-t $(IMAGE_NAME):$(APISIX_VERSION)-centos \
@@ -49,7 +49,7 @@ push-multiarch-on-centos:
 		--platform linux/amd64,linux/arm64 \
 		-f ./centos/Dockerfile .
 
-### push-on-alpine:       Push apache/apisix:xx-alpine image
+### push-multiarch-on-alpine:       Push apache/apisix:xx-alpine image
 push-multiarch-on-alpine:
 	docker buildx build --push \
 		-t $(IMAGE_NAME):$(APISIX_VERSION)-alpine \
@@ -78,11 +78,16 @@ save-alpine-tar:
 build-dashboard:
 	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
 
-### push-dashboard:     Push apache/dashboard:tag image
-push-dashboard:
-	docker push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
-	docker build -t $(APISIX_DASHBOARD_IMAGE_NAME):latest -f ./dashboard/Dockerfile .
-	docker push $(APISIX_DASHBOARD_IMAGE_NAME):latest
+### push-multiarch-dashboard:     Push apache/dashboard:tag image
+push-multiarch-dashboard:
+	docker buildx build --push \
+		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
+		--platform linux/amd64,linux/arm64 \
+		-f ./dashboard/Dockerfile .
+	docker buildx build --push \
+		-t $(APISIX_DASHBOARD_IMAGE_NAME):latest \
+		--platform linux/amd64,linux/arm64 \
+		-f ./dashboard/Dockerfile .
 
 ### save-dashboard-tar:      tar apache/apisix-dashboard:tag image
 save-dashboard-tar:
