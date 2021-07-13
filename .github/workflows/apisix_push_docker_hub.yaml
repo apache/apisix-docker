@@ -3,11 +3,6 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - alpine
-          - centos
 
     steps:
       - name: Check out the repo
@@ -24,4 +19,6 @@ jobs:
 
       - name: Push apisix image to Docker Hub
         run:
-          make push-multiarch-on-${{ matrix.platform }}
+          make push-multiarch-on-alpine
+          make build-on-centos
+          make push-on-centos

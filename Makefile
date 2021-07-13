@@ -38,16 +38,12 @@ build-on-alpine:
 build-on-alpine-local:
 	docker build -t $(IMAGE_NAME):$(APISIX_VERSION)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
 
-### push-multiarch-on-centos:       Push apache/apisix:xx-centos image
-push-multiarch-on-centos:
-	docker buildx build --push \
-		-t $(IMAGE_NAME):$(APISIX_VERSION)-centos \
-		--platform linux/amd64,linux/arm64 \
-		-f ./centos/Dockerfile .
-	docker buildx build --push \
-		-t $(IMAGE_NAME):latest \
-		--platform linux/amd64,linux/arm64 \
-		-f ./centos/Dockerfile .
+### push-on-centos:       Push apache/apisix:xx-centos image
+# centos not support multiarch since it reply on x86 rpm package
+push-on-centos:
+	docker push $(IMAGE_NAME):$(APISIX_VERSION)-centos
+	docker build -t $(IMAGE_NAME):latest -f ./centos/Dockerfile .
+	docker push $(IMAGE_NAME):latest
 
 ### push-multiarch-on-alpine:       Push apache/apisix:xx-alpine image
 push-multiarch-on-alpine:

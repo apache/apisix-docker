@@ -1,7 +1,5 @@
 name: Push apisix dashboard to Docker image
-on:
-  push:
-    branches: ['release/dashboard**']
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
