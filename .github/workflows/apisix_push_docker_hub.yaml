@@ -1,5 +1,7 @@
 name: Push apisix to Docker image
-on: [pull_request]
+on:
+  push:
+    branches: ['release/apisix-**']
 jobs:
   build:
     runs-on: ubuntu-latest
