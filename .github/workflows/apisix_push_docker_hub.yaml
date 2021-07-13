@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Login
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username=${{ secrets.DOCKERHUB_USER }} --password-stdin
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1

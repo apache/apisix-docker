@@ -11,9 +11,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Login
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username=${{ secrets.DOCKER_USERNAME }} --password-stdin
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username=${{ secrets.DOCKERHUB_USER }} --password-stdin
 
       - name: Push apisix dashboard image to Docker Hub
-        run:
+        run: |
           make build-on-dashboard
           make push-on-dashboard
