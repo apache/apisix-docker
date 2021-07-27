@@ -5,11 +5,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - alpine
-          - centos
 
     steps:
       - name: Check out the repo
@@ -18,7 +13,14 @@ jobs:
       - name: Login
         run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username=${{ secrets.DOCKERHUB_USER }} --password-stdin
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Push apisix image to Docker Hub
         run: |
-          make build-on-${{ matrix.platform }}
-          make push-on-${{ matrix.platform }}
+          make push-multiarch-on-alpine
+          make build-on-centos
+          make push-on-centos
