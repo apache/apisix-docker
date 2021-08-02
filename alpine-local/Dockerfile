@@ -14,6 +14,8 @@ RUN set -x \
     pkgconfig \
     cmake \
     git \
+    pcre \
+    pcre-dev \
     && cd apisix \
     && make deps \
     && cp -v bin/apisix /usr/bin/ \
