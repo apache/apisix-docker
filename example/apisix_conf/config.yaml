@@ -19,3 +19,9 @@ etcd:
     - "http://etcd:2379"     # multiple etcd address
   prefix: "/apisix"               # apisix configurations prefix
   timeout: 30                     # 30 seconds
+
+plugin_attr:
+  prometheus:
+    export_addr:
+      ip: "0.0.0.0"
+      port: 9091

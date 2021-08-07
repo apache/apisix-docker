@@ -12,7 +12,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:2.6-alpine
+    image: apache/apisix:2.7-alpine
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
@@ -22,6 +22,7 @@ services:
     ##network_mode: host
     ports:
       - "9080:9080/tcp"
+      - "9091:9091/tcp"
       - "9443:9443/tcp"
     networks:
       apisix:
