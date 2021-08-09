@@ -66,6 +66,7 @@ docker run --name test-api-gateway \
  -v `pwd`/example/apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml \
  -v `pwd`/example/apisix_log:/usr/local/apisix/logs  \
  -p 9080:9080 \
+ -p 9091:9091  \
  -p 9443:9443 \
  --network apisix \
  --ip 172.18.5.11 \

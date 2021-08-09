@@ -15,6 +15,7 @@ services:
       - etcd
     ports:
       - "9080:9080/tcp"
+      - "9091:9091/tcp"
       - "9443:9443/tcp"
     networks:
       apisix:
