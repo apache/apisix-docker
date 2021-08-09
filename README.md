@@ -81,3 +81,13 @@ Tips: If there is a port conflict, please modify the host port through `docker r
 ```shell
 $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 19080:9080 -p 19091:9091 -p 12379:2379 -p 19000:9000 -d apache/apisix-dashboard:whole
 ```
+
+**Note**: Apache APISIX expose prometheus metrics port on 9091, and you need to expose it to `0.0.0.0` instead of the default `127.0.0.1` to make it accessible outside docker. You could achieve it with adding the following to your `config.yaml`.
+
+```shell
+plugin_attr:
+  prometheus:
+    export_addr:
+      ip: "0.0.0.0"
+      port: 9091
+```
