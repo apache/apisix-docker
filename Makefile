@@ -20,7 +20,7 @@ APISIX_VERSION ?= 2.8
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
-APISIX_DASHBOARD_VERSION ?= 2.7
+APISIX_DASHBOARD_VERSION ?= 2.7.1
 APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
 APISIX_DASHBOARD_IMAGE_TAR_NAME = apache_apisix_dashboard
 
