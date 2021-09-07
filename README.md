@@ -69,7 +69,7 @@ $ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/confi
 
 * All in one Docker container for Apache apisix-dashboard
 
-**The latest version of `apisix-dashboard` is 2.7 and should be used with APISIX 2.6.**
+**The latest version of `apisix-dashboard` is 2.8 and can be used with APISIX 2.9.**
 
 ```shell
 $ make build-dashboard
