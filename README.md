@@ -45,7 +45,7 @@ $ make build-on-alpine-cn
 
 ### Manual deploy apisix via docker
 
-[Manual deploy](docs/en/latest/manual.md)
+[Manual deploy](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md)
 
 ### QuickStart via docker-compose
 
@@ -56,7 +56,7 @@ $ cd example
 $ docker-compose -p docker-apisix up -d
 ```
 
-You can refer to [the docker-compose example](docs/en/latest/example.md) for more try.
+You can refer to [the docker-compose example](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/example.md) for more try.
 
 ### Quick test with all dependencies in one Docker container
 
