@@ -44,11 +44,6 @@ _color_blue   =\E[1;34m
 _color_wipe   =\E[0m
 
 
-define func_echo_nginx_init_status
-	printf "[$(_color_blue) info $(_color_wipe)] \`$(CURDIR)\`'s nginx server %s\n" $(1)
-endef
-
-
 define func_echo_status
 	printf "[$(_color_blue) info $(_color_wipe)] %s\n" $(1)
 endef
