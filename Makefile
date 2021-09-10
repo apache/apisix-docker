@@ -17,8 +17,6 @@
 
 # Makefile basic env setting
 .DEFAULT_GOAL := help
-## add pipefail support for default shell
-SHELL := $(SHELL) -o pipefail
 
 
 # APISIX ARGS
