@@ -14,6 +14,7 @@ RUN set -x \
     git \
     pcre \
     pcre-dev \
+    openldap-dev \
     && mkdir ~/.luarocks \
     && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
     && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
@@ -28,7 +29,7 @@ ARG ENABLE_PROXY
 # add runtime for Apache APISIX
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache bash libstdc++ curl tzdata
+    && apk add --no-cache bash libstdc++ curl tzdata openldap-dev
 
 WORKDIR /usr/local/apisix
 
