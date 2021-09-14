@@ -1,5 +1,4 @@
-**Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
-
+chmod 777 ./etcd_data 
 ## How To Build Image
 
 **The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.**
