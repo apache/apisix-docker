@@ -29,10 +29,9 @@ services:
 
   etcd:
     image: bitnami/etcd:3.4.15
-    user: root
     restart: always
     volumes:
-      - ./etcd_data:/bitnami/etcd
+      - etcd_data:/bitnami/etcd
     environment:
       ETCD_ENABLE_V2: "true"
       ALLOW_NONE_AUTHENTICATION: "yes"
@@ -70,3 +69,8 @@ services:
 networks:
   apisix:
     driver: bridge
+
+volumes:
+  etcd_data:
+    driver: local
+
