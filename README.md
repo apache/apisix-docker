@@ -8,33 +8,38 @@
 
 1. Build from release version:
 ```sh
-# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.6. The latest version can be find at `https://github.com/apache/apisix/releases`
+# Assign Apache release version to variable `APISIX_VERSION`, for example: 2.9.
+# The latest release version can be find at `https://github.com/apache/apisix/releases`
 
-export APISIX_VERSION=2.6
-# alpine
-$ make build-on-alpine
+export APISIX_VERSION=2.9
 
-# centos
-$ make build-on-centos
+# build alpine based image
+make build-on-alpine
+
+# build centos based image
+make build-on-centos
 ```
 
 2. Build from master branch version, which has latest code(ONLY for the developer's convenience):
 ```sh
 export APISIX_VERSION=master
-# alpine
-$ make build-on-alpine
 
-# centos
-$ make build-on-centos
+# build alpine based image
+make build-on-alpine
+
+# build centos based image
+make build-on-centos
 ```
 
 3. Build from local code:
 ```sh
 # To copy apisix into image, we need to include it in build context
-$ cp -r <APISIX-PATH> ./apisix
-$ APISIX_PATH=./apisix make build-on-alpine-local
+cp -r <APISIX-PATH> ./apisix
 
-# Might need root privilege if encounter "error checking context: 'can't stat'"
+export APISIX_PATH=./apisix
+make build-on-alpine-local
+
+# Might need root privilege if encounter "error checking context: 'can't start'"
 ```
 
 **Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
@@ -52,8 +57,8 @@ $ make build-on-alpine-cn
 **start all modules with docker-compose**
 
 ```sh
-$ cd example
-$ docker-compose -p docker-apisix up -d
+cd example
+docker-compose -p docker-apisix up -d
 ```
 
 You can refer to [the docker-compose example](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/example.md) for more try.
@@ -62,24 +67,40 @@ You can refer to [the docker-compose example](https://github.com/apache/apisix-d
 
 * All in one Docker container for Apache APISIX
 
-```shell
-$ make build-all-in-one
-$ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -p 9080:9080 -p 9091:9091 -p 2379:2379 -d apache/apisix:whole
+```sh
+make build-all-in-one
+
+# launch APISIX container
+docker run -d \
+-p 9080:9080 -p 9091:9091 -p 2379:2379 \
+-v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml \
+apache/apisix:whole
 ```
 
 * All in one Docker container for Apache apisix-dashboard
 
 **The latest version of `apisix-dashboard` is 2.8 and can be used with APISIX 2.9.**
 
-```shell
-$ make build-dashboard
-$ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 9080:9080 -p 9091:9091 -p 2379:2379 -p 9000:9000 -d apache/apisix-dashboard:whole
+```sh
+make build-dashboard
+
+# launch APISIX-dashboard container
+docker run -d \
+-p 9080:9080 -p 9091:9091 -p 2379:2379 -p 9000:9000 \
+-v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml \
+-v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml \
+apache/apisix-dashboard:whole
 ```
 
 Tips: If there is a port conflict, please modify the host port through `docker run -p`, e.g.
 
-```shell
-$ docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml -p 19080:9080 -p 19091:9091 -p 12379:2379 -p 19000:9000 -d apache/apisix-dashboard:whole
+```sh
+# launch APISIX-AIO container
+docker run -d \
+-p 19080:9080 -p 19091:9091 -p 12379:2379 -p 19000:9000 \
+-v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml \
+-v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml \
+apache/apisix-dashboard:whole
 ```
 
 ### Note
