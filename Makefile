@@ -65,7 +65,7 @@ endef
 build-on-centos:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos -f ./centos/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### build-on-alpine : Build apache/apisix:xx-alpine image
@@ -73,7 +73,7 @@ build-on-centos:
 build-on-alpine:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine -f ./alpine/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### build-on-alpine-local : Build apache/apisix:xx-alpine-local image
@@ -83,7 +83,7 @@ build-on-alpine:
 build-on-alpine-local:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### push-on-centos : Push apache/apisix:xx-centos image
@@ -94,7 +94,7 @@ push-on-centos:
 	$(ENV_DOCKER) push $(ENV_APISIX_IMAGE_TAG_NAME)-centos
 	$(ENV_DOCKER) build -t $(IMAGE_NAME):latest -f ./centos/Dockerfile .
 	$(ENV_DOCKER) push $(IMAGE_NAME):latest
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### push-on-alpine : Push apache/apisix:xx-alpine image
@@ -105,7 +105,7 @@ push-multiarch-on-alpine:
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine \
 		--platform linux/amd64,linux/arm64 \
 		-f ./alpine/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### build-on-alpine-cn : Build apache/apisix:xx-alpine image (for chinese)
@@ -113,7 +113,7 @@ push-multiarch-on-alpine:
 build-on-alpine-cn:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine --build-arg APISIX_VERSION=$(APISIX_VERSION) --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### build-all-in-one : Build All in one Docker container for Apache APISIX
@@ -121,7 +121,7 @@ build-on-alpine-cn:
 build-all-in-one:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) build -t $(IMAGE_NAME):whole -f ./all-in-one/apisix/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### save-centos-tar : tar apache/apisix:xx-centos image
@@ -130,7 +130,7 @@ save-centos-tar:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	mkdir -p package
 	$(ENV_DOCKER) save -o ./package/$(ENV_APISIX_TAR_NAME)-centos.tar $(ENV_APISIX_IMAGE_TAG_NAME)-centos
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### save-alpine-tar : tar apache/apisix:xx-alpine image
@@ -139,7 +139,7 @@ save-alpine-tar:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	mkdir -p package
 	$(ENV_DOCKER) save -o ./package/$(ENV_APISIX_TAR_NAME)-alpine.tar $(ENV_APISIX_IMAGE_TAG_NAME)-alpine
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### build-dashboard : Build apache/dashboard:tag image
@@ -147,7 +147,7 @@ save-alpine-tar:
 build-dashboard:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### push-dashboard : Push apache/dashboard:tag image
@@ -157,7 +157,7 @@ push-dashboard:
 	$(ENV_DOCKER) push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):latest -f ./dashboard/Dockerfile .
 	$(ENV_DOCKER) push $(APISIX_DASHBOARD_IMAGE_NAME):latest
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### save-dashboard-tar : tar apache/apisix-dashboard:tag image
@@ -166,7 +166,7 @@ save-dashboard-tar:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	mkdir -p package
 	$(ENV_DOCKER) save -o ./package/$(APISIX_DASHBOARD_IMAGE_TAR_NAME)_$(APISIX_DASHBOARD_VERSION).tar $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
-	@$(call func_echo_success_status, "$@ -> [ Done  ]")
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
 ### help : Show Makefile rules
