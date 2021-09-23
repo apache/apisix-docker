@@ -29,11 +29,12 @@ title: Build an image from the source codes
 ```
 # Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2. The latest version can be find at `https://github.com/apache/apisix/releases`
 
-APISIX_VERSION=2.2
-docker build -t apisix:${APISIX_VERSION}-alpine --build-arg APISIX_VERSION=${APISIX_VERSION} -f alpine/Dockerfile alpine
+export APISIX_VERSION=2.9
+make build-on-alpine
 ```
 
 2. install master branch version, which has latest code(ONLY for the developer's convenience):
 ```
-docker build -t apisix:master-alpine -f alpine/Dockerfile alpine
+export APISIX_VERSION=master
+make build-on-alpine
 ```
