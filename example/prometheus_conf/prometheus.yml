@@ -4,7 +4,7 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-    monitor: "codelab-monitor"
+    stack: "apisix"
 
 
 # A scrape configuration containing exactly one endpoint to scrape:
