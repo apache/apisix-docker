@@ -76,6 +76,12 @@ RUN cd /tmp \
     && make -j${RESTY_J} install
 
 RUN cd /tmp \
+    && export openssl_prefix=/usr/local/openresty/openssl111 \
+    && export zlib_prefix=/usr/local/openresty/zlib \
+    && export pcre_prefix=/usr/local/openresty/pcre \
+    && export OR_PREFIX=/usr/local/openresty \
+    && export cc_opt="-DNGX_LUA_ABORT_AT_PANIC -I${zlib_prefix}/include -I${pcre_prefix}/include -I${openssl_prefix}/include" \
+    && export ld_opt="-L${zlib_prefix}/lib -L${pcre_prefix}/lib -L${openssl_prefix}/lib -Wl,-rpath,${zlib_prefix}/lib:${pcre_prefix}/lib:${openssl_prefix}/lib" \
     && ./build-apisix-base.sh
 
 CMD /bin/sh
