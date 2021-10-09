@@ -13,7 +13,7 @@ jobs:
     name: build dashboard & test
     runs-on: ubuntu-latest
     env:
-      APISIX_DASHBOARD_TAG: 2.8
+      APISIX_DASHBOARD_TAG: 2.9.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
