@@ -2,7 +2,7 @@ version: "3"
 
 services:
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.7
+    image: apache/apisix-dashboard:2.9.0
     restart: always
     volumes:
     - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
@@ -12,7 +12,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:2.6-alpine
+    image: apache/apisix:2.10.0-alpine
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
@@ -24,6 +24,7 @@ services:
       - "9080:9080/tcp"
       - "9091:9091/tcp"
       - "9443:9443/tcp"
+      - "9092:9092/tcp"
     networks:
       apisix:
 
@@ -63,6 +64,28 @@ services:
       - "9082:80/tcp"
     environment:
       - NGINX_PORT=80
+    networks:
+      apisix:
+
+  prometheus:
+    image: prom/prometheus:v2.25.0
+    restart: always
+    volumes:
+      - ./prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      apisix:
+
+  grafana:
+    image: grafana/grafana:7.3.7
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./grafana_conf/provisioning:/etc/grafana/provisioning"
+      - "./grafana_conf/dashboards:/var/lib/grafana/dashboards"
+      - "./grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini"
     networks:
       apisix:
 

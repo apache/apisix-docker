@@ -16,6 +16,7 @@ RUN set -x \
     git \
     pcre \
     pcre-dev \
+    openldap-dev \
     && cd apisix \
     && make deps \
     && cp -v bin/apisix /usr/bin/ \
@@ -28,7 +29,7 @@ ARG ENABLE_PROXY
 # add runtime for Apache APISIX
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache bash libstdc++ curl tzdata
+    && apk add --no-cache bash libstdc++ curl tzdata openldap-dev
 
 WORKDIR /usr/local/apisix
 
