@@ -3,7 +3,7 @@ ARG APISIX_VERSION=master
 ARG ETCD_VERSION=v3.4.14
 
 # Build Apache APISIX
-FROM openresty/openresty:1.19.3.1-alpine-fat AS production-stage
+FROM api7/apisix-base:1.19.3.2.1 AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"
@@ -22,9 +22,6 @@ RUN set -x \
     pcre \
     pcre-dev \
     openldap-dev \
-    && mkdir ~/.luarocks \
-    && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
-    && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
     && (if [ "$APISIX_VERSION" = "master" ] || [ "$APISIX_VERSION" \> "2.2" ]; then echo 'use shell ';else bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path'; sed -i "1s@.*@$bin@" /usr/bin/apisix ; fi;) \

@@ -1,6 +1,6 @@
 ARG ENABLE_PROXY=false
 
-FROM openresty/openresty:1.19.3.1-alpine-fat AS production-stage
+FROM api7/apisix-base:1.19.3.2.1 AS production-stage
 
 ARG ENABLE_PROXY
 RUN set -x \
@@ -15,9 +15,6 @@ RUN set -x \
     pcre \
     pcre-dev \
     openldap-dev \
-    && mkdir ~/.luarocks \
-    && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
-    && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
