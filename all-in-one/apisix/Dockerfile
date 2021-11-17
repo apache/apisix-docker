@@ -3,7 +3,7 @@ ARG APISIX_VERSION=master
 ARG ETCD_VERSION=v3.4.14
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.19.3.2.1 AS production-stage
+FROM api7/apisix-base:1.19.3.2.2 AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"
