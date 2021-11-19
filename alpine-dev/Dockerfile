@@ -1,6 +1,6 @@
 ARG ENABLE_PROXY=false
 
-FROM api7/apisix-base:1.19.3.2.1 AS production-stage
+FROM api7/apisix-base:1.19.3.2.2 AS production-stage
 
 ARG ENABLE_PROXY
 RUN set -x \
