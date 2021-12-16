@@ -21,5 +21,4 @@ jobs:
 
       - name: Push apisix dashboard image to Docker Hub
         run: |
-          make build-dashboard
-          make push-dashboard
+          make push-multiarch-dashbaord
