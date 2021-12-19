@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+ARG BUILDPLATFORM=amd64
+
 FROM --platform=$BUILDPLATFORM alpine:latest as pre-build
 
 ARG APISIX_DASHBOARD_VERSION=release/2.10
@@ -69,4 +71,4 @@ RUN mkdir logs
 
 EXPOSE 9000
 
-CMD [ "/usr/local/apisix-dashboard/manager-api" ]
+ENTRYPOINT [ "/usr/local/apisix-dashboard/manager-api" ]
