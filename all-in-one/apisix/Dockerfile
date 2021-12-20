@@ -57,11 +57,12 @@ COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
 
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
+RUN chown -R 1001:1001 /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 EXPOSE 9080 9443 2379 2380
-
+USER 1001
 CMD ["sh", "-c", "(nohup etcd >/tmp/etcd.log 2>&1 &) && sleep 10 && /usr/bin/apisix init && /usr/bin/apisix init_etcd && /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'"]
 
 STOPSIGNAL SIGQUIT
