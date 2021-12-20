@@ -26,6 +26,7 @@ RUN set -x \
     && apk del .builddeps build-base make unzip
 
 FROM alpine:3.13 AS last-stage
+
 ARG ENABLE_PROXY
 # add runtime for Apache APISIX
 RUN set -x \
@@ -33,6 +34,7 @@ RUN set -x \
     && apk add --no-cache bash libstdc++ curl tzdata openldap-dev
 
 WORKDIR /usr/local/apisix
+
 COPY --from=production-stage /usr/local/openresty/ /usr/local/openresty/
 COPY --from=production-stage /usr/local/apisix/ /usr/local/apisix/
 COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
@@ -43,9 +45,10 @@ RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
 
 RUN chown -R 1001:1001 /usr/local/apisix
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
-USER 1001
+
 EXPOSE 9080 9443
 
+USER 1001
 CMD ["sh", "-c", "/usr/bin/apisix init && /usr/bin/apisix init_etcd && /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'"]
 
 STOPSIGNAL SIGQUIT
