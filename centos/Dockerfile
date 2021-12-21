@@ -9,7 +9,9 @@ RUN yum install -y https://repos.apiseven.com/packages/centos/apache-apisix-repo
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
 
 WORKDIR /usr/local/apisix
+RUN useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix
 
+USER apisix
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
