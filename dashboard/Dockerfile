@@ -14,9 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-FROM alpine:latest as pre-build
+ARG BUILDPLATFORM=amd64
 
-ARG APISIX_DASHBOARD_VERSION=release/2.9.0
+FROM --platform=$BUILDPLATFORM alpine:latest as pre-build
+
+ARG APISIX_DASHBOARD_VERSION=release/2.10
 
 RUN set -x \
     && apk add --no-cache --virtual .builddeps git \
@@ -24,7 +26,7 @@ RUN set -x \
     && cd /usr/local/apisix-dashboard && git clean -Xdf \
     && rm -f ./.githash && git log --pretty=format:"%h" -1 > ./.githash
 
-FROM golang:1.14 as api-builder
+FROM --platform=$BUILDPLATFORM golang:1.14 as api-builder
 
 ARG ENABLE_PROXY=false
 
@@ -32,11 +34,14 @@ WORKDIR /usr/local/apisix-dashboard
 
 COPY --from=pre-build /usr/local/apisix-dashboard .
 
+ARG TARGETOS
+ARG TARGETARCH
+
 RUN if [ "$ENABLE_PROXY" = "true" ] ; then go env -w GOPROXY=https://goproxy.io,direct ; fi \
     && go env -w GO111MODULE=on \
-    && CGO_ENABLED=0 ./api/build.sh
+    && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} ./api/build.sh
 
-FROM node:14-alpine as fe-builder
+FROM --platform=$BUILDPLATFORM node:14-alpine as fe-builder
 
 ARG ENABLE_PROXY=false
 
@@ -66,4 +71,4 @@ RUN mkdir logs
 
 EXPOSE 9000
 
-CMD [ "/usr/local/apisix-dashboard/manager-api" ]
+ENTRYPOINT [ "/usr/local/apisix-dashboard/manager-api" ]

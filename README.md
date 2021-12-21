@@ -79,7 +79,7 @@ apache/apisix:whole
 
 * All in one Docker container for Apache apisix-dashboard
 
-**The latest version of `apisix-dashboard` is 2.9 and can be used with APISIX 2.10.**
+**The latest version of `apisix-dashboard` is 2.10 and can be used with APISIX 2.11.**
 
 ```sh
 make build-dashboard

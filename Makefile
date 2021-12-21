@@ -24,7 +24,7 @@ APISIX_VERSION ?= 2.11.0
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
-APISIX_DASHBOARD_VERSION ?= 2.9.0
+APISIX_DASHBOARD_VERSION ?= 2.10
 APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
 APISIX_DASHBOARD_IMAGE_TAR_NAME = apache_apisix_dashboard
 
@@ -157,6 +157,21 @@ push-dashboard:
 	$(ENV_DOCKER) push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):latest -f ./dashboard/Dockerfile .
 	$(ENV_DOCKER) push $(APISIX_DASHBOARD_IMAGE_NAME):latest
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
+### push-multiarch-dashbaord : Build and push multiarch apache/dashboard:tag image
+.PHONY: push-multiarch-dashbaord
+push-multiarch-dashbaord:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) buildx build --push \
+		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
+		--platform linux/amd64,linux/arm64 \
+		-f ./dashboard/Dockerfile .
+	$(ENV_DOCKER) buildx build --push \
+		-t $(APISIX_DASHBOARD_IMAGE_NAME):latest \
+		--platform linux/amd64,linux/arm64 \
+		-f ./dashboard/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
