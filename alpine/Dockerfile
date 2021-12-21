@@ -28,10 +28,11 @@ RUN set -x \
 FROM alpine:3.13 AS last-stage
 
 ARG ENABLE_PROXY
-# add runtime for Apache APISIX
+# add runtime for Apache APISIX and APISIX user
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache bash libstdc++ curl tzdata openldap-dev
+    && apk add --no-cache bash libstdc++ curl tzdata openldap-dev \
+    && addgroup -S apisix -g 1001 && adduser -S apisix -G apisix -u 1001
 
 WORKDIR /usr/local/apisix
 
@@ -44,6 +45,9 @@ RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
+RUN chown -R apisix:apisix /usr/local/apisix
+
+USER apisix
 
 EXPOSE 9080 9443
 
