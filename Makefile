@@ -146,17 +146,7 @@ save-alpine-tar:
 .PHONY: build-dashboard
 build-dashboard:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
-### push-dashboard : Push apache/dashboard:tag image
-.PHONY: push-dashboard
-push-dashboard:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) push $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
-	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):latest -f ./dashboard/Dockerfile .
-	$(ENV_DOCKER) push $(APISIX_DASHBOARD_IMAGE_NAME):latest
+	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile.alpine .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
