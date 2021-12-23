@@ -165,13 +165,20 @@ push-dashboard:
 push-multiarch-dashbaord:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --push \
-		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
+		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)-alpine \
+		--build-arg APISIX_DASHBOARD_VERSION=release/$(APISIX_DASHBOARD_VERSION) \
 		--platform linux/amd64,linux/arm64 \
-		-f ./dashboard/Dockerfile .
+		-f ./dashboard/Dockerfile.alpine .
+	$(ENV_DOCKER) buildx build --push \
+		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)-centos \
+		--build-arg APISIX_DASHBOARD_VERSION=release/$(APISIX_DASHBOARD_VERSION) \
+		--platform linux/amd64,linux/arm64 \
+		-f ./dashboard/Dockerfile.centos .
 	$(ENV_DOCKER) buildx build --push \
 		-t $(APISIX_DASHBOARD_IMAGE_NAME):latest \
+		--build-arg APISIX_DASHBOARD_VERSION=release/$(APISIX_DASHBOARD_VERSION) \
 		--platform linux/amd64,linux/arm64 \
-		-f ./dashboard/Dockerfile .
+		-f ./dashboard/Dockerfile.centos .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
