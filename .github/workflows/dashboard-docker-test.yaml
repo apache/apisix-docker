@@ -10,17 +10,23 @@ on:
 
 jobs:
   dashboard-docker-test:
-    name: build dashboard & test
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - centos
+          - alpine
+    name: build dashboard & test on ${{ matrix.os }}
     runs-on: ubuntu-latest
     env:
-      APISIX_DASHBOARD_TAG: "2.10"
+      APISIX_DASHBOARD_TAG: "2.10.1"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Build and run
         run: |
-          make build-dashboard
+          make build-dashboard-${{ matrix.os }}
           docker-compose -f ./compose/dashboard-compose.yaml up -d
           sleep 30
           docker logs compose_dashboard_1
@@ -33,7 +39,7 @@ jobs:
 
       - name: Tar Image
         run: |
-          make save-dashboard-tar
+          make save-dashboard-${{ matrix.os }}-tar
 
       - name: Upload Image
         uses: actions/upload-artifact@v2
