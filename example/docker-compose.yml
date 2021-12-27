@@ -2,7 +2,7 @@ version: "3"
 
 services:
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.9.0
+    image: apache/apisix-dashboard:2.10.1-alpine
     restart: always
     volumes:
     - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
@@ -12,7 +12,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:2.10.0-alpine
+    image: apache/apisix:2.11.0-alpine
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
