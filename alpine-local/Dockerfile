@@ -1,6 +1,6 @@
 ARG ENABLE_PROXY=false
 
-FROM api7/apisix-base:1.19.3.2.2 AS production-stage
+FROM openresty/openresty:1.19.3.2-alpine-fat AS production-stage
 
 ARG ENABLE_PROXY
 ARG APISIX_PATH
