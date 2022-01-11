@@ -32,6 +32,7 @@ RUN set -x \
     pcre \
     pcre-dev \
     openldap-dev \
+    && git config --global url.https://github.com/.insteadOf git://github.com/ \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \

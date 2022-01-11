@@ -35,6 +35,7 @@ RUN set -x \
     pcre-dev \
     openldap-dev \
     && cd apisix \
+    && git config --global url.https://github.com/.insteadOf git://github.com/ \
     && make deps \
     && cp -v bin/apisix /usr/bin/ \
     && mv ../apisix /usr/local/apisix \
