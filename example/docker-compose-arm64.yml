@@ -18,8 +18,18 @@
 version: "3"
 
 services:
+  apisix-dashboard:
+    image: apache/apisix-dashboard:2.10.1-alpine
+    restart: always
+    volumes:
+      - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    ports:
+      - "9000:9000"
+    networks:
+      apisix:
+
   apisix:
-    image: apache/apisix:2.9-alpine
+    image: apache/apisix:2.11.0-alpine
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
@@ -35,7 +45,7 @@ services:
       apisix:
 
   etcd:
-    image: rancher/coreos-etcd:v3.4.13-arm64
+    image: rancher/coreos-etcd:v3.4.15-arm64
     user: root
     restart: always
     volumes:
