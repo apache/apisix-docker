@@ -20,7 +20,7 @@
 
 
 # APISIX ARGS
-APISIX_VERSION ?= 2.11.0
+APISIX_VERSION ?= 2.10.3
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
@@ -64,7 +64,9 @@ endef
 .PHONY: build-on-centos
 build-on-centos:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos -f ./centos/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos \
+		--build-arg APISIX_VERSION=$(APISIX_VERSION) \
+		-f ./centos/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -72,7 +74,9 @@ build-on-centos:
 .PHONY: build-on-alpine
 build-on-alpine:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine -f ./alpine/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine \
+		--build-arg APISIX_VERSION=$(APISIX_VERSION) \
+		-f ./alpine/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -82,7 +86,9 @@ build-on-alpine:
 .PHONY: build-on-alpine-local
 build-on-alpine-local:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine-local \
+		--build-arg APISIX_PATH=${APISIX_PATH} \
+		-f ./alpine-local/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -92,7 +98,9 @@ build-on-alpine-local:
 push-on-centos:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) push $(ENV_APISIX_IMAGE_TAG_NAME)-centos
-	$(ENV_DOCKER) build -t $(IMAGE_NAME):latest -f ./centos/Dockerfile .
+	$(ENV_DOCKER) build -t $(IMAGE_NAME):latest \
+		--build-arg APISIX_VERSION=$(APISIX_VERSION) \
+		-f ./centos/Dockerfile .
 	$(ENV_DOCKER) push $(IMAGE_NAME):latest
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
@@ -103,6 +111,7 @@ push-multiarch-on-alpine:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine \
+		--build-arg APISIX_VERSION=$(APISIX_VERSION) \
 		--platform linux/amd64,linux/arm64 \
 		-f ./alpine/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
@@ -112,7 +121,10 @@ push-multiarch-on-alpine:
 .PHONY: build-on-alpine-cn
 build-on-alpine-cn:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine --build-arg APISIX_VERSION=$(APISIX_VERSION) --build-arg ENABLE_PROXY=true -f alpine/Dockerfile alpine
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine \
+		--build-arg APISIX_VERSION=$(APISIX_VERSION) \
+		--build-arg ENABLE_PROXY=true \
+		-f alpine/Dockerfile alpine
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -120,7 +132,9 @@ build-on-alpine-cn:
 .PHONY: build-all-in-one
 build-all-in-one:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(IMAGE_NAME):whole -f ./all-in-one/apisix/Dockerfile .
+	$(ENV_DOCKER) build -t $(IMAGE_NAME):whole \
+		--build-arg APISIX_VERSION=$(APISIX_VERSION) \
+		-f ./all-in-one/apisix/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
