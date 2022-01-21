@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APISIX_PATH: "./apisix-local"
-      APISIX_DOCKER_TAG: 2.11.0-${{ matrix.platform }}
+      APISIX_DOCKER_TAG: 2.10.3-${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
 
