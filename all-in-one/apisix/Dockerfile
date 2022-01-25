@@ -20,7 +20,7 @@ ARG APISIX_VERSION=2.11.0
 ARG ETCD_VERSION=v3.4.14
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.19.3.2.2 AS production-stage
+FROM api7/apisix-base:1.19.9.1.3 AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"
@@ -30,15 +30,19 @@ ARG ENABLE_PROXY
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
     && apk add --no-cache --virtual .builddeps \
-    automake \
-    autoconf \
-    libtool \
-    pkgconfig \
-    cmake \
-    git \
-    pcre \
-    pcre-dev \
-    openldap-dev \
+        build-base \
+        automake \
+        autoconf \
+        libtool \
+        pkgconfig \
+        cmake \
+        unzip \
+        curl \
+        openssl \
+        git \
+        pcre \
+        pcre-dev \
+        openldap-dev \
     && git config --global url.https://github.com/.insteadOf git://github.com/ \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
