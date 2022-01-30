@@ -41,7 +41,12 @@ RUN set -x \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
     && apk del .builddeps \
-    && apk add --no-cache bash libstdc++ curl tzdata \
+    && apk add --no-cache \
+        bash \
+        libstdc++ \
+        curl \
+        openldap \
+        tzdata \
     # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
