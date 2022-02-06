@@ -48,8 +48,8 @@ RUN set -x \
     && apk del .builddeps \
     && apk add --no-cache \
         bash \
-        libstdc++ \
         curl \
+        libstdc++ \
         openldap \
         tzdata \
     # forward request and error logs to docker log collector
