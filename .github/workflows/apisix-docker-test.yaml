@@ -17,6 +17,7 @@ jobs:
           - alpine
           - centos
           - alpine-local
+          - alpine-dev
 
     runs-on: ubuntu-latest
     env:
@@ -28,7 +29,7 @@ jobs:
       - name: Clone apisix for local test
         if: ${{ matrix.platform == 'alpine-local' }}
         run: |
-          git clone http://github.com/apache/apisix apisix-local
+          git clone --depth 1 http://github.com/apache/apisix apisix-local
 
       - name: Build and run
         run: |
@@ -39,6 +40,8 @@ jobs:
 
       - name: Test
         run: |
+          grep -C 3 '\[error\]' example/apisix_log/error.log && exit 1
+
           curl http://127.0.0.1:9080/apisix/admin/routes/1 \
           -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
             {
@@ -58,12 +61,12 @@ jobs:
           fi
 
       - name: Tar Image
-        if: ${{ !endsWith(matrix.platform, 'local') }}
+        if: ${{ !endsWith(matrix.platform, '-local') && !endsWith(matrix.platform, '-dev')  }}
         run: |
           make save-${{ matrix.platform }}-tar
 
       - name: Upload Image
-        if: ${{ !endsWith(matrix.platform, 'local') }}
+        if: ${{ !endsWith(matrix.platform, '-local') && !endsWith(matrix.platform, '-dev')  }}
         uses: actions/upload-artifact@v2
         with:
           path: ./package
