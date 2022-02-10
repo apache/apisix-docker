@@ -73,7 +73,7 @@ RUN set -x \
     && tar -xvf /tmp/apisix-dashboard.tar.gz -C /usr/local/apisix-dashboard --strip 1
 
 # Build APISIX Dashboard - 2. build manager-api from source code
-FROM golang:1.14 as api-builder
+FROM golang:1.17 as api-builder
 
 ARG APISIX_DASHBOARD_VERSION
 ARG ENABLE_PROXY
