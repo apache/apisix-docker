@@ -52,7 +52,7 @@ $ make build-on-alpine-cn
 
 ```sh
 # Assign the release version of Apache APISIX Dashboard to variable `APISIX_DASHBOARD_VERSION`, for example: 2.10.
-# The latest release version can be find at `https://github.com/apache/apisix-dashboard/releases`
+# The latest release version can be found at `https://github.com/apache/apisix-dashboard/releases`
 
 export APISIX_DASHBOARD_VERSION=2.10
 
