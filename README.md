@@ -48,6 +48,21 @@ make build-on-alpine-local
 $ make build-on-alpine-cn
 ```
 
+4. Build apisix-dashboard from release version:
+
+```sh
+# Assign the release version of Apache APISIX Dashboard to variable `APISIX_DASHBOARD_VERSION`, for example: 2.10.
+# The latest release version can be found at `https://github.com/apache/apisix-dashboard/releases`
+
+export APISIX_DASHBOARD_VERSION=2.10
+
+# build alpine based image
+make build-dashboard-alpine
+
+# build centos based image
+make build-dashboard-centos
+```
+
 ### Manual deploy apisix via docker
 
 [Manual deploy](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md)
@@ -82,7 +97,7 @@ apache/apisix:whole
 **The latest version of `apisix-dashboard` is 2.10 and can be used with APISIX 2.11.**
 
 ```sh
-make build-dashboard
+make build-dashboard-all-in-one
 
 # launch APISIX-dashboard container
 docker run -d \

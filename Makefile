@@ -132,6 +132,14 @@ build-all-in-one:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
+### build-dashboard-all-in-one : Build All in one Docker container for Apache APISIX-dashboard
+.PHONY: build-dashboard-all-in-one
+build-dashboard-all-in-one:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):whole -f ./all-in-one/apisix-dashboard/Dockerfile .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
 ### save-centos-tar : tar apache/apisix:xx-centos image
 .PHONY: save-centos-tar
 save-centos-tar:
