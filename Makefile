@@ -116,6 +116,17 @@ push-multiarch-on-alpine:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
+### push-on-alpine : Push apache/apisix:dev image
+.PHONY: push-multiarch-dev-on-alpine
+push-multiarch-dev-on-alpine:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) buildx build --push \
+		-t $(IMAGE_NAME):dev \
+		--platform linux/amd64,linux/arm64 \
+		-f ./alpine-dev/Dockerfile .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
 ### build-on-alpine-cn : Build apache/apisix:xx-alpine image (for chinese)
 .PHONY: build-on-alpine-cn
 build-on-alpine-cn:
