@@ -120,6 +120,8 @@ apache/apisix-dashboard:whole
 
 ### Note
 
+**Prometheus**
+
 Apache APISIX expose prometheus metrics port on 9091, and you need to expose it to `0.0.0.0` instead of the default `127.0.0.1` to make it accessible outside docker. You could achieve it with adding the following to your `config.yaml`.
 
 ```shell
@@ -128,4 +130,12 @@ plugin_attr:
     export_addr:
       ip: "0.0.0.0"
       port: 9091
+```
+
+**APISIX-Dev Image**
+
+At `0:00 UTC` every day, the APISIX `master` code will be automatically built and synchronized to the Docker Hub repository. You can pull the latest master branch image in the following ways.
+
+```bash
+docker pull apache/apisix:dev
 ```

@@ -1,4 +1,4 @@
-name: Build and Push apisix-dev to Docker image
+name: Build and Push apisix-dev to Docker DockerHub
 
 
 on:
