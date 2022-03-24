@@ -19,7 +19,7 @@ jobs:
     name: build dashboard & test on ${{ matrix.os }}
     runs-on: ubuntu-latest
     env:
-      APISIX_DASHBOARD_TAG: "2.10.1"
+      APISIX_DASHBOARD_TAG: "2.11"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
