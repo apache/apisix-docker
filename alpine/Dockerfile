@@ -18,7 +18,7 @@
 ARG ENABLE_PROXY=false
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.19.9.1.3
+FROM api7/apisix-base:1.19.9.1.4
 
 ARG APISIX_VERSION=2.12.1
 LABEL apisix_version="${APISIX_VERSION}"
