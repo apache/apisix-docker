@@ -29,7 +29,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:2.13.0-alpine
+    image: apache/apisix:2.10.5-alpine
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
