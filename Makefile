@@ -185,9 +185,9 @@ build-dashboard-alpine:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### push-multiarch-dashbaord : Build and push multiarch apache/dashboard:tag image
-.PHONY: push-multiarch-dashbaord
-push-multiarch-dashbaord:
+### push-multiarch-dashboard : Build and push multiarch apache/dashboard:tag image
+.PHONY: push-multiarch-dashboard
+push-multiarch-dashboard:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --push \
 		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)-alpine \
