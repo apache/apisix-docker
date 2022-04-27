@@ -139,3 +139,40 @@ At `0:00 UTC` every day, the APISIX `master` code will be automatically built an
 ```bash
 docker pull apache/apisix:dev
 ```
+## All commands
+Commands supported by apisix-docker
+* centos:\
+  ```make build-on-centos``` \
+  Build apache/apisix:xx-centos image. You can use this command to build apisix on centos.\
+  Supported arch: amd64, arm32v6, i386
+  
+  ```make push-on-centos```\
+  Build and push apache/apisix:xx-centos image.\
+  Supported arch: amd64, arm32v6, i386
+  
+  ```make save-centos-tar```\
+  Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . \
+  Supported arch: amd64, arm32v6, i386
+  
+* dev:
+```
+  make build-on-alpine-dev
+```
+* alpine:
+```
+  make build-on-alpine
+  make build-on-alpine-cn
+  make build-on-alpine-local
+  make push-on-alpine
+  make save-alpine-tar
+```
+* All-in-one:
+```
+  make build-all-in-one
+  make build-dashboard-all-in-one
+  make build-dashboard-centos
+  make build-dashboard-alpine
+  make push-multiarch-dashboard
+  make save-dashboard-centos-tar
+  make save-dashboard-alpine-tar
+```
