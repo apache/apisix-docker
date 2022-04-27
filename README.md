@@ -144,13 +144,19 @@ Commands supported by apisix-docker
 * Centos:\
   Supported arch: amd64, arm32v6, i386 \
   ```make build-on-centos``` \
-  Build apache/apisix:xx-centos image. This command can be used to build apisix on centos.\
+  Build apache/apisix:xx-centos image. This command can be used to build apisix on centos.
   
   ```make push-on-centos```\
-  Build and push apache/apisix:xx-centos image.\
+  Build and push apache/apisix:xx-centos image.
   
   ```make save-centos-tar```\
-  Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . \
+  Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . 
+  
+  ```make build-dashboard-centos```\
+  Build apache/dashboard:tag image on centos. This can be used to build APISIX dashboard on centos.
+  
+  ```make save-dashboard-centos-tar```\
+   Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . 
   
 * Alpine:\
   Supported arch: amd64, arm64\
@@ -158,19 +164,25 @@ Commands supported by apisix-docker
   Build apache/apisix:xx-alpine image.\
   
   ```make build-on-alpine-dev```\
-  Build apache/apisix:xx-alpine-dev image.\
+  Build apache/apisix:xx-alpine-dev image.
   
   ```make build-on-alpine-cn```\
-  Build apache/apisix:xx-alpine image (for Chinese)\
+  Build apache/apisix:xx-alpine image (for Chinese)
   
   ```make build-on-alpine-local```\
-  Build apache/apisix:xx-alpine-local image. This command can be used to build image on local code.\
+  Build apache/apisix:xx-alpine-local image. This command can be used to build image on local code.
   
   ```make push-multiarch-on-alpine```\
-  Push apache/apisix:xx-alpine image.\
+  Push apache/apisix:xx-alpine image.
   
   ```make save-alpine-tar```\
-  Save apache/apisix:xx-alpine image to a tar archive located at ```./package``` . \
+  Save apache/apisix:xx-alpine image to a tar archive located at ```./package``` . 
+  
+  ```make build-dashboard-alpine```\
+  Build apache/dashboard:tag image on alpine. This can be used to build APISIX dashboard on alpine.
+  
+  ```make save-dashboard-alpine-tar```\
+  Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . 
 
 * All-in-one:
   Supported arch: amd64, arm64\
@@ -180,18 +192,5 @@ Commands supported by apisix-docker
   ```make build-dashboard-all-in-one```\
   Build APISIX-dashboard.
   
-  ```make build-dashboard-centos```\
-  Build apache/dashboard:tag image on centos. This can be used to build APISIX dashboard on centos.
-  
-  ```make build-dashboard-alpine```\
-  Build apache/dashboard:tag image on alpine. This can be used to build APISIX dashboard on alpine.
-  
   ```make push-multiarch-dashboard```\
   Build and push multiarch apache/dashboard:tag image. This can be used to build and push APISIX dashboard on centos and on alpine.
-  
-  ```make save-dashboard-centos-tar```\
-   Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . \
-  
-  ```make save-dashboard-alpine-tar```\
-  Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . \
-```
