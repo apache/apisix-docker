@@ -140,11 +140,13 @@ At `0:00 UTC` every day, the APISIX `master` code will be automatically built an
 docker pull apache/apisix:dev
 ```
 ## All commands
-Commands supported by apisix-docker
-* Centos:\
-  Supported arch: amd64, arm32v6, i386 \
+
+**Centos**
+
+  Supported arch: amd64, arm32v6, i386 
+  
   ```make build-on-centos``` \
-  Build apache/apisix:xx-centos image. This command can be used to build apisix on centos.
+  Build apache/apisix:xx-centos image. This can be used to build APISIX on centos.
   
   ```make push-on-centos```\
   Build and push apache/apisix:xx-centos image.
@@ -158,10 +160,12 @@ Commands supported by apisix-docker
   ```make save-dashboard-centos-tar```\
    Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . 
   
-* Alpine:\
-  Supported arch: amd64, arm64\
+**Alpine**
+
+  Supported arch: amd64, arm64
+  
   ```make build-on-alpine```\
-  Build apache/apisix:xx-alpine image.\
+  Build apache/apisix:xx-alpine image.
   
   ```make build-on-alpine-dev```\
   Build apache/apisix:xx-alpine-dev image.
@@ -170,7 +174,7 @@ Commands supported by apisix-docker
   Build apache/apisix:xx-alpine image (for Chinese)
   
   ```make build-on-alpine-local```\
-  Build apache/apisix:xx-alpine-local image. This command can be used to build image on local code.
+  Build apache/apisix:xx-alpine-local image. This can be used to build image on local code.
   
   ```make push-multiarch-on-alpine```\
   Push apache/apisix:xx-alpine image.
@@ -184,8 +188,10 @@ Commands supported by apisix-docker
   ```make save-dashboard-alpine-tar```\
   Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . 
 
-* All-in-one:
-  Supported arch: amd64, arm64\
+**All-in-one**
+
+  Supported arch: amd64, arm64
+  
   ```make build-all-in-one```\
   Build APISIX.
   
