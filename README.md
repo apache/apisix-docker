@@ -141,9 +141,14 @@ docker pull apache/apisix:dev
 ```
 ## All commands
 
-**Centos**
+### APISIX
 
-  Supported arch: amd64, arm32v6, i386 
+* **All-in-one**
+  
+  ```make build-all-in-one```\
+  Build APISIX
+
+* **Centos**
   
   ```make build-on-centos``` \
   Build apache/apisix:xx-centos image. This can be used to build APISIX on centos.
@@ -154,15 +159,8 @@ docker pull apache/apisix:dev
   ```make save-centos-tar```\
   Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . 
   
-  ```make build-dashboard-centos```\
-  Build apache/dashboard:tag image on centos. This can be used to build APISIX dashboard on centos.
   
-  ```make save-dashboard-centos-tar```\
-   Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . 
-  
-**Alpine**
-
-  Supported arch: amd64, arm64
+* **Alpine**
   
   ```make build-on-alpine```\
   Build apache/apisix:xx-alpine image.
@@ -182,21 +180,31 @@ docker pull apache/apisix:dev
   ```make save-alpine-tar```\
   Save apache/apisix:xx-alpine image to a tar archive located at ```./package``` . 
   
+### APISIX Dashboard
+
+* **All-in-one**
+
+  ```make build-dashboard-all-in-one```\
+  Build APISIX-dashboard.
+  
+  ```make push-multiarch-dashboard```\
+  Build and push multiarch apache/dashboard:tag image. This can be used to build and push APISIX dashboard on centos and on alpine.
+
+* **Centos**
+  
+  ```make build-dashboard-centos```\
+  Build apache/dashboard:tag image on centos. This can be used to build APISIX dashboard on centos.
+  
+  ```make save-dashboard-centos-tar```\
+   Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` .
+  
+* **Alpine**
+  
   ```make build-dashboard-alpine```\
   Build apache/dashboard:tag image on alpine. This can be used to build APISIX dashboard on alpine.
   
   ```make save-dashboard-alpine-tar```\
   Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . 
 
-**All-in-one**
 
-  Supported arch: amd64, arm64
-  
-  ```make build-all-in-one```\
-  Build APISIX.
-  
-  ```make build-dashboard-all-in-one```\
-  Build APISIX-dashboard.
-  
-  ```make push-multiarch-dashboard```\
-  Build and push multiarch apache/dashboard:tag image. This can be used to build and push APISIX dashboard on centos and on alpine.
+
