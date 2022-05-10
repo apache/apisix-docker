@@ -1,5 +1,5 @@
 ## Summary
-This repo contains docker images for APISIX, APISIX dashboard, Prometheus and Grafana (which emit metrics of APISIX). It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose.
+This repo contains docker images for APISIX and APISIX dashboard. It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose.
 
 **Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.
 
@@ -12,8 +12,6 @@ The repo contains the following images:
 - `/centos/Dockerfile`builds APISIX on centos.
 
 - `/dashboard` contains two docker files - `Dockerfile.alpine` and `Dockerfile.centos`, which build APISIX dashboard on alpine and centos respectively.
-
-- `/all-in-one` enables you to quickly start apisix on alpine by following [these steps](https://github.com/apache/apisix-docker#quick-test-with-all-dependencies-in-one-docker-container).
 
 You can build these images as follows:
 
@@ -115,7 +113,7 @@ The example docker compose file defines several services: `apisix-dashboard, api
 All the services are configured by mounting external configuration files onto the containers: `./dashboard_conf/conf.yaml` defines the configs for `apisix-dashboard`; `./apisix_conf/conf.yaml` defines the configs for apisix. Similarly, configs for etcd, prometheus, and grafana are located in the corresponding conf.yaml files. If you want to use a config file from a different path, you need to modify the local config file path in the `volumes` entry under the corresponding service.
 
 ## Quick test with all dependencies in one Docker container
-A quick way to get APISIX running is to use the provided all-in-one docker images, which deploys all dependencies in one Docker container. 
+A quick way to get APISIX running on alpine is to use the provided all-in-one docker images, which deploys all dependencies in one Docker container. 
 
 * All in one Docker container for Apache APISIX
 
