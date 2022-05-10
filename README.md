@@ -1,10 +1,27 @@
-**Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
+## Summary
+This repo hosts docker images for APISIX, APISIX dashboard, Prometheus and Grafana (which emit metrics of APISIX). It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose. \
 
-## How To Build Image
+**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
 
-**The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.**
+## How To Build Images
+
+The repo contains the following images:
+
+- `/alpine/Dockerfile` builds APISIX on alpine.
+
+- `/centos/Dockerfile`builds APISIX on centos.
+
+- `/dashboard` contains two docker files - `Dockerfile.alpine` and `Dockerfile.centos`, which build apisix dashboard on alpine and centos respectively.
+
+- `/all-in-one` enables you to quickly start apisix on alpine by following [these steps](https://github.com/apache/apisix-docker#quick-test-with-all-dependencies-in-one-docker-container).
+
+You can build these images as follows:
+
+**Note**: The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.
 
 ### Build an image from source
+
+You can build images as follows:
 
 1. Build from release version:
 ```sh
@@ -63,22 +80,44 @@ make build-dashboard-alpine
 make build-dashboard-centos
 ```
 
-### Manual deploy apisix via docker
+## Run Services With Docker-compose
 
-[Manual deploy](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md)
+The following example illustrates how to run APISIX and APISIX dashboard with docker-compose. If you want to manually deploy services, see [this guide](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md)
 
-### QuickStart via docker-compose
+`/example` contains an example docker-compose file and config files that show how to start apisix and apisix dashboard using docker compose.
+1. Start apisix and apisix dashboard
+    ```
+    cd example
+    docker-compose -p docker-apisix up -d
+    ```
+ 
+2. Check if APISIX is running properly by running this command and checking the response.
+    ```
+    curl "http://127.0.0.1:9080/apisix/admin/services/" -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'
+    ```
+     The response indicates that apisix is running successfully:
+    ```
+    {
+      "count":0,
+      "action":"get",
+      "node":{
+        "key":"/apisix/services",
+        "nodes":[],
+        "dir":true
+      }
+    }
+    ```
+ 
+The example docker compose file defines several services: `apisix-dashboard, apisix, etcd, web1, web2, prometheus, and grafana`:
+`apisix-dashboard, apisix, etcd` are the essential services required for starting apisix-dashboard, apisix, etcd.
+`web1, web2` are sample backend services used for testing purposes.
+`prometheus, grafana` are services used for exposing metrics of the running services.
+ It also creates a bridge network `apisix` which connects all services and a `etcd_data` volume used by the `etcd` service. 
 
-**start all modules with docker-compose**
+All the services are configured by mounting external configuration files onto the containers: `./dashboard_conf/conf.yaml` defines the configs for `apisix-dashboard`; `./apisix_conf/conf.yaml` defines the configs for apisix. Similarly, configs for etcd, prometheus, and grafana are located in the corresponding conf.yaml files. If you want to use a config file from a different path, you need to modify the local config file path in the `volumes` entry under the corresponding service.
 
-```sh
-cd example
-docker-compose -p docker-apisix up -d
-```
-
-You can refer to [the docker-compose example](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/example.md) for more try.
-
-### Quick test with all dependencies in one Docker container
+## Quick test with all dependencies in one Docker container
+Another way to deploy services is to use the provided all-in-one docker images, which deploys all dependencies in one Docker container. 
 
 * All in one Docker container for Apache APISIX
 
@@ -117,6 +156,18 @@ docker run -d \
 -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml \
 apache/apisix-dashboard:whole
 ```
+## Useful commands
+
+Below are some useful commands which build, push, and tar your updated images.
+As an example, these are the commands for apisix-centos images:
+
+-   ```make build-on-centos``` : Build apache/apisix:xx-centos image. 
+
+-   ```make push-on-centos```: Build and push apache/apisix:xx-centos image.
+
+-  ```make save-centos-tar```:  Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . 
+
+Similar commands exist for apisix-alpine images and apisix dashboard. See [the makefile](https://github.com/apache/apisix-docker/blob/master/Makefile) for a full list of commands. 
 
 ### Note
 
@@ -139,72 +190,3 @@ At `0:00 UTC` every day, the APISIX `master` code will be automatically built an
 ```bash
 docker pull apache/apisix:dev
 ```
-## All commands
-
-### APISIX
-
-* **All-in-one**
-  
-  ```make build-all-in-one```\
-  Build APISIX
-
-* **Centos**
-  
-  ```make build-on-centos``` \
-  Build apache/apisix:xx-centos image. This can be used to build APISIX on centos.
-  
-  ```make push-on-centos```\
-  Build and push apache/apisix:xx-centos image.
-  
-  ```make save-centos-tar```\
-  Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . 
-  
-  
-* **Alpine**
-  
-  ```make build-on-alpine```\
-  Build apache/apisix:xx-alpine image.
-  
-  ```make build-on-alpine-dev```\
-  Build apache/apisix:xx-alpine-dev image.
-  
-  ```make build-on-alpine-cn```\
-  Build apache/apisix:xx-alpine image (for Chinese)
-  
-  ```make build-on-alpine-local```\
-  Build apache/apisix:xx-alpine-local image. This can be used to build image on local code.
-  
-  ```make push-multiarch-on-alpine```\
-  Push apache/apisix:xx-alpine image.
-  
-  ```make save-alpine-tar```\
-  Save apache/apisix:xx-alpine image to a tar archive located at ```./package``` . 
-  
-### APISIX Dashboard
-
-* **All-in-one**
-
-  ```make build-dashboard-all-in-one```\
-  Build APISIX-dashboard.
-  
-  ```make push-multiarch-dashboard```\
-  Build and push multiarch apache/dashboard:tag image. This can be used to build and push APISIX dashboard on centos and on alpine.
-
-* **Centos**
-  
-  ```make build-dashboard-centos```\
-  Build apache/dashboard:tag image on centos. This can be used to build APISIX dashboard on centos.
-  
-  ```make save-dashboard-centos-tar```\
-   Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` .
-  
-* **Alpine**
-  
-  ```make build-dashboard-alpine```\
-  Build apache/dashboard:tag image on alpine. This can be used to build APISIX dashboard on alpine.
-  
-  ```make save-dashboard-alpine-tar```\
-  Save apache/apisix-dashboard:tag image to a tar archive located at ```./package``` . 
-
-
-
