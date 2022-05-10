@@ -1,7 +1,7 @@
 ## Summary
-This repo hosts docker images for APISIX, APISIX dashboard, Prometheus and Grafana (which emit metrics of APISIX). It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose.
+This repo contains docker images for APISIX, APISIX dashboard, Prometheus and Grafana (which emit metrics of APISIX). It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose.
 
-**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
+**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.
 
 ## How To Build Images
 
@@ -11,7 +11,7 @@ The repo contains the following images:
 
 - `/centos/Dockerfile`builds APISIX on centos.
 
-- `/dashboard` contains two docker files - `Dockerfile.alpine` and `Dockerfile.centos`, which build apisix dashboard on alpine and centos respectively.
+- `/dashboard` contains two docker files - `Dockerfile.alpine` and `Dockerfile.centos`, which build APISIX dashboard on alpine and centos respectively.
 
 - `/all-in-one` enables you to quickly start apisix on alpine by following [these steps](https://github.com/apache/apisix-docker#quick-test-with-all-dependencies-in-one-docker-container).
 
@@ -20,8 +20,6 @@ You can build these images as follows:
 **Note**: The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.
 
 ### Build an image from source
-
-You can build images as follows:
 
 1. Build from release version:
 ```sh
@@ -80,9 +78,9 @@ make build-dashboard-alpine
 make build-dashboard-centos
 ```
 
-## Run Services With Docker-compose
+## Run With Docker-compose
 
-The following example illustrates how to run APISIX and APISIX dashboard with docker-compose. If you want to manually deploy services, please refer to [this guide](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md)
+The following example illustrates how to run APISIX and APISIX dashboard with docker-compose. If you want to manually deploy services, please refer to [this guide](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md).
 
 `/example` contains an example docker-compose file and config files that show how to start apisix and apisix dashboard using docker compose.
 1. Start apisix and apisix dashboard
@@ -117,7 +115,7 @@ The example docker compose file defines several services: `apisix-dashboard, api
 All the services are configured by mounting external configuration files onto the containers: `./dashboard_conf/conf.yaml` defines the configs for `apisix-dashboard`; `./apisix_conf/conf.yaml` defines the configs for apisix. Similarly, configs for etcd, prometheus, and grafana are located in the corresponding conf.yaml files. If you want to use a config file from a different path, you need to modify the local config file path in the `volumes` entry under the corresponding service.
 
 ## Quick test with all dependencies in one Docker container
-Another way to deploy services is to use the provided all-in-one docker images, which deploys all dependencies in one Docker container. 
+A quick way to get APISIX running is to use the provided all-in-one docker images, which deploys all dependencies in one Docker container. 
 
 * All in one Docker container for Apache APISIX
 
@@ -167,7 +165,7 @@ As an example, these are the commands for apisix-centos images:
 
 -  ```make save-centos-tar```:  Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . 
 
-Similar commands exist for apisix-alpine images and apisix dashboard. See [the makefile](https://github.com/apache/apisix-docker/blob/master/Makefile) for a full list of commands. 
+Similar commands exist for apisix-alpine images and apisix dashboard. See [the makefile](/Makefile) for a full list of commands. 
 
 ### Note
 
