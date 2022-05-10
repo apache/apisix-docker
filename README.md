@@ -1,5 +1,5 @@
 ## Summary
-This repo hosts docker images for APISIX, APISIX dashboard, Prometheus and Grafana (which emit metrics of APISIX). It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose. \
+This repo hosts docker images for APISIX, APISIX dashboard, Prometheus and Grafana (which emit metrics of APISIX). It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose.
 
 **Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
 
@@ -82,7 +82,7 @@ make build-dashboard-centos
 
 ## Run Services With Docker-compose
 
-The following example illustrates how to run APISIX and APISIX dashboard with docker-compose. If you want to manually deploy services, see [this guide](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md)
+The following example illustrates how to run APISIX and APISIX dashboard with docker-compose. If you want to manually deploy services, please refer to [this guide](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md)
 
 `/example` contains an example docker-compose file and config files that show how to start apisix and apisix dashboard using docker compose.
 1. Start apisix and apisix dashboard
