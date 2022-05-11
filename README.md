@@ -1,9 +1,12 @@
 ## Summary
-This repo contains docker images for APISIX and APISIX dashboard. It also includes useful commands to use, build, and save the images and an example that illustrates how to start these services with docker-compose.
-
-**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.
+This repo includes:
+1. docker images for APISIX and APISIX dashboard (on alpine and centos). 
+2. examples that show how to get APISIX and APISIX dashboard up and running. 
+3. a list of commands that allow users to easily build, save, and tar the docker images.
 
 ## How To Build Images
+
+**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.
 
 The repo contains the following images:
 
