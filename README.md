@@ -6,7 +6,8 @@ This repo includes:
 
 ## How To Build Images
 
-**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.
+**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source. \
+**Note**: The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.
 
 The repo contains the following images:
 
@@ -17,8 +18,6 @@ The repo contains the following images:
 - `/dashboard` contains two docker files - `Dockerfile.alpine` and `Dockerfile.centos`, which build APISIX dashboard on alpine and centos respectively.
 
 You can build these images as follows:
-
-**Note**: The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.
 
 ### Build an image from source
 
