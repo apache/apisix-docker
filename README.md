@@ -4,10 +4,9 @@ This repo includes:
 2. examples that show how to get APISIX and APISIX dashboard up and running. 
 3. a list of commands that allow users to easily build, save, and tar the docker images.
 
-## How To Build Images
+**Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source.**
 
-**Note**: Docker images are not official ASF releases but provided for convenience. Recommended usage is always to build the source. \
-**Note**: The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x](https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.
+## How To Build Images
 
 The repo contains the following images:
 
@@ -36,6 +35,9 @@ make build-on-centos
 ```
 
 2. Build from master branch version, which has latest code(ONLY for the developer's convenience):
+
+**The master branch is for the version of Apache APISIX 2.x. If you need a previous version, please build from the [v1.x]       (https://github.com/apache/apisix-docker/releases/tag/v1.x) tag.**
+
 ```sh
 export APISIX_VERSION=master
 
@@ -163,7 +165,7 @@ As an example, these are the commands for apisix-centos images:
 
 -   ```make push-on-centos```: Build and push apache/apisix:xx-centos image.
 
--  ```make save-centos-tar```:  Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . 
+-   ```make save-centos-tar```: Save apache/apisix:xx-centos image to a tar archive located at ```./package``` . 
 
 Similar commands exist for apisix-alpine images and apisix dashboard. See [the makefile](/Makefile) for a full list of commands. 
 
