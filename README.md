@@ -1,69 +1,29 @@
-## What's in this image?
-  The APISIX image has everything you need to get APISIX up and running. It installs all the dependencies, then starts APISIX and the etcd server (which persists the data for APISIX).
+## What is APISIX?
+
+Apache APISIX is a dynamic, real-time, high-performance API gateway. APISIX provides rich traffic management features such as load balancing, dynamic upstream, canary release, circuit breaking, authentication, observability, and more.
+
+See https://apisix.apache.org/ for more info.
 
 ## Image variants
-  The APISIX images come in many flavors, each designed for a specific use case.
 
-  `apisix:<version>`
+The APISIX image comes in many flavors, each designed for a specific use case.
 
-  This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
+`apisix:<version>`
 
-  `apisix:<version>-alpine`
+This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-  This image is based on the popular Alpine Linux project, available in the alpine official image. Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
+`apisix:<version>-alpine`
 
-  This variant is useful when final image size being as small as possible is your primary concern. The main caveat to note is that it does use musl libc instead of glibc and friends, so software will often run into issues depending on the depth of their libc requirements/assumptions. See this Hacker News comment thread for more discussion of the issues that might arise and some pro/con comparisons of using Alpine-based images.
+This image is based on the popular Alpine Linux project, available in the alpine official image. Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
 
-  To minimize image size, it's uncommon for additional related tools (such as git or bash) to be included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the alpine image description for examples of how to install packages if you are unfamiliar).
+This variant is useful when final image size being as small as possible is your primary concern. The main caveat to note is that it does use musl libc instead of glibc and friends, so software will often run into issues depending on the depth of their libc requirements/assumptions. See this Hacker News comment thread for more discussion of the issues that might arise and some pro/con comparisons of using Alpine-based images.
 
-  `apisix:<version>-centos`
+To minimize image size, it's uncommon for additional related tools (such as git or bash) to be included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the alpine image description for examples of how to install packages if you are unfamiliar).
 
+`apisix:<version>-centos`
 
-## How To Use this Image?
-[The apisix-docker repo] contains a list of makefile commands which makes it easy to build images. 
+## How to run APISIX?
 
-To build the APISIX image, specify the version of APISIX by setting `APISIX_VERSION`. It is recommended to use the latest release version, which can be found at https://github.com/apache/apisix/releases.
-
-```sh
-# The latest release version can be find at `https://github.com/apache/apisix/releases`, for example: 2.9
-export APISIX_VERSION=2.9
-
-# build alpine based image
-make build-on-alpine
-
-# build centos based image
-make build-on-centos
-```
-
-Alternatively, you can build APISIX from your local code.
-```sh
-# To copy the local apisix into image, we need to include it in build context
-cp -r <APISIX-PATH> ./apisix
-
-export APISIX_PATH=./apisix
-make build-on-alpine-local
-
-# Might need root privilege if encounter "error checking context: 'can't start'"
-```
-
-**Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
-
-To build the APISIX dashboard image, specify the version of APISIX dashboard by setting `APISIX_DASHBOARD_VERSION`. It is recommended to use the latest release version, which can be found at https://github.com/apache/apisix-dashboard/releases.
-
-```sh
-# The latest release version can be found at `https://github.com/apache/apisix-dashboard/releases`, for example: 2.10
-export APISIX_DASHBOARD_VERSION=2.10
-
-# build alpine based image
-make build-dashboard-alpine
-
-# build centos based image
-make build-dashboard-centos
-```
-
-Note that we are not able to run APISIX yet because etcd, which APISIX depends on to persist data, has not been configured and started. The following section shows two ways to run APISIX.
-
-## How to run APISIX
 APISIX can be run using docker compose or using the `all-in-one` image. It is recommended to use docker compose to run APISIX, as `all-in-one` deploys all dependencies in a single container and should be used for quick testing.
 If you want to manually deploy services, please refer to [this guide](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md).
 
@@ -110,7 +70,7 @@ If you want to use a config file from a different path, you need to modify the l
 
 ### Run APISIX with all-in-one command 
 
-A quick way to get APISIX running on alpine is to use the `all-in-one` docker image, which deploys all dependencies in one Docker container. 
+A quick way to get APISIX running on alpine is to use the `all-in-one` docker image, which deploys all dependencies in one Docker container. You can find the dockerfile [here](https://github.com/apache/apisix-docker/blob/master/all-in-one/apisix/Dockerfile).
 
 - All in one Docker container for Apache APISIX
 
@@ -151,6 +111,55 @@ docker run -d \
 -v `pwd`/all-in-one/apisix-dashboard/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml \
 apache/apisix-dashboard:whole
 ```
+
+## How To Build this Image?
+
+[The apisix-docker repo](https://github.com/apache/apisix-docker) contains a list of makefile commands which makes it easy to build images. 
+
+There are two build arguments that can be set:
+`APISIX_VERSION`: To build the APISIX image, specify the version of APISIX by setting `APISIX_VERSION`. The latest release version can be found at https://github.com/apache/apisix/releases. 
+`ENABLE_PROXY`: Set `ENABLE_PROXY=true` to enable the proxy to accelerate the build process.
+
+To use these commands, clone [the repo](https://github.com/apache/apisix-docker) and cd into its root folder.
+
+```sh
+# The latest release version can be find at `https://github.com/apache/apisix/releases`, for example: 2.9
+export APISIX_VERSION=2.9
+
+# build alpine based image
+make build-on-alpine
+
+# build centos based image
+make build-on-centos
+```
+
+Alternatively, you can build APISIX from your local code.
+```sh
+# To copy the local apisix into image, we need to include it in build context
+cp -r <APISIX-PATH> ./apisix
+
+export APISIX_PATH=./apisix
+make build-on-alpine-local
+
+# Might need root privilege if encounter "error checking context: 'can't start'"
+```
+
+**Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
+
+To build the APISIX dashboard image, specify the version of APISIX dashboard by setting `APISIX_DASHBOARD_VERSION`. The latest release version can be found at https://github.com/apache/apisix-dashboard/releases.
+
+```sh
+# The latest release version can be found at `https://github.com/apache/apisix-dashboard/releases`, for example: 2.10
+export APISIX_DASHBOARD_VERSION=2.10
+
+# build alpine based image
+make build-dashboard-alpine
+
+# build centos based image
+make build-dashboard-centos
+```
+
+Note that we are not able to run APISIX yet because etcd, which APISIX depends on to persist data, has not been configured and started. The following section shows two ways to run APISIX.
 
 ### Note
 
