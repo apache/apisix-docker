@@ -34,8 +34,6 @@ RUN set -x \
         curl \
         openssl \
         git \
-        pcre \
-        pcre-dev \
         openldap-dev \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
