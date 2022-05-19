@@ -1,8 +1,8 @@
-## What is APISIX?
+## What is APISIX
 
 Apache APISIX is a dynamic, real-time, high-performance API gateway. APISIX provides rich traffic management features such as load balancing, dynamic upstream, canary release, circuit breaking, authentication, observability, and more.
 
-See https://apisix.apache.org/ for more info.
+See [apisix](https://apisix.apache.org/) for more info.
 
 ## Image variants
 
@@ -24,7 +24,7 @@ To minimize image size, it's uncommon for additional related tools (such as git 
 
 [placeholder: description for centos]
 
-## How to run APISIX?
+## How to run APISIX
 
 APISIX can be run using docker compose or using the `all-in-one` image. It is recommended to use docker compose to run APISIX, as `all-in-one` deploys all dependencies in a single container and should be used for quick testing.
 If you want to manually deploy services, please refer to [this guide](https://github.com/apache/apisix-docker/blob/master/docs/en/latest/manual.md).
@@ -70,7 +70,7 @@ All the services are configured by mounting external configuration files onto th
 
 If you want to use a config file located at a different path, you need to modify the local config file path in the `volumes` entry under the corresponding service.
 
-### Run APISIX with all-in-one command 
+### Run APISIX with all-in-one command
 
 A quick way to get APISIX running on alpine is to use the `all-in-one` docker image, which deploys all dependencies in one Docker container. You can find the dockerfile [here](https://github.com/apache/apisix-docker/blob/master/all-in-one/apisix/Dockerfile). The image utilizes [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/), building APISIX layer and etcd layer first, then copying the nesessary artifacts to the alpine layer.
 
@@ -107,12 +107,12 @@ apache/apisix:whole
 
 The configuration file for the service is located at [/all-in-one/apisix/config.yaml](https://github.com/apache/apisix-docker/blob/master/all-in-one/apisix/config.yaml). It is mounted onto the container at runtime.
 
-## How To Build this Image?
+## How To Build this Image
 
 [The apisix-docker repo](https://github.com/apache/apisix-docker) contains a list of makefile commands which makes it easy to build images. To use these commands, clone [the repo](https://github.com/apache/apisix-docker) and cd into its root folder.
 
 There are two build arguments that can be set:
-`APISIX_VERSION`: To build the APISIX image, specify the version of APISIX by setting `APISIX_VERSION`. The latest release version can be found at https://github.com/apache/apisix/releases. 
+`APISIX_VERSION`: To build the APISIX image, specify the version of APISIX by setting `APISIX_VERSION`. The latest. release version can be found here [apisix/releases](https://github.com/apache/apisix/releases).
 `ENABLE_PROXY`: Set `ENABLE_PROXY=true` to enable the proxy to accelerate the build process.
 
 ```sh
