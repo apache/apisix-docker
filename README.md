@@ -22,7 +22,9 @@ To minimize image size, it's uncommon for additional related tools (such as git 
 
 `apisix:<version>-centos`
 
-[placeholder: description for centos]
+This image is based on the CentOS Linux project, available in the centos official image. CentOS is derived from the sources of Red Hat Enterprise Linux (RHEL). It is considered to be a more stable distribution compared to Ubuntu, mainly because package updates are less frequent.
+
+The variant is useful when your primary concern is stability and want to minimize the number of image updates. The applications running on CentOS don't need to be updated as often owing to the lesser frequency of its updates, and the cost is also very less than compared with other Linux essentials.
 
 ## How to run APISIX
 
@@ -82,12 +84,12 @@ To try out this example:
 
 3. Launch the APISIX container:
 
-```sh
-docker run -d \
--p 9080:9080 -p 9091:9091 -p 2379:2379 \
--v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml \
-apache/apisix:whole
-```
+    ```sh
+    docker run -d \
+    -p 9080:9080 -p 9091:9091 -p 2379:2379 \
+    -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml \
+    apache/apisix:whole
+    ```
 
 4. Check if APISIX is running properly by running this command and checking the response.
     ```
