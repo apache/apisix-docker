@@ -2,7 +2,7 @@
 
 Apache APISIX is a dynamic, real-time, high-performance API gateway. APISIX provides rich traffic management features such as load balancing, dynamic upstream, canary release, circuit breaking, authentication, observability, and more.
 
-See [apisix](https://apisix.apache.org/) for more info.
+See [the APISIX website](https://apisix.apache.org/) for more info.
 
 ## Image variants
 
@@ -35,7 +35,7 @@ If you want to manually deploy services, please refer to [this guide](https://gi
 
 To try out this example:
 
-1. Clone the [repo](https://github.com/apache/apisix-docker/blob/master) and cd into the root folder.
+1. Clone the [repo](https://github.com/apache/apisix-docker) and cd into the root folder.
   
 2. Start APISIX.
     ```
@@ -109,7 +109,7 @@ The configuration file for the service is located at [/all-in-one/apisix/config.
 
 ## How To Build this Image
 
-[The apisix-docker repo](https://github.com/apache/apisix-docker) contains a list of makefile commands which makes it easy to build images. To use these commands, clone [the repo](https://github.com/apache/apisix-docker) and cd into its root folder.
+The apisix-docker repo contains a list of makefile commands which makes it easy to build images. To use these commands, clone [the repo](https://github.com/apache/apisix-docker) and cd into its root folder.
 
 There are two build arguments that can be set:
 `APISIX_VERSION`: To build the APISIX image, specify the version of APISIX by setting `APISIX_VERSION`. The latest. release version can be found here [apisix/releases](https://github.com/apache/apisix/releases).
