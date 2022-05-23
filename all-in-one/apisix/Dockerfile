@@ -16,11 +16,11 @@
 #
 
 ARG ENABLE_PROXY=false
-ARG APISIX_VERSION=2.13.1
+ARG APISIX_VERSION=2.14.0
 ARG ETCD_VERSION=v3.4.14
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.19.9.1.5 AS production-stage
+FROM api7/apisix-base:1.19.9.1.6 AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"
