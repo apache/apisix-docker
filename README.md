@@ -16,9 +16,9 @@ This is the default image. If you are unsure about what your needs are, this is 
 
 This image is based on the popular Alpine Linux project. Since Alpine Linux is much smaller than most distribution Linux images (~5MB), you can build smaller images with it.
 
-This variant is useful when final image size being as small as possible is your primary concern. The main caveat to note is that it does use musl libc instead of glibc and friends, so software will often run into issues depending on the depth of their libc requirements/assumptions. See this Hacker News comment thread for more discussion of the issues that might arise and some pro/con comparisons of using Alpine-based images.
+This variant is useful when storage compatibility is your primary concern. The main caveat to note is that it does use `musl libc` instead of `glibc` and friends, so software will often run into issues depending on the depth of their `libc requirements/assumptions`. See this [Hacker News comment thread](https://news.ycombinator.com/item?id=10782897) for more discussion of the issues that might arise and some advantages and disadvantages comparisons of using Alpine-based images.
 
-To minimize image size, it's uncommon for additional related tools (such as git or bash) to be included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the alpine image description for examples of how to install packages if you are unfamiliar).
+To minimize the image size, additional tools, such as git and bash, are not included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the [alpine image description](https://hub.docker.com/_/alpine/)).
 
 `apisix:<version>-centos`
 
@@ -38,15 +38,19 @@ If you want to manually deploy services, please refer to [this guide](https://gi
 To try out this example:
 
 1. Clone the [repo](https://github.com/apache/apisix-docker) and cd into the root folder.
+    ```
+    git clone 'https://github.com/apache/apisix-docker'
+    cd apisix-docker
+    ```
   
-2. Start APISIX.
+1. Start APISIX.
     ```
     cd example
 
     docker-compose -p docker-apisix up -d
     ```
 
-3. Check if APISIX is running properly by running this command and checking the response.
+2. Check if APISIX is running properly by running this command and checking the response.
     ```
     curl "http://127.0.0.1:9080/apisix/admin/services/" -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'
     ```
@@ -64,7 +68,7 @@ To try out this example:
     ```
 
 The [example docker compose file](https://github.com/apache/apisix-docker/blob/master/example/docker-compose.yml) defines several services: `apisix-dashboard, apisix, etcd, web1, web2, prometheus, and grafana`:
-- `apisix-dashboard, apisix, etcd` are the essential services required for starting apisix-dashboard, apisix, etcd.
+- `apisix-dashboard, apisix, etcd` are the essential services required for starting apisix-dashboard, apisix, and etcd.
 - `web1, web2` are sample backend services used for testing purposes. They use nginx-alpine image.  
 - `prometheus, grafana` are services used for exposing metrics of the running services.
 
@@ -78,7 +82,7 @@ A quick way to get APISIX running on alpine is to use the `all-in-one` docker im
 
 To try out this example:
 
-1. Clone the [apisix-docker repo](https://github.com/apache/apisix-docker/blob/master) and cd into the root folder.
+1. Make sure that you are in the root folder of apisix-docker.
 
 2. `make build-all-in-one` to build the `all-in-one` image.
 
@@ -106,6 +110,7 @@ To try out this example:
         "dir":true
       }
     }
+    ```
 
 The configuration file for the service is located at [/all-in-one/apisix/config.yaml](https://github.com/apache/apisix-docker/blob/master/all-in-one/apisix/config.yaml). It is mounted onto the container at runtime.
 
