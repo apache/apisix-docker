@@ -36,14 +36,12 @@ RUN set -x \
     pkgconfig \
     cmake \
     git \
-    pcre \
-    pcre-dev \
     openldap-dev \
     && mkdir ~/.luarocks \
     && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
     && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
     && git config --global url.https://github.com/.insteadOf git://github.com/ \
-    && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps \
+    && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
     && (if [ "$APISIX_VERSION" = "master" ] || [ "$APISIX_VERSION" \> "2.2" ]; then echo 'use shell ';else bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path'; sed -i "1s@.*@$bin@" /usr/bin/apisix ; fi;) \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
