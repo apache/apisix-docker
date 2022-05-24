@@ -14,7 +14,7 @@ This is the default image. If you are unsure about what your needs are, this is 
 
 `apisix:<version>-alpine`
 
-This image is based on the popular Alpine Linux project, available in the alpine official image. Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
+This image is based on the popular Alpine Linux project. Since Alpine Linux is much smaller than most distribution Linux images (~5MB), you can build smaller images with it.
 
 This variant is useful when final image size being as small as possible is your primary concern. The main caveat to note is that it does use musl libc instead of glibc and friends, so software will often run into issues depending on the depth of their libc requirements/assumptions. See this Hacker News comment thread for more discussion of the issues that might arise and some pro/con comparisons of using Alpine-based images.
 
