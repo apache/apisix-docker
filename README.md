@@ -4,28 +4,6 @@ Apache APISIX is a dynamic, real-time, high-performance API gateway. APISIX prov
 
 See [the APISIX website](https://apisix.apache.org/) for more info.
 
-## Image variants
-
-The APISIX image comes in many flavors, each designed for a specific use case.
-
-`apisix:<version>`
-
-This is the default image. If you are unsure about what your needs are, this is your go-to option.you can use it as a throw away container (mount your source code and start the container to start your applications), as well as the base to build other images of.
-
-`apisix:<version>-alpine`
-
-This image is based on the popular Alpine Linux project. Since Alpine Linux is much smaller than most distribution Linux images (~5MB), you can build smaller images with it.
-
-This variant is useful when storage compatibility is your primary concern. The main caveat to note is that it does use `musl libc` instead of `glibc` and friends, so software will often run into issues depending on the depth of their `libc requirements/assumptions`. See this [Hacker News comment thread](https://news.ycombinator.com/item?id=10782897) for more discussion of the issues that might arise and some advantages and disadvantages comparisons of using Alpine-based images.
-
-To minimize the image size, additional tools, such as git and bash, are not included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the [alpine image description](https://hub.docker.com/_/alpine/)).
-
-`apisix:<version>-centos`
-
-This image is based on the CentOS Linux project, available in the centos official image. CentOS is derived from the sources of Red Hat Enterprise Linux (RHEL). It is considered to be a more stable distribution compared to Ubuntu, mainly because package updates are less frequent.
-
-The variant is useful when your primary concern is stability and want to minimize the number of image updates. The applications running on CentOS don't need to be updated as often owing to the lesser frequency of its updates, and the cost is also very less than compared with other Linux essentials.
-
 ## How to run APISIX
 
 APISIX can be run using docker compose or using the `all-in-one` image. It is recommended to use docker compose to run APISIX, as `all-in-one` deploys all dependencies in a single container and should be used for quick testing.
@@ -168,3 +146,25 @@ At `0:00 UTC` every day, the APISIX `master` code will be automatically built an
 ```bash
 docker pull apache/apisix:dev
 ```
+
+## Image variants
+
+The APISIX image comes in many flavors, each designed for a specific use case.
+
+`apisix:<version>`
+
+This is the default image. If you are unsure about what your needs are, this is your go-to option.you can use it as a throw away container (mount your source code and start the container to start your applications), as well as the base to build other images of.
+
+`apisix:<version>-alpine`
+
+This image is based on the popular Alpine Linux project. Since Alpine Linux is much smaller than most distribution Linux images (~5MB), you can build smaller images with it.
+
+This variant is useful when storage compatibility is your primary concern. The main caveat to note is that it does use `musl libc` instead of `glibc` and friends, so software will often run into issues depending on the depth of their `libc requirements/assumptions`. See this [Hacker News comment thread](https://news.ycombinator.com/item?id=10782897) for more discussion of the issues that might arise and some advantages and disadvantages comparisons of using Alpine-based images.
+
+To minimize the image size, additional tools, such as git and bash, are not included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the [alpine image description](https://hub.docker.com/_/alpine/)).
+
+`apisix:<version>-centos`
+
+This image is based on the CentOS Linux project, available in the centos official image. CentOS is derived from the sources of Red Hat Enterprise Linux (RHEL). It is considered to be a more stable distribution compared to Ubuntu, mainly because package updates are less frequent.
+
+The variant is useful when your primary concern is stability and want to minimize the number of image updates. The applications running on CentOS don't need to be updated as often owing to the lesser frequency of its updates, and the cost is also very less than compared with other Linux essentials.
