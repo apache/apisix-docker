@@ -16,11 +16,11 @@
 #
 
 ARG ENABLE_PROXY=false
-ARG APISIX_VERSION=2.13.1
+ARG APISIX_VERSION=2.14.1
 ARG ETCD_VERSION=v3.4.14
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.19.9.1.5 AS production-stage
+FROM api7/apisix-base:1.19.9.1.6 AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"
@@ -40,11 +40,9 @@ RUN set -x \
         curl \
         openssl \
         git \
-        pcre \
-        pcre-dev \
         openldap-dev \
     && git config --global url.https://github.com/.insteadOf git://github.com/ \
-    && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps \
+    && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
     && (function ver_lt { [ "$1" = "$2" ] && return 1 || [ "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]; };  if [ "$APISIX_VERSION" = "master" ] || ver_lt 2.2.0 $APISIX_VERSION; then echo 'use shell ';else bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path'; sed -i "1s@.*@$bin@" /usr/bin/apisix ; fi;) \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
