@@ -8,7 +8,7 @@
 
 - Where to get help related to Apache APISIX: \
   Mailing List: Mail to dev-subscribe@apisix.apache.org, follow the reply to subscribe to the mailing list.
-  Slack Workspace - join [#apisix channel](https://github.com/apache/apisix-docker/pull/305)
+  Slack Workspace - join [#apisix channel](https://apisix.apache.org/docs/general/join/#join-the-slack-channel)
 
 - Blog: \
   [the APISIX Blog](https://apisix.apache.org/blog/)
