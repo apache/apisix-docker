@@ -1,3 +1,18 @@
+## Quick Reference
+
+- Documentation: \
+  [the APISIX Docs](https://apisix.apache.org/docs/apisix/next/getting-started/)
+
+- Where to file issues: \
+  [https://github.com/apache/apisix/issues](https://github.com/apache/apisix/issues)
+
+- Where to get help related to Apache APISIX: \
+  Mailing List: Mail to dev-subscribe@apisix.apache.org, follow the reply to subscribe to the mailing list.
+  Slack Workspace - join [#apisix channel](https://github.com/apache/apisix-docker/pull/305)
+
+- Blog: \
+  [the APISIX Blog](https://apisix.apache.org/blog/)
+
 ## What is APISIX
 
 Apache APISIX is a dynamic, real-time, high-performance API gateway. APISIX provides rich traffic management features such as load balancing, dynamic upstream, canary release, circuit breaking, authentication, observability, and more.
@@ -168,3 +183,9 @@ To minimize the image size, additional tools, such as git and bash, are not incl
 This image is based on the CentOS Linux project, available in the centos official image. CentOS is derived from the sources of Red Hat Enterprise Linux (RHEL). It is considered to be a more stable distribution compared to Ubuntu, mainly because package updates are less frequent.
 
 The variant is useful when your primary concern is stability and want to minimize the number of image updates. The applications running on CentOS don't need to be updated as often owing to the lesser frequency of its updates, and the cost is also very less than compared with other Linux essentials.
+
+## License
+
+Licensed under the Apache License, Version 2.0: [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
