@@ -17,7 +17,7 @@
 
 FROM turien/apisix-base:dev AS production-stage
 
-ARG ENABLE_PROXY
+ARG ENABLE_PROXY=true
 
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://archive.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apk/repositories) \
