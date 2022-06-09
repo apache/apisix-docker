@@ -17,35 +17,6 @@
 
 FROM turien/apisix-base:dev AS production-stage
 
-RUN mv /etc/apt/sources.list /etc/apt/sources_bak.list \
-    && echo 'deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiversee\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse\n\
-\n\
-deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse\n\
-\n\
-deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse\n\
-\n\
-deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse\n\
-\n\
-deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse\n\
-\n\
-deb https://mirrors.aliyun.com/ubuntu-ports/ xenial main restricted universe multiverse\n\
-deb-src https://mirrors.aliyun.com/ubuntu-ports/ xenial main main restricted universe multiverse\n\
-\n\
-deb https://mirrors.aliyun.com/ubuntu-ports/ xenial-updates main restricted universe multiverse\n\
-deb-src https://mirrors.aliyun.com/ubuntu-ports/ xenial-updates main restricted universe multiverse\n\
-\n\
-deb https://mirrors.aliyun.com/ubuntu-ports/ xenial-backports main restricted universe multiverse\n\
-deb-src https://mirrors.aliyun.com/ubuntu-ports/ xenial-backports main restricted universe multiverse\n\
-\n\
-deb https://mirrors.aliyun.com/ubuntu-ports/ xenial-security main restricted universe multiverse\n\
-deb-src https://mirrors.aliyun.com/ubuntu-ports/ xenial-security main restricted universe multiverse\n'\
-> /etc/apt/sources.list
-
 RUN set -x \
     && apt-get -y update --fix-missing \
     && apt autoremove -y libldap-2.4-2 git git-man \
