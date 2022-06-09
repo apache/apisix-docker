@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM turien/apisix-base:dev AS production-stage
+FROM api7/apisix-base:dev AS production-stage
 
 ARG ENABLE_PROXY=true
 
