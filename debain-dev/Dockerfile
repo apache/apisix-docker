@@ -19,6 +19,8 @@ FROM turien/apisix-base:dev AS production-stage
 
 ARG ENABLE_PROXY=true
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://archive.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://ports.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
