@@ -117,13 +117,13 @@ push-multiarch-on-alpine:
 
 
 ### push-on-alpine : Push apache/apisix:dev image
-.PHONY: push-multiarch-dev-on-alpine
-push-multiarch-dev-on-alpine:
+.PHONY: push-multiarch-dev-on-debain
+push-multiarch-dev-on-debain:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) buildx build --push \
+	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):dev \
 		--platform linux/amd64,linux/arm64 \
-		-f ./alpine-dev/Dockerfile .
+		-f ./debain-dev/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
