@@ -20,8 +20,8 @@ FROM turien/apisix-base:dev AS production-stage
 ARG ENABLE_PROXY=true
 
 RUN set -x \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://archive.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://ports.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apk/repositories) \
+    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://archive.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
+    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://ports.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && apt-get -y update --fix-missing \
     && apt autoremove -y libldap-2.4-2 git git-man \
     && apt-get -y install git \
