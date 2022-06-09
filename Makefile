@@ -121,7 +121,7 @@ push-multiarch-on-alpine:
 push-multiarch-dev-on-debain:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(IMAGE_NAME):dev \
+		-t turien/apisix:dev \
 		--platform linux/amd64,linux/arm64 \
 		-f ./debain-dev/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
