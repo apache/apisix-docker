@@ -4,7 +4,7 @@ name: Build and Push apisix-dev to Docker DockerHub
 on:
   schedule:
     # UTC 0:00 AM (See https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
-    - cron: "0 0 * * *"
+    - cron: "0 1 * * *"
 
 jobs:
   build:
