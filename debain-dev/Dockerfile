@@ -17,7 +17,7 @@
 
 FROM api7/apisix-base:dev AS production-stage
 
-ARG ENABLE_PROXY=true
+ARG ENABLE_PROXY=false
 
 ENV DEBIAN_FRONTEND noninteractive
 
