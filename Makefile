@@ -76,7 +76,7 @@ build-on-alpine:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### build-on-debain-dev : Build apache/apisix:xx-alpine-dev image
+### build-on-debain-dev : Build apache/apisix:xx-debain-dev image
 .PHONY: build-on-debain-dev
 build-on-debain-dev:
 	@$(call func_echo_status, "$@ -> [ Start ]")
