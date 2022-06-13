@@ -76,11 +76,11 @@ build-on-alpine:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### build-on-alpine-dev : Build apache/apisix:xx-alpine-dev image
-.PHONY: build-on-alpine-dev
-build-on-alpine-dev:
+### build-on-debain-dev : Build apache/apisix:xx-alpine-dev image
+.PHONY: build-on-debain-dev
+build-on-debain-dev:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine-dev -f ./alpine-dev/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debain-dev -f ./debain-dev/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
