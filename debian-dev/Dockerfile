@@ -15,15 +15,14 @@
 # limitations under the License.
 #
 
-FROM api7/apisix-base:dev AS production-stage
+FROM turien/apisix-base:dev AS production-stage
 
 ARG ENABLE_PROXY=false
 
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN set -x \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://archive.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://ports.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
+    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://deb.debian.org,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && apt-get -y update --fix-missing \
     && apt autoremove -y libldap-2.4-2 \
     && apt-get -y install git \

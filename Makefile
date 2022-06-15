@@ -21,7 +21,7 @@
 
 # APISIX ARGS
 APISIX_VERSION ?= 2.14.1
-IMAGE_NAME = apache/apisix
+IMAGE_NAME = turien/apisix
 IMAGE_TAR_NAME = apache_apisix
 
 APISIX_DASHBOARD_VERSION ?= 2.13
