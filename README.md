@@ -35,7 +35,7 @@ To try out this example:
     git clone 'https://github.com/apache/apisix-docker'
     cd apisix-docker
     ```
-  
+
 1. Start APISIX.
     ```
     cd example
@@ -62,7 +62,7 @@ To try out this example:
 
 The [example docker compose file](https://github.com/apache/apisix-docker/blob/master/example/docker-compose.yml) defines several services: `apisix-dashboard, apisix, etcd, web1, web2, prometheus, and grafana`:
 - `apisix-dashboard, apisix, etcd` are the essential services required for starting apisix-dashboard, apisix, and etcd.
-- `web1, web2` are sample backend services used for testing purposes. They use nginx-alpine image.  
+- `web1, web2` are sample backend services used for testing purposes. They use nginx-alpine image.
 - `prometheus, grafana` are services used for exposing metrics of the running services.
 
 All the services are configured by mounting external configuration files onto the containers: [/apisix_conf/conf.yaml](https://github.com/apache/apisix-docker/blob/master/example/apisix_conf/config.yaml) defines the configs for apisix. Similarly, configs for etcd, prometheus, and grafana are located in [/etcd_conf/etcd.conf.yml](https://github.com/apache/apisix-docker/blob/master/example/etcd_conf/etcd.conf.yml), [/prometheus_conf/prometheus.yml](https://github.com/apache/apisix-docker/blob/master/example/prometheus_conf/prometheus.yml), and [/grafana_conf/config](https://github.com/apache/apisix-docker/tree/master/example/grafana_conf/config) respectively.
@@ -133,7 +133,7 @@ Alternatively, you can build APISIX from your local code.
 cp -r <APISIX-PATH> ./apisix
 
 export APISIX_PATH=./apisix
-make build-on-alpine-local
+make build-on-debain-local
 
 # Might need root privilege if encounter "error checking context: 'can't start'"
 ```

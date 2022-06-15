@@ -16,7 +16,7 @@ jobs:
         platform:
           - alpine
           - centos
-          - alpine-local
+          - debain-local
           - debain-dev
 
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Clone apisix for local test
-        if: ${{ matrix.platform == 'alpine-local' }}
+        if: ${{ matrix.platform == 'debain-local' }}
         run: |
           git clone --depth 1 http://github.com/apache/apisix apisix-local
 
