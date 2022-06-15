@@ -84,16 +84,6 @@ build-on-debain-dev:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### build-on-debain-local : Build apache/apisix:xx-alpine-local image
-# Actually it is not build on certain version but on local code
-# Use this name (in the same patterns with others) for convenient CI
-.PHONY: build-on-debain-local
-build-on-debain-local:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debain-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./debain-local/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
 ### push-on-centos : Push apache/apisix:xx-centos image
 # centos not support multiarch since it reply on x86 rpm package
 .PHONY: push-on-centos

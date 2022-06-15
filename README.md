@@ -127,17 +127,6 @@ make build-on-alpine
 make build-on-centos
 ```
 
-Alternatively, you can build APISIX from your local code.
-```sh
-# To copy the local apisix into image, we need to include it in build context
-cp -r <APISIX-PATH> ./apisix
-
-export APISIX_PATH=./apisix
-make build-on-debain-local
-
-# Might need root privilege if encounter "error checking context: 'can't start'"
-```
-
 **Note:** For Chinese, the following command is always recommended. The additional build argument `ENABLE_PROXY=true` will enable proxy to definitely accelerate the progress.
 
 ### Note
