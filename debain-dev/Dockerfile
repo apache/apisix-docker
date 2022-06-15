@@ -25,7 +25,7 @@ RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://archive.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://ports.ubuntu.com,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && apt-get -y update --fix-missing \
-    && apt autoremove -y libldap-2.4-2 git git-man \
+    && apt autoremove -y libldap-2.4-2 \
     && apt-get -y install git \
         curl \
         unzip \
@@ -33,9 +33,6 @@ RUN set -x \
         liblua5.1-0-dev \
         libldap2-dev \
         gawk \
-    && mv /usr/bin/awk /usr/bin/awk.bak \
-    && mv /usr/bin/gawk /usr/bin/awk \
-    && git config --global url.https://github.com/.insteadOf git://github.com/ \
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
