@@ -16,7 +16,7 @@ jobs:
         platform:
           - alpine
           - centos
-          - debain-dev
+          - debian-dev
 
     runs-on: ubuntu-latest
     env:

@@ -76,11 +76,11 @@ build-on-alpine:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### build-on-debain-dev : Build apache/apisix:xx-debain-dev image
-.PHONY: build-on-debain-dev
-build-on-debain-dev:
+### build-on-debian-dev : Build apache/apisix:xx-debian-dev image
+.PHONY: build-on-debian-dev
+build-on-debian-dev:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debain-dev -f ./debain-dev/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev -f ./debian-dev/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -107,13 +107,13 @@ push-multiarch-on-alpine:
 
 
 ### push-on-alpine : Push apache/apisix:dev image
-.PHONY: push-multiarch-dev-on-debain
-push-multiarch-dev-on-debain:
+.PHONY: push-multiarch-dev-on-debian
+push-multiarch-dev-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):dev \
 		--platform linux/amd64,linux/arm64 \
-		-f ./debain-dev/Dockerfile .
+		-f ./debian-dev/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
