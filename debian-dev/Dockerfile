@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM turien/apisix-base:dev AS build
+FROM api7/apisix-base:dev AS build
 
 ARG ENABLE_PROXY=false
 
