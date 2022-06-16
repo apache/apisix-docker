@@ -24,16 +24,16 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://deb.debian.org,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && apt-get -y update --fix-missing \
-    && apt-get install -y git \
-        curl \
-        unzip \
-        lua5.1 \
-        liblua5.1-0-dev \
-        libldap2-dev \
+    && apt-get install -y curl \
         gawk \
-        wget \
+        git \
+        libldap2-dev \
+        liblua5.1-0-dev \
+        lua5.1 \
         make \
         sudo \
+        unzip \
+        wget \
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
