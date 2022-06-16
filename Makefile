@@ -76,21 +76,11 @@ build-on-alpine:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### build-on-alpine-dev : Build apache/apisix:xx-alpine-dev image
-.PHONY: build-on-alpine-dev
-build-on-alpine-dev:
+### build-on-debian-dev : Build apache/apisix:xx-debian-dev image
+.PHONY: build-on-debian-dev
+build-on-debian-dev:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine-dev -f ./alpine-dev/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
-### build-on-alpine-local : Build apache/apisix:xx-alpine-local image
-# Actually it is not build on certain version but on local code
-# Use this name (in the same patterns with others) for convenient CI
-.PHONY: build-on-alpine-local
-build-on-alpine-local:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-alpine-local --build-arg APISIX_PATH=${APISIX_PATH} -f ./alpine-local/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev -f ./debian-dev/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -117,13 +107,13 @@ push-multiarch-on-alpine:
 
 
 ### push-on-alpine : Push apache/apisix:dev image
-.PHONY: push-multiarch-dev-on-alpine
-push-multiarch-dev-on-alpine:
+.PHONY: push-multiarch-dev-on-debian
+push-multiarch-dev-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) buildx build --push \
+	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):dev \
 		--platform linux/amd64,linux/arm64 \
-		-f ./alpine-dev/Dockerfile .
+		-f ./debian-dev/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 

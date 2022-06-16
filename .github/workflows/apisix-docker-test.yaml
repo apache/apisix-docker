@@ -16,8 +16,7 @@ jobs:
         platform:
           - alpine
           - centos
-          - alpine-local
-          - alpine-dev
+          - debian-dev
 
     runs-on: ubuntu-latest
     env:
@@ -25,11 +24,6 @@ jobs:
       APISIX_DOCKER_TAG: 2.14.1-${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
-
-      - name: Clone apisix for local test
-        if: ${{ matrix.platform == 'alpine-local' }}
-        run: |
-          git clone --depth 1 http://github.com/apache/apisix apisix-local
 
       - name: Build and run
         run: |
