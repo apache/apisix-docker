@@ -24,7 +24,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://deb.debian.org,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && apt-get -y update --fix-missing \
-    && apt-get install -y --no-install-recommends git \
+    && apt-get install -y git \
         curl \
         unzip \
         lua5.1 \
