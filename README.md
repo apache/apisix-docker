@@ -1,4 +1,4 @@
-## What is Apache APISIX API Gateway?
+## What is Apache APISIX API Gateway
 
 Apache APISIX is a dynamic, real-time, high-performance API Gateway.
 
@@ -7,7 +7,7 @@ APISIX API Gateway provides rich traffic management features such as load balanc
 You can use APISIX API Gateway to handle traditional north-south traffic, as well as east-west traffic between services.
 At present, APISIX has been used in various industries, including NASA, Tencent Cloud, EU Digital Factory, Airbus, Airwallex, iQIYI, etc.
 
-## How to run Apache APISIX?
+## How to run Apache APISIX
 
 Apache APISIX supports stand-alone mode and also supports the use of etcd database as the configuration center.
 
@@ -129,7 +129,7 @@ docker run -d --name etcd \
 $ cat << EOF > $(pwd)/config.yaml
 apisix:
   allow_admin:
-    - 0.0.0.0/0  # Please set it to the subnet address you obtained. 
+    - 0.0.0.0/0  # Please set it to the subnet address you obtained.
                  # If not set, by default all IP access is allowed.
 etcd:
   host:
@@ -161,7 +161,7 @@ $ curl "http://127.0.0.1:9080/apisix/admin/services/" \
 The response indicates that apisix is running successfully:
 
 ```
-{ 
+{
   "count":0,
   "action":"get",
   "node":{
