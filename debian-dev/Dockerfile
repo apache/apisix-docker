@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM turien/apisix-base:dev AS production-stage
+FROM turien/apisix-base:dev AS build
 
 ARG ENABLE_PROXY=false
 
@@ -41,6 +41,12 @@ RUN set -x \
     # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
+
+FROM turien/apisix-base:dev AS production-stage
+
+COPY --from=build /usr/local/apisix /usr/local/apisix
+COPY --from=build /usr/local/openresty /usr/local/openresty
+COPY --from=build /usr/local/openresty-debug /usr/local/openresty-debug
 
 WORKDIR /usr/local/apisix
 
