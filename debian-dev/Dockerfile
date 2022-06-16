@@ -42,7 +42,7 @@ RUN set -x \
     && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
 
-FROM turien/apisix-base:dev AS production-stage
+FROM api7/apisix-base:dev AS production-stage
 
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/local/openresty /usr/local/openresty
