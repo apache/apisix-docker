@@ -44,11 +44,14 @@ RUN set -x \
 
 FROM api7/apisix-base:dev AS production-stage
 
-COPY --from=build /usr/lib/ /usr/lib/
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
-COPY --from=build /usr/local/openresty /usr/local/openresty
-COPY --from=build /usr/local/openresty-debug /usr/local/openresty-debug
+
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get -y update --fix-missing \
+    && apt-get install -y \
+        libldap2-dev \
+    && apt-get remove --purge --auto-remove -y
 
 WORKDIR /usr/local/apisix
 
