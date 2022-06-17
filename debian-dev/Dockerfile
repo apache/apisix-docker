@@ -44,6 +44,7 @@ RUN set -x \
 
 FROM api7/apisix-base:dev AS production-stage
 
+COPY --from=build /usr/lib/ /usr/lib/
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
 COPY --from=build /usr/local/openresty /usr/local/openresty
