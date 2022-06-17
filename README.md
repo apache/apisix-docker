@@ -15,7 +15,7 @@ Apache APISIX supports stand-alone mode and also supports the use of etcd databa
 
 In stand-alone mode, APISIX uses `apisix.yaml` as the configuration center to store routing, upstream, consumer and other information. After APISIX is started, it will load the `apisix.yaml` file regularly to update the corresponding configuration information.
 
-The following command creates a configuration file for APISIX, and enables Stand-alone mode.
+The following command creates a configuration file for APISIX, and enables stand-alone mode.
 
 1. Create a APISIX configuration file in the current directory and use this file in the next step.
 
@@ -37,7 +37,7 @@ $ docker run -d \
    apache/apisix
 ```
 
-#### Modify Stand-alone mode configuration file
+#### Modify stand-alone mode configuration file
 
 After completing the above steps, you can refer to the following example to write the Route and Plugin configuration to the `apisix.yaml` file.
 
@@ -71,7 +71,7 @@ docker exec -it apache-apisix apisix reload && \
 curl http://127.0.0.1:9080/anything
 ```
 
-The response indicates that apisix is running successfully:
+The response indicates that APISIX is running successfully:
 
 ```
 Hello APISIX
@@ -96,7 +96,7 @@ $ docker run -d \
    bitnami/etcd:latest
 ```
 
-2. Start APISIX and reference the file created in the previous step.
+2. Start APISIX.
 
 ```
 $ docker run -d \
