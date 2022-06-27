@@ -20,7 +20,7 @@
 
 
 # APISIX ARGS
-APISIX_VERSION ?= 2.14.1
+APISIX_VERSION ?= 2.13.2
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
