@@ -20,7 +20,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      APISIX_DOCKER_TAG: 2.14.1-${{ matrix.platform }}
+      APISIX_DOCKER_TAG: 2.13.2-${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
 
