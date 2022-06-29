@@ -64,7 +64,7 @@ endef
 .PHONY: build-on-centos
 build-on-centos:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos -f ./centos/Dockerfile .
+	$(ENV_DOCKER) build --network=host -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos -f ./centos/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
