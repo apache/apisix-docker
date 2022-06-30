@@ -56,6 +56,7 @@ services:
       ALLOW_NONE_AUTHENTICATION: "yes"
       ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
       ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
+      ETCD_DATA_DIR: "/etcd-data"
     ports:
       - "2379:2379/tcp"
     networks:
