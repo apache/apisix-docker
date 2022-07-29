@@ -6,10 +6,7 @@ on:
       - master
   pull_request:
     branches:
-      - alpine
-      - centos
-      - debian
-      - debian-dev
+      - master
 
 jobs:
   build:
@@ -17,7 +14,10 @@ jobs:
       fail-fast: false
       matrix:
         platform:
+          - alpine
+          - centos
           - debian
+          - debian-dev
 
     runs-on: ubuntu-latest
     env:
