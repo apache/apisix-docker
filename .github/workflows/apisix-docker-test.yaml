@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feat/debian
   pull_request:
     branches:
       - master
@@ -14,13 +15,11 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - alpine
-          - centos
-          - debian-dev
+          - debian
 
     runs-on: ubuntu-latest
     env:
-      APISIX_DOCKER_TAG: 2.14.1-${{ matrix.platform }}
+      APISIX_DOCKER_TAG: 2.15.0-${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
 

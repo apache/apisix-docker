@@ -84,6 +84,14 @@ build-on-debian-dev:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
+### build-on-debian : Build apache/apisix:xx-debian image
+.PHONY: build-on-debian
+build-on-debian:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian -f ./debian/Dockerfile .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
 ### push-on-centos : Push apache/apisix:xx-centos image
 # centos not support multiarch since it reply on x86 rpm package
 .PHONY: push-on-centos
@@ -114,6 +122,17 @@ push-multiarch-dev-on-debian:
 		-t $(IMAGE_NAME):dev \
 		--platform linux/amd64,linux/arm64 \
 		-f ./debian-dev/Dockerfile .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
+### push-multiarch-on-debian : Push apache/apisix:xx-debian image
+.PHONY: push-multiarch-on-debian
+push-multiarch-on-debian:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) buildx build --network=host --push \
+		-t $(ENV_APISIX_IMAGE_TAG_NAME)-debian \
+		--platform linux/amd64,linux/arm64 \
+		-f ./debian/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -156,6 +175,15 @@ save-alpine-tar:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	mkdir -p package
 	$(ENV_DOCKER) save -o ./package/$(ENV_APISIX_TAR_NAME)-alpine.tar $(ENV_APISIX_IMAGE_TAG_NAME)-alpine
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
+### save-debian-tar : tar apache/apisix:xx-debian image
+.PHONY: save-debian-tar
+save-debian-tar:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	mkdir -p package
+	$(ENV_DOCKER) save -o ./package/$(ENV_APISIX_TAR_NAME)-debian.tar $(ENV_APISIX_IMAGE_TAG_NAME)-debian
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
