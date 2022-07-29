@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - master
-      - feat/debian
   pull_request:
     branches:
-      - master
+      - alpine
+      - centos
+      - debian
+      - debian-dev
 
 jobs:
   build:
