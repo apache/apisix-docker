@@ -35,6 +35,13 @@ apisix:
   control:
     ip: "0.0.0.0"
     port: 9092
+  security:
+    access_control_allow_origin: "http://httpbin.org"
+    access_control_allow_credentials: true          # support using custom cors configration
+    access_control_allow_headers: "Authorization"
+    access_control-allow_methods: "*"
+    x_frame_options: "deny"
+    content_security_policy: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src xxx.xxx.xxx.xxx:3000"  # Please note to fill in your ip address here.
 
 etcd:
   host:                           # it's possible to define multiple etcd hosts addresses of the same etcd cluster.
