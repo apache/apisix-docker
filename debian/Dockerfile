@@ -42,8 +42,11 @@ RUN set -ex; \
     esac; \
     apt update \
     && apt install -y apisix=${APISIX_VERSION}-0 \
+    && apt-get purge -y --auto-remove \
+    && rm -f /etc/apt/sources.list.d/openresty.list /etc/apt/sources.list.d/apisix.list \
     && openresty -V \
     && apisix version
+
 WORKDIR /usr/local/apisix
 
 # forward request and error logs to docker log collector
