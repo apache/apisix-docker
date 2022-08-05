@@ -24,6 +24,7 @@ jobs:
 
       - name: Push apisix image to Docker Hub
         run: |
+          make push-multiarch-on-debian
           make push-multiarch-on-alpine
           make build-on-centos
           make push-on-centos
