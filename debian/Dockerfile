@@ -20,7 +20,7 @@ ARG IMAGE_TAG="bullseye"
 FROM ${IMAGE_BASE}:${IMAGE_TAG}-slim
 
 ARG TARGETARCH
-ARG APISIX_VERSION=2.15.0
+ARG APISIX_VERSION=2.13.3
 
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
