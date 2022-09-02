@@ -1,4 +1,4 @@
-name: APISIX Docker Test
+name: APISIX Docker dev Test
 
 on:
   push:
@@ -14,13 +14,12 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - alpine
-          - centos
-          - debian
+          - debian-dev
 
     runs-on: ubuntu-latest
     env:
-      APISIX_DOCKER_TAG: 2.15.0-${{ matrix.platform }}
+      APISIX_VERSION=master
+      APISIX_DOCKER_TAG: master-${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
 
@@ -35,7 +34,7 @@ jobs:
         run: |
           grep -C 3 '\[error\]' example/apisix_log/error.log && exit 1
 
-          curl http://127.0.0.1:9080/apisix/admin/routes/1 \
+          curl http://127.0.0.1:9180/apisix/admin/routes/1 \
           -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
             {
             "uri": "/get",
