@@ -19,7 +19,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      APISIX_VERSION=master
+      APISIX_VERSION: master
       APISIX_DOCKER_TAG: master-${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
