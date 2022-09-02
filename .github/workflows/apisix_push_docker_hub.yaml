@@ -26,5 +26,5 @@ jobs:
         run: |
           make push-multiarch-on-debian
           make push-multiarch-on-alpine
-          make build-on-centos
-          make push-on-centos
+          make push-multiarch-on-centos
+          make push-multiarch-on-latest

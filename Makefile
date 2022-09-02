@@ -92,17 +92,6 @@ build-on-debian:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### push-on-centos : Push apache/apisix:xx-centos image
-# centos not support multiarch since it reply on x86 rpm package
-.PHONY: push-on-centos
-push-on-centos:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) push $(ENV_APISIX_IMAGE_TAG_NAME)-centos
-	$(ENV_DOCKER) build -t $(IMAGE_NAME):latest -f ./centos/Dockerfile .
-	$(ENV_DOCKER) push $(IMAGE_NAME):latest
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
 ### push-on-alpine : Push apache/apisix:xx-alpine image
 .PHONY: push-multiarch-on-alpine
 push-multiarch-on-alpine:
@@ -131,6 +120,28 @@ push-multiarch-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-debian \
+		--platform linux/amd64,linux/arm64 \
+		-f ./debian/Dockerfile .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
+### push-multiarch-on-centos : Push apache/apisix:xx-centos image
+.PHONY: push-multiarch-on-centos
+push-multiarch-on-centos:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) buildx build --network=host --push \
+		-t $(ENV_APISIX_IMAGE_TAG_NAME)-centos \
+		--platform linux/amd64,linux/arm64 \
+		-f ./centos/Dockerfile .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
+### push-multiarch-on-latest : Push apache/apisix:latest image
+.PHONY: push-multiarch-on-latest
+push-multiarch-on-latest:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) buildx build --network=host --push \
+		-t $(IMAGE_NAME):latest \
 		--platform linux/amd64,linux/arm64 \
 		-f ./debian/Dockerfile .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
