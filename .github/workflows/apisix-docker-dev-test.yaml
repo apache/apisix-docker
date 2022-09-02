@@ -1,12 +1,13 @@
 name: APISIX Docker dev Test
 
 on:
+  schedule:
+    - cron: "0 1 * * *"
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+    branches: [master]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
 
 jobs:
   build:
