@@ -1,3 +1,4 @@
+#!/usr/bin/bash
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -15,7 +16,6 @@
 # limitations under the License.
 #
 
-#!/usr/bin/bash
 set -Eeo pipefail
 
 PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
