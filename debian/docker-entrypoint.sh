@@ -31,12 +31,6 @@ _EOC_
         cat > ${PREFIX}/conf/apisix.yaml << _EOC_
 routes:
   -
-    id: 1
-    uri: /*
-    upstream:
-      nodes:
-        "httpbin.org:80": 1
-      type: roundrobin
 #END
 _EOC_
         /usr/bin/apisix init
