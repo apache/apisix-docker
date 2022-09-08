@@ -64,7 +64,7 @@ endef
 .PHONY: build-on-centos
 build-on-centos:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos -f ./centos/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos -f ./centos/Dockerfile centos
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -80,7 +80,7 @@ build-on-alpine:
 .PHONY: build-on-debian-dev
 build-on-debian-dev:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev -f ./debian-dev/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev -f ./debian-dev/Dockerfile debian-dev
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -88,7 +88,7 @@ build-on-debian-dev:
 .PHONY: build-on-debian
 build-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian -f ./debian/Dockerfile .
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian -f ./debian/Dockerfile debian
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -110,7 +110,7 @@ push-multiarch-dev-on-debian:
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):dev \
 		--platform linux/amd64,linux/arm64 \
-		-f ./debian-dev/Dockerfile .
+		-f ./debian-dev/Dockerfile debian-dev
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -121,7 +121,7 @@ push-multiarch-on-debian:
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-debian \
 		--platform linux/amd64,linux/arm64 \
-		-f ./debian/Dockerfile .
+		-f ./debian/Dockerfile debian
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -132,7 +132,7 @@ push-multiarch-on-centos:
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-centos \
 		--platform linux/amd64,linux/arm64 \
-		-f ./centos/Dockerfile .
+		-f ./centos/Dockerfile centos
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -143,7 +143,7 @@ push-multiarch-on-latest:
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):latest \
 		--platform linux/amd64,linux/arm64 \
-		-f ./debian/Dockerfile .
+		-f ./debian/Dockerfile debian
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
