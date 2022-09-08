@@ -31,6 +31,7 @@ _EOC_
         cat > ${PREFIX}/conf/apisix.yaml << _EOC_
 routes:
   -
+    id: 1
     uri: /*
     upstream:
       nodes:

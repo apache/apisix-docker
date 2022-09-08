@@ -31,6 +31,7 @@ _EOC_
         cat > ${PREFIX}/conf/apisix.yaml << _EOC_
 routes:
   -
+    id: 1
     uri: /*
     upstream:
       nodes:
@@ -44,7 +45,7 @@ _EOC_
         /usr/bin/apisix init_etcd
     fi
     
-    exec /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'
+    exec /usr/local/openresty-debug/bin/openresty -p /usr/local/apisix -g 'daemon off;'
 fi
 
 exec "$@"
