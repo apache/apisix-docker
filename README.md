@@ -24,7 +24,7 @@ docker run -d --name apache-apisix -p 9080:9080 -e APISIX_STAND_ALONE=true apach
 Add Route and Plugin configuration to the running APISIX container:
 
 ```
-docker exec -i apisix-test sh -c "cat > /usr/local/apisix/conf/apisix.yaml <<_EOC_
+docker exec -i apache-apisix sh -c "cat > /usr/local/apisix/conf/apisix.yaml <<_EOC_
 routes:
   -
     id: httpbin
