@@ -18,13 +18,13 @@ In stand-alone mode, APISIX uses `apisix.yaml` as the configuration center to st
 You can start an APISIX container with stand-alone mode by the following command:
 
 ```
-docker run -d --name apache-apisix -p 9080:9080 -e APISIX_STAND_ALONE=true apache/apisix
+$ docker run -d --name apache-apisix -p 9080:9080 -e APISIX_STAND_ALONE=true apache/apisix
 ```
 
 Add Route and Plugin configuration to the running APISIX container:
 
 ```
-docker exec -i apache-apisix sh -c "cat > /usr/local/apisix/conf/apisix.yaml <<_EOC_
+$ docker exec -i apache-apisix sh -c "cat > /usr/local/apisix/conf/apisix.yaml <<_EOC_
 routes:
   -
     id: httpbin
