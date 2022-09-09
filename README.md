@@ -24,14 +24,14 @@ $ docker run -d --name apache-apisix -p 9080:9080 -e APISIX_STAND_ALONE=true apa
 Add Route and Plugin configuration to the running APISIX container:
 
 ```
-$ docker exec -i apache-apisix sh -c "cat > /usr/local/apisix/conf/apisix.yaml <<_EOC_
+$ docker exec -i apache-apisix sh -c 'cat > /usr/local/apisix/conf/apisix.yaml <<_EOC_
 routes:
   -
     id: httpbin
     uri: /*
     upstream:
       nodes:
-        \"httpbin.org\": 1
+        "httpbin.org": 1
       type: roundrobin
     plugin_config_id: 1
 
@@ -40,10 +40,10 @@ plugin_configs:
     id: 1
     plugins:
       response-rewrite:
-        body: \"Hello APISIX\n\"
-    desc: \"response-rewrite\"
+        body: "Hello APISIX\n"
+    desc: "response-rewrite"
 #END
-_EOC_"
+_EOC_'
 ```
 
 If you want to know more configuration examples, you can refer to [stand-alone](https://apisix.apache.org/docs/apisix/stand-alone).
