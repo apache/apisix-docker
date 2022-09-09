@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -15,28 +16,30 @@
 # limitations under the License.
 #
 
-FROM centos:7
+set -eo pipefail
 
-ARG APISIX_VERSION=2.15.0
-LABEL apisix_version="${APISIX_VERSION}"
+PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
 
-RUN yum install -y https://repos.apiseven.com/packages/centos/apache-apisix-repo-1.0-1.noarch.rpm \
-	&& yum install -y apisix-${APISIX_VERSION} \
-	&& yum clean all \
-	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
+if [[ "$1" == "docker-start" ]]; then
+    if [ "$APISIX_STAND_ALONE" = "true" ]; then
+        cat > ${PREFIX}/conf/config.yaml << _EOC_
+apisix:
+  enable_admin: false
+  config_center: yaml
+_EOC_
 
-WORKDIR /usr/local/apisix
+        cat > ${PREFIX}/conf/apisix.yaml << _EOC_
+routes:
+  -
+#END
+_EOC_
+        /usr/bin/apisix init
+    else
+        /usr/bin/apisix init
+        /usr/bin/apisix init_etcd
+    fi
+    
+    exec /usr/local/openresty-debug/bin/openresty -p /usr/local/apisix -g 'daemon off;'
+fi
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
-    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
-
-EXPOSE 9080 9443
-
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD ["docker-start"]
-
-STOPSIGNAL SIGQUIT
+exec "$@"
