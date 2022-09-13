@@ -14,12 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-ARG IMAGE_BASE="debian"
-ARG IMAGE_TAG="bullseye"
 
-FROM ${IMAGE_BASE}:${IMAGE_TAG}-slim
+FROM debian:bullseye-slim
 
-ARG TARGETARCH
 ARG APISIX_VERSION=2.15.0
 
 RUN set -ex; \
