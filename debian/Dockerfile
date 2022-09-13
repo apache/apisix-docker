@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-ARG IMAGE_BASE="debian"
-ARG IMAGE_TAG="bullseye"
 
 FROM debian:bullseye-slim
 
