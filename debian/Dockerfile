@@ -17,7 +17,6 @@
 
 FROM debian:bullseye-slim
 
-ARG TARGETARCH
 ARG APISIX_VERSION=2.15.0
 
 RUN set -ex; \
