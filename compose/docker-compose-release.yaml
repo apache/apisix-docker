@@ -22,12 +22,11 @@ services:
     image: "apache/apisix:${APISIX_DOCKER_TAG}"
     restart: always
     volumes:
-      - ./apisix_log:/usr/local/apisix/logs
-      - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ./compose/example/apisix_log:/usr/local/apisix/logs
+      - ./compose/example/apisix_conf/config-release.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
     ports:
-      - "9180:9180/tcp"
       - "9080:9080/tcp"
       - "9091:9091/tcp"
       - "9443:9443/tcp"
