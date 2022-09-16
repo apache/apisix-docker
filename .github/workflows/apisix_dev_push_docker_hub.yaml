@@ -54,12 +54,10 @@ jobs:
           fi
 
       - name: Tar Image
-        if: ${{ !endsWith(matrix.platform, '-local') && !endsWith(matrix.platform, '-dev')  }}
         run: |
-          make save-${{ matrix.platform }}-tar
+          make save-debian-dev-tar
 
       - name: Upload Image
-        if: ${{ !endsWith(matrix.platform, '-local') && !endsWith(matrix.platform, '-dev')  }}
         uses: actions/upload-artifact@v2
         with:
           path: ./package
