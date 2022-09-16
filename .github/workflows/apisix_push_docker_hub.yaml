@@ -65,6 +65,6 @@ jobs:
         run: |
           make push-multiarch-on-latest
 
-      - name: Push apisix image to Docker Hub
+      - name: Push apisix:${{ matrix.os }} image to Docker Hub
         run: |
           make push-multiarch-on-${{ matrix.platform }}
