@@ -6,7 +6,8 @@ on:
     # UTC 0:00 AM (See https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
     - cron: "0 1 * * *"
   push:
-    branches: [master]
+    #branches: [master]
+    branches: ['ci/docker_hub']
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -15,9 +16,53 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      APISIX_VERSION: master
+      APISIX_DOCKER_TAG: master-debian-dev
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+
+      - name: Build and run
+        run: |
+          make build-on-debian-dev
+          docker-compose -f ./compose/docker-compose-master.yaml up -d
+          sleep 30
+          docker logs compose_apisix_1
+
+      - name: Test
+        run: |
+          grep -C 3 '\[error\]' compose/apisix_log/error.log && exit 1
+
+          curl http://127.0.0.1:9180/apisix/admin/routes/1 \
+          -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+            {
+            "uri": "/get",
+            "upstream": {
+                "type": "roundrobin",
+                "nodes": {
+                    "httpbin.org:80": 1
+                }
+            }
+          }'
+
+          result_code=`curl -I -m 10 -o /dev/null -s -w %{http_code} http://127.0.0.1:9080/get`
+          if [[ $result_code -ne 200 ]];then
+                  printf "result_code: %s\n" "$result_code"
+                  exit 125
+          fi
+
+      - name: Tar Image
+        if: ${{ !endsWith(matrix.platform, '-local') && !endsWith(matrix.platform, '-dev')  }}
+        run: |
+          make save-${{ matrix.platform }}-tar
+
+      - name: Upload Image
+        if: ${{ !endsWith(matrix.platform, '-local') && !endsWith(matrix.platform, '-dev')  }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./package
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
