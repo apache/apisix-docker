@@ -6,8 +6,7 @@ on:
     # UTC 0:00 AM (See https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07)
     - cron: "0 1 * * *"
   push:
-    #branches: [master]
-    branches: ['ci/docker_hub']
+    branches: [master]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
