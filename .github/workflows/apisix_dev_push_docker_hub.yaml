@@ -31,7 +31,7 @@ jobs:
           sleep 30
           docker logs compose_apisix_1
 
-      - name: Test
+      - name: Test APISIX
         run: |
           grep -C 3 '\[error\]' compose/apisix_log/error.log && exit 1
 
