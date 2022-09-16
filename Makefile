@@ -21,8 +21,8 @@
 
 # APISIX ARGS
 APISIX_VERSION ?= 2.15.0
-IMAGE_NAME = apache/apisix
-IMAGE_TAR_NAME = apache_apisix
+IMAGE_NAME = soulbird/apisix
+IMAGE_TAR_NAME = soulbird_apisix
 
 APISIX_DASHBOARD_VERSION ?= 2.13
 APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
