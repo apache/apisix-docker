@@ -4,11 +4,44 @@ on:
     branches: ['release/apisix-dashboard**']
 jobs:
   build:
+    strategy:
+        fail-fast: false
+        matrix:
+          os:
+            - centos
+            - alpine
+
+    name: build dashboard & test on ${{ matrix.os }} && push to docker hub
     runs-on: ubuntu-latest
+
+    env:
+      APISIX_DASHBOARD_TAG: "2.13"
 
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+
+            - name: Build and run
+        run: |
+          make build-dashboard-${{ matrix.os }}
+          docker-compose -f ./compose/dashboard-compose.yaml up -d
+          sleep 30
+          docker logs compose_dashboard_1
+
+      - name: check
+        run: |
+          wget https://raw.githubusercontent.com/apache/apisix-dashboard/master/api/test/shell/manager_smoking.sh
+          chmod +x ./manager_smoking.sh
+          sh manager_smoking.sh -s true
+
+      - name: Tar Image
+        run: |
+          make save-dashboard-${{ matrix.os }}-tar
+
+      - name: Upload Image
+        uses: actions/upload-artifact@v2
+        with:
+          path: ./package
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -23,5 +56,6 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Push apisix dashboard image to Docker Hub
+        if: matrix.platform == 'centos'
         run: |
           make push-multiarch-dashboard
