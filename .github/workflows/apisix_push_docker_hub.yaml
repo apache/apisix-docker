@@ -13,7 +13,7 @@ jobs:
           - centos
           - debian
     env:
-      APISIX_DOCKER_TAG: 2.15.0-${{ matrix.platform }}
+      APISIX_DOCKER_TAG: 2.99.0-${{ matrix.platform }}
 
     steps:
       - name: Check out the repo
