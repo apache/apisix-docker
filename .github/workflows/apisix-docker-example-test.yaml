@@ -8,6 +8,9 @@ on:
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
+  pull_request:
+    paths:
+      - 'example/*'
 
 jobs:
   build:
@@ -16,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: use docker-compose
-        run: cd ./example && docker-compose -p docker-apisix up -d
+        run: cd ./example && docker-compose -p docker-apisix up -d && cd ..
 
       - name: Test APISIX
         run: |
