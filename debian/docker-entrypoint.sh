@@ -23,8 +23,6 @@ PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
 if [[ "$1" == "docker-start" ]]; then
     if [ "$APISIX_STAND_ALONE" = "true" ]; then
         cat > ${PREFIX}/conf/config.yaml << _EOC_
-apisix:
-  enable_admin: false
 deployment:
   role: data_plane
   role_data_plane:
