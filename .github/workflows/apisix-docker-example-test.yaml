@@ -23,6 +23,7 @@ jobs:
 
       - name: Test APISIX
         run: |
+          sleep 30
           grep -C 3 '\[error\]' ./example/apisix_log/error.log && exit 1
 
           curl http://127.0.0.1:9080/apisix/admin/routes/1 \
