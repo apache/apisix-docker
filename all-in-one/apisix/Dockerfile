@@ -49,7 +49,7 @@ RUN set -x \
     && apk del .builddeps build-base make unzip
 
 # Build etcd
-FROM alpine:3.13 AS etcd-stage
+FROM alpine:3.14 AS etcd-stage
 
 ARG ETCD_VERSION
 LABEL etcd_version="${ETCD_VERSION}"
@@ -61,7 +61,7 @@ RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-
     && ln -s etcd-${ETCD_VERSION}-linux-amd64 etcd
 
 # Finally combine all the resources into one image
-FROM alpine:3.13 AS last-stage
+FROM alpine:3.14 AS last-stage
 
 ARG ENABLE_PROXY
 # add runtime for Apache APISIX
