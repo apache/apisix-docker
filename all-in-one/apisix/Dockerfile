@@ -20,7 +20,7 @@ ARG APISIX_VERSION=2.99.0
 ARG ETCD_VERSION=v3.4.14
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.21.4.1.1 AS production-stage
+FROM api7/apisix-base:1.21.4.1.2 AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"
@@ -80,7 +80,7 @@ COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
-EXPOSE 9080 9443 2379 2380
+EXPOSE 9180 9080 9443 2379 2380
 
 CMD ["sh", "-c", "(nohup etcd >/tmp/etcd.log 2>&1 &) && sleep 10 && /usr/bin/apisix init && /usr/bin/apisix init_etcd && /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'"]
 
