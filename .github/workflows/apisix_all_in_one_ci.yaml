@@ -24,12 +24,8 @@ jobs:
       - name: Start
         run: |
           docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -p 9180:9180 -p 9080:9080 -p 2379:2379 --name apisix -d apache/apisix:whole
-      
-      # Debug via SSH if previous steps failed
-      - name: Set up tmate session
-        uses: ./.github/action-tmate
-        with:
-          timeout-minutes: 15
+          docker logs apisix
+          sudo netstat -lntp
 
       - name: Test
         run: |
