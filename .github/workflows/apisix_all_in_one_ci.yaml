@@ -26,7 +26,7 @@ jobs:
           docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -p 9180:9180 -p 9080:9080 -p 2379:2379 --name apisix -d apache/apisix:whole
           docker logs apisix
           sudo netstat -lntp
-          docker exec -it apisix cat /usr/local/apisix/logs/error.log
+          docker exec -i apisix cat /usr/local/apisix/logs/error.log
 
       - name: Test
         run: |
