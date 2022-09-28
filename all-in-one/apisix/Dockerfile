@@ -17,7 +17,7 @@
 
 ARG ENABLE_PROXY=false
 ARG APISIX_VERSION=2.99.0
-ARG ETCD_VERSION=v3.4.14
+ARG ETCD_VERSION=v3.5.4
 
 # Build Apache APISIX
 FROM api7/apisix-base:1.21.4.1.2 AS production-stage
