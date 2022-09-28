@@ -1,0 +1,3 @@
+[submodule ".github/actions/action-tmate"]
+	path = .github/actions/action-tmate
+	url = https://github.com/mxschmitt/action-tmate

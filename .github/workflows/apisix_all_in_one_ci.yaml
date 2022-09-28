@@ -12,7 +12,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
 
       - name: Build
         run: |
@@ -22,6 +25,12 @@ jobs:
         run: |
           docker run -v `pwd`/all-in-one/apisix/config.yaml:/usr/local/apisix/conf/config.yaml -p 9180:9180 -p 9080:9080 -p 2379:2379 --name apisix -d apache/apisix:whole
       
+      # Debug via SSH if previous steps failed
+      - name: Set up tmate session
+        uses: ./.github/actions/action-tmate
+        with:
+          timeout-minutes: 15
+
       - name: Test
         run: |
           sleep 30
