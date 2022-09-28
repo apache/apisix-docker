@@ -20,36 +20,8 @@ ARG APISIX_VERSION=2.99.0
 ARG ETCD_VERSION=v3.5.4
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.21.4.1.2 AS production-stage
+FROM apache/apisix:${APISIX_VERSION}-debian
 
-ARG APISIX_VERSION
-LABEL apisix_version="${APISIX_VERSION}"
-
-ARG ENABLE_PROXY
-
-RUN set -x \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache --virtual .builddeps \
-        build-base \
-        automake \
-        autoconf \
-        libtool \
-        pkgconfig \
-        cmake \
-        unzip \
-        curl \
-        openssl \
-        git \
-        openldap-dev \
-    && git config --global url.https://github.com/.insteadOf git://github.com/ \
-    && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-${APISIX_VERSION}-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
-    && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
-    && (function ver_lt { [ "$1" = "$2" ] && return 1 || [ "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]; };  if [ "$APISIX_VERSION" = "master" ] || ver_lt 2.2.0 $APISIX_VERSION; then echo 'use shell ';else bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path'; sed -i "1s@.*@$bin@" /usr/bin/apisix ; fi;) \
-    && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
-    && apk del .builddeps build-base make unzip
-
-# Build etcd
-FROM alpine:3.14 AS etcd-stage
 
 ARG ETCD_VERSION
 LABEL etcd_version="${ETCD_VERSION}"
@@ -58,25 +30,10 @@ WORKDIR /tmp
 
 RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
     && tar -zxvf etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
-    && ln -s etcd-${ETCD_VERSION}-linux-amd64 etcd
+    && mv etcd-${ETCD_VERSION}-linux-amd64/* /usr/bin/
 
-# Finally combine all the resources into one image
-FROM alpine:3.14 AS last-stage
-
-ARG ENABLE_PROXY
-# add runtime for Apache APISIX
-RUN set -x \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache bash libstdc++ curl openldap-dev
 
 WORKDIR /usr/local/apisix
-
-COPY --from=production-stage /usr/local/openresty/ /usr/local/openresty/
-COPY --from=production-stage /usr/local/apisix/ /usr/local/apisix/
-COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
-
-COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
-COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
