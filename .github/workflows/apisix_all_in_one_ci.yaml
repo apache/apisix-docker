@@ -27,7 +27,7 @@ jobs:
       
       # Debug via SSH if previous steps failed
       - name: Set up tmate session
-        uses: ./.github/actions/action-tmate
+        uses: ./.github/action-tmate
         with:
           timeout-minutes: 15
 
