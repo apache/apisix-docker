@@ -27,6 +27,10 @@ RUN yum install -y https://repos.apiseven.com/packages/centos/apache-apisix-repo
 
 WORKDIR /usr/local/apisix
 
+RUN useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix
+
+USER apisix
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log

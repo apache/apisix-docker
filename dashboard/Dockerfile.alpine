@@ -63,8 +63,11 @@ COPY --from=api-builder /usr/local/apisix-dashboard/output/ ./
 
 COPY --from=fe-builder /usr/local/apisix-dashboard/output/ ./
 
-RUN mkdir logs
+RUN mkdir logs \
+    && addgroup -S apisix -g 1001 && adduser -S apisix -G apisix -u 1001 \
+    && chown -R apisix:apisix /usr/local/apisix-dashboard
 
+USER apisix
 EXPOSE 9000
 
 ENTRYPOINT [ "/usr/local/apisix-dashboard/manager-api" ]
