@@ -17,10 +17,12 @@
 
 # Makefile basic env setting
 .DEFAULT_GOAL := help
+SHELL := bash
 
 
 # APISIX ARGS
 APISIX_VERSION ?= 3.0.0
+MAX_APISIX_VERSION ?= 3.0.0
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
@@ -138,12 +140,17 @@ push-multiarch-on-centos:
 
 ### push-multiarch-on-latest : Push apache/apisix:latest image
 .PHONY: push-multiarch-on-latest
+# Here we choose to check the max APISIX version instead of the patch version, so that
+# we can release a patch version for a non-LTS version. For example, release a version
+# to solve security issue.
 push-multiarch-on-latest:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(IMAGE_NAME):latest \
-		--platform linux/amd64,linux/arm64 \
-		-f ./debian/Dockerfile debian
+	@if [ "$(shell echo "$(APISIX_VERSION) $(MAX_APISIX_VERSION)" | tr " " "\n" | sort -rV | head -n 1)" == "$(APISIX_VERSION)" ]; then \
+		$(ENV_DOCKER) buildx build --network=host --push \
+			-t $(IMAGE_NAME):latest \
+			--platform linux/amd64,linux/arm64 \
+			-f ./debian/Dockerfile debian; \
+	fi
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
