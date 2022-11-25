@@ -17,7 +17,7 @@
 
 ARG ENABLE_PROXY=false
 
-# Build Apache APISIX image
+# Build the Apache APISIX image
 FROM api7/apisix-base:1.21.4.1.2
 
 ARG APISIX_VERSION=2.99.0
