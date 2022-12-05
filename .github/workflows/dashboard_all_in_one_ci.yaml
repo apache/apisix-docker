@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APISIX_DASHBOARD_BRANCH: "2.13.1" # GitHub release tag id
+      APISIX_DASHBOARD_BRANCH: "2.14.0" # GitHub release tag id
     
     steps:
       - uses: actions/checkout@v2
