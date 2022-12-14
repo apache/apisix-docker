@@ -205,6 +205,26 @@ save-debian-tar:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
+### build-dashboard-centos : Build apache/dashboard:tag image on centos
+.PHONY: build-dashboard-centos
+build-dashboard-centos:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
+		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
+		-f ./dashboard/Dockerfile.centos .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
+### build-dashboard-alpine : Build apache/dashboard:tag image on alpine
+.PHONY: build-dashboard-alpine
+build-dashboard-alpine:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
+		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
+		-f ./dashboard/Dockerfile.alpine .
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
 ### push-multiarch-dashboard : Build and push multiarch apache/dashboard:tag image
 .PHONY: push-multiarch-dashboard
 push-multiarch-dashboard:
