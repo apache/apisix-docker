@@ -19,7 +19,7 @@ version: "3"
 
 services:
   dashboard:
-    image: "apache/apisix-dashboard:${APISIX_DASHBOARD_TAG}"
+    image: "apache/apisix-dashboard:${APISIX_DASHBOARD_VERSION}"
     restart: always
     volumes:
       - ../example/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml:ro
