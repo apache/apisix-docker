@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APISIX_DASHBOARD_TAG: "2.14.0"
+      APISIX_DASHBOARD_VERSION: "2.15.0" # in semver
 
     steps:
       - name: Check out the repo

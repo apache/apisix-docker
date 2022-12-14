@@ -18,11 +18,11 @@ ARG BUILDPLATFORM=amd64
 
 FROM --platform=$BUILDPLATFORM alpine:latest as pre-build
 
-ARG APISIX_DASHBOARD_VERSION=release/2.10
+ARG APISIX_DASHBOARD_TAG=v2.15.0
 
 RUN set -x \
     && apk add --no-cache --virtual .builddeps git \
-    && git clone https://github.com/apache/apisix-dashboard.git -b ${APISIX_DASHBOARD_VERSION} /usr/local/apisix-dashboard \
+    && git clone https://github.com/apache/apisix-dashboard.git -b ${APISIX_DASHBOARD_TAG} /usr/local/apisix-dashboard \
     && cd /usr/local/apisix-dashboard && git clean -Xdf \
     && rm -f ./.githash && git log --pretty=format:"%h" -1 > ./.githash
 
