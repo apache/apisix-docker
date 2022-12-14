@@ -46,7 +46,7 @@ RUN set -ex; \
 
 WORKDIR /usr/local/apisix
 
-RUN useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix/conf
+RUN useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix
 
 USER apisix
 
