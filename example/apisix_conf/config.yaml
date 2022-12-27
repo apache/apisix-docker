@@ -23,7 +23,12 @@ apisix:
   control:
     ip: "0.0.0.0"
     port: 9092
-
+nginx_config:                     # config for render the template to generate nginx.conf
+  #user: root                     # specifies the execution user of the worker process.
+                                  # the "user" directive makes sense only if the master process runs with super-user privileges.
+                                  # if you're not root user,the default is current user.
+  error_log: logs/error.log
+  error_log_level:  info          # warn,error
 deployment:
   admin:
     allow_admin:               # http://nginx.org/en/docs/http/ngx_http_access_module.html#allow
