@@ -86,6 +86,17 @@ build-on-debian:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
+### push-on-alpine : Push apache/apisix:dev image
+.PHONY: push-multiarch-dev-on-debian
+push-multiarch-dev-on-debian:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) buildx build --network=host --push \
+		-t $(IMAGE_NAME):dev \
+		--platform linux/amd64,linux/arm64 \
+		-f ./debian-dev/Dockerfile debian-dev
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
 ### push-multiarch-on-debian : Push apache/apisix:xx-debian image
 .PHONY: push-multiarch-on-debian
 push-multiarch-on-debian:
