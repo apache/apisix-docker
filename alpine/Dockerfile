@@ -18,9 +18,9 @@
 ARG ENABLE_PROXY=false
 
 # Build Apache APISIX
-FROM api7/apisix-base:1.21.4.1.1
+FROM api7/apisix-base:1.21.4.1.2
 
-ARG APISIX_VERSION=2.15.0
+ARG APISIX_VERSION=3.0.0
 LABEL apisix_version="${APISIX_VERSION}"
 
 ARG ENABLE_PROXY
@@ -58,7 +58,7 @@ WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
-EXPOSE 9080 9443
+EXPOSE 9180 9080 9443
 
 CMD ["sh", "-c", "/usr/bin/apisix init && /usr/bin/apisix init_etcd && /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'"]
 

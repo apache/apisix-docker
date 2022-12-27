@@ -17,14 +17,16 @@
 
 # Makefile basic env setting
 .DEFAULT_GOAL := help
+SHELL := bash
 
 
 # APISIX ARGS
-APISIX_VERSION ?= 2.15.0
+APISIX_VERSION ?= 3.0.0
+MAX_APISIX_VERSION ?= 3.0.0
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
-APISIX_DASHBOARD_VERSION ?= 2.13
+APISIX_DASHBOARD_VERSION ?= $(shell echo ${APISIX_DASHBOARD_VERSION:=2.15.0})
 APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
 APISIX_DASHBOARD_IMAGE_TAR_NAME = apache_apisix_dashboard
 
@@ -138,12 +140,17 @@ push-multiarch-on-centos:
 
 ### push-multiarch-on-latest : Push apache/apisix:latest image
 .PHONY: push-multiarch-on-latest
+# Here we choose to check the max APISIX version instead of the patch version, so that
+# we can release a patch version for a non-LTS version. For example, release a version
+# to solve security issue.
 push-multiarch-on-latest:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(IMAGE_NAME):latest \
-		--platform linux/amd64,linux/arm64 \
-		-f ./debian/Dockerfile debian
+	@if [ "$(shell echo "$(APISIX_VERSION) $(MAX_APISIX_VERSION)" | tr " " "\n" | sort -rV | head -n 1)" == "$(APISIX_VERSION)" ]; then \
+		$(ENV_DOCKER) buildx build --network=host --push \
+			-t $(IMAGE_NAME):latest \
+			--platform linux/amd64,linux/arm64 \
+			-f ./debian/Dockerfile debian; \
+	fi
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -202,7 +209,9 @@ save-debian-tar:
 .PHONY: build-dashboard-centos
 build-dashboard-centos:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile.centos .
+	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
+		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
+		-f ./dashboard/Dockerfile.centos .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -210,7 +219,9 @@ build-dashboard-centos:
 .PHONY: build-dashboard-alpine
 build-dashboard-alpine:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) -f ./dashboard/Dockerfile.alpine .
+	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
+		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
+		-f ./dashboard/Dockerfile.alpine .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -220,17 +231,17 @@ push-multiarch-dashboard:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --push \
 		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)-alpine \
-		--build-arg APISIX_DASHBOARD_VERSION=release/$(APISIX_DASHBOARD_VERSION) \
+		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
 		--platform linux/amd64,linux/arm64 \
 		-f ./dashboard/Dockerfile.alpine .
 	$(ENV_DOCKER) buildx build --push \
 		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)-centos \
-		--build-arg APISIX_DASHBOARD_VERSION=release/$(APISIX_DASHBOARD_VERSION) \
+		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
 		--platform linux/amd64,linux/arm64 \
 		-f ./dashboard/Dockerfile.centos .
 	$(ENV_DOCKER) buildx build --push \
 		-t $(APISIX_DASHBOARD_IMAGE_NAME):latest \
-		--build-arg APISIX_DASHBOARD_VERSION=release/$(APISIX_DASHBOARD_VERSION) \
+		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
 		--platform linux/amd64,linux/arm64 \
 		-f ./dashboard/Dockerfile.centos .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")

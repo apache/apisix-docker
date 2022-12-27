@@ -1,0 +1,45 @@
+name: Docker compose CI for example
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  pull_request:
+    paths:
+      - 'example/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: use docker-compose
+        run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
+
+      - name: Test APISIX
+        run: |
+          sleep 30
+          grep -C 3 '\[error\]' example/apisix_log/error.log && exit 1
+
+          curl http://127.0.0.1:9180/apisix/admin/routes/1 \
+          -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+            {
+            "uri": "/get",
+            "upstream": {
+                "type": "roundrobin",
+                "nodes": {
+                    "web1:80": 1
+                }
+            }
+          }'
+
+          result_code=`curl -I -m 10 -o /dev/null -s -w %{http_code} http://127.0.0.1:9080/get`
+          if [[ $result_code -ne 200 ]];then
+                  printf "result_code: %s\n" "$result_code"
+                  exit 125
+          fi

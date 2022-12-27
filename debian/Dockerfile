@@ -17,7 +17,7 @@
 
 FROM debian:bullseye-slim
 
-ARG APISIX_VERSION=2.15.0
+ARG APISIX_VERSION=3.0.0
 
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
@@ -45,6 +45,10 @@ RUN set -ex; \
     && apisix version
 
 WORKDIR /usr/local/apisix
+
+RUN useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix
+
+USER apisix
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \

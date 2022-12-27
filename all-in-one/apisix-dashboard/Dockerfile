@@ -63,10 +63,10 @@ RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-
 # Build APISIX Dashboard - 1. download source code from github
 FROM alpine:latest as pre-build
 
-ARG APISIX_DASHBOARD_VERSION
+ARG APISIX_DASHBOARD_TAG
 
 RUN set -x \
-    && wget https://github.com/apache/apisix-dashboard/archive/${APISIX_DASHBOARD_VERSION}.tar.gz -O /tmp/apisix-dashboard.tar.gz \
+    && wget https://github.com/apache/apisix-dashboard/archive/${APISIX_DASHBOARD_TAG}.tar.gz -O /tmp/apisix-dashboard.tar.gz \
     && mkdir /usr/local/apisix-dashboard \
     && tar -xvf /tmp/apisix-dashboard.tar.gz -C /usr/local/apisix-dashboard --strip 1
 

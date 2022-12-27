@@ -19,7 +19,7 @@ version: "3"
 
 services:
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.13-alpine
+    image: apache/apisix-dashboard:2.15.0-alpine
     restart: always
     volumes:
     - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
@@ -29,7 +29,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:2.15.0-alpine
+    image: apache/apisix:latest
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
@@ -38,6 +38,7 @@ services:
       - etcd
     ##network_mode: host
     ports:
+      - "9180:9180/tcp"
       - "9080:9080/tcp"
       - "9091:9091/tcp"
       - "9443:9443/tcp"
@@ -53,7 +54,7 @@ services:
     environment:
       ETCD_ENABLE_V2: "true"
       ALLOW_NONE_AUTHENTICATION: "yes"
-      ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
       ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
     ports:
       - "2379:2379/tcp"
@@ -113,4 +114,3 @@ networks:
 volumes:
   etcd_data:
     driver: local
-
