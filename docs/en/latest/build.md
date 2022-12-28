@@ -27,9 +27,9 @@ title: Build an image from the source codes
 
 1. install release version (Apache releases are beginning from version 0.9):
 ```
-# Assign Apache release version number to variable `APISIX_VERSION`, for example: 2.2. The latest version can be find at `https://github.com/apache/apisix/releases`
+# Assign Apache release version number to variable `APISIX_VERSION`, for example: 3.0.0. The latest version can be find at `https://github.com/apache/apisix/releases`
 
-export APISIX_VERSION=2.9
+export APISIX_VERSION=3.0.0
 make build-on-debian
 ```
 
