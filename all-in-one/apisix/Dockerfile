@@ -16,11 +16,10 @@
 #
 
 ARG ENABLE_PROXY=false
-ARG APISIX_VERSION=3.1.0
 ARG ETCD_VERSION=v3.5.4
 
 # Build Apache APISIX
-FROM apache/apisix:${APISIX_VERSION}-debian
+FROM apache/apisix:latest
 
 
 ARG ETCD_VERSION
