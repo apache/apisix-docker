@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 
+ARG ETCD_VERSION=v3.5.6
+
+FROM quay.io/coreos/etcd:$ETCD_VERSION as etcddep
 FROM api7/apisix-base:dev AS build
 
 ARG ENABLE_PROXY=false
@@ -44,6 +47,7 @@ RUN set -x \
 
 FROM api7/apisix-base:dev AS production-stage
 
+COPY --from=etcddep /usr/local/bin/etcdctl /usr/local/bin/etcdctl
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
 

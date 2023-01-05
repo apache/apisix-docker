@@ -16,21 +16,18 @@
 #
 
 ARG ENABLE_PROXY=false
-ARG ETCD_VERSION=v3.5.4
+ARG ETCD_VERSION=v3.5.6
+
+FROM quay.io/coreos/etcd:$ETCD_VERSION as etcddep
 
 # Build Apache APISIX
 FROM apache/apisix:latest
 
-
-ARG ETCD_VERSION
 LABEL etcd_version="${ETCD_VERSION}"
 
+COPY --from=etcddep /usr/local/bin/* /usr/local/bin/
+
 WORKDIR /tmp
-
-RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
-    && tar -zxvf etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
-    && mv etcd-${ETCD_VERSION}-linux-amd64/* /usr/bin/
-
 
 WORKDIR /usr/local/apisix
 

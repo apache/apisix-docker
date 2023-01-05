@@ -15,8 +15,11 @@
 # limitations under the License.
 #
 
-FROM debian:bullseye-slim
+ARG ETCD_VERSION=v3.5.6
 
+FROM quay.io/coreos/etcd:$ETCD_VERSION as etcddep
+
+FROM debian:bullseye-slim
 ARG APISIX_VERSION=3.1.0
 
 RUN set -ex; \
@@ -56,6 +59,7 @@ RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
 
 EXPOSE 9080 9443
 
+COPY --from=etcddep /usr/local/bin/etcdctl /usr/local/bin/etcdctl
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
