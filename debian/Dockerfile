@@ -46,6 +46,8 @@ RUN set -ex; \
 
 WORKDIR /usr/local/apisix
 
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
+
 RUN useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix
 
 USER apisix

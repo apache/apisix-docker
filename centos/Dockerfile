@@ -27,6 +27,8 @@ RUN yum install -y https://repos.apiseven.com/packages/centos/apache-apisix-repo
 
 WORKDIR /usr/local/apisix
 
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
