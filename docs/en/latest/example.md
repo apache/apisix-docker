@@ -102,6 +102,4 @@ curl https://web1.lvh.me:9443/ -v --cacert ./mkcert/rootCA.pem
 docker-compose -p docker-apisix down
 
 sudo rm -rf etcd_data/member
-
-rm -rf apisix_log/*.log
 ```

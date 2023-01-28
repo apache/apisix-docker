@@ -32,7 +32,6 @@ services:
     image: apache/apisix:latest
     restart: always
     volumes:
-      - ./apisix_log:/usr/local/apisix/logs
       - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
