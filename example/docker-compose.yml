@@ -19,7 +19,7 @@ version: "3"
 
 services:
   apisix-dashboard:
-    image: apache/apisix-dashboard:2.15.0-alpine
+    image: apache/apisix-dashboard:3.0.0-alpine
     restart: always
     volumes:
     - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
