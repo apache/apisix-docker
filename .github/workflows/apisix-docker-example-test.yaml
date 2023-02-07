@@ -18,6 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Build image
+        env: 
+          APISIX_VERSION: 3.2.0
+        run: |
+          make build-on-debian
+          
       - name: use docker-compose
         run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
 
