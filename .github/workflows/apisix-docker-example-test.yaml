@@ -49,3 +49,11 @@ jobs:
                   printf "result_code: %s\n" "$result_code"
                   exit 125
           fi
+
+      - name: verify exmaple image
+        run: |
+          image_debian_numbers=$(docker images apache/apisix | grep apisix | wc -l)
+          (echo $image_debian_numbers | grep 1 ) && exit 0
+          echo "example image does not match the build image"
+          docker image apache/apisix
+          exit 1
