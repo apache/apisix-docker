@@ -21,7 +21,7 @@ SHELL := bash
 
 
 # APISIX ARGS
-APISIX_VERSION ?= 2.15.1
+APISIX_VERSION ?= 2.15.2
 MAX_APISIX_VERSION ?= 3.0.0
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
