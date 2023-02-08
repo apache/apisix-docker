@@ -9,8 +9,8 @@ on:
       - 'docs/**'
       - '**/*.md'
   pull_request:
-    paths:
-      - 'example/*'
+    branches:
+      - master
 
 jobs:
   build:
