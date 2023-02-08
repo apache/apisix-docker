@@ -29,7 +29,7 @@ WORKDIR /tmp
 
 USER root
 
-RUN curl -sSL https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz -o etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
+RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
     && tar -zxvf etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
     && mv etcd-${ETCD_VERSION}-linux-amd64/* /usr/bin/
 
