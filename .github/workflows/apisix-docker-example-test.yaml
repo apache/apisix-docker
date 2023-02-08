@@ -25,6 +25,8 @@ jobs:
 
     env:
       APISIX_VERSION: "3.1.0"
+      APISIX_IMAGE_CENTOS: apisix:$APISIX_VERSION-centos
+      APISIX_IMAGE_DEBIAN: apisix:${{ env.APISIX_VERSION }}-debian
 
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +34,7 @@ jobs:
       - name: Verify exmaple image tag
         run: |
           image=$(cat example/docker-compose.yml | grep -Po apisix:\\d.\\d.\\d-\\w*)
-          (echo $image | grep $APISIX_VERSION-debian || echo $image | grep $APISIX_VERSION-centos) && exit 0
+          (echo $image | grep apisix:$APISIX_VERSION-debian || echo $image | grep $APISIX_VERSION-centos) && exit 0
 
           echo "Example image does not match the current image."
           echo "Expect: apache/$APISIX_VERSION-debian or apache/$APISIX_VERSION-centos"
