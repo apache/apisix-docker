@@ -24,7 +24,7 @@ jobs:
           - debian
 
     env:
-      APISIX_VERSION: 3.1.0
+      APISIX_VERSION: "3.1.0"
 
     steps:
       - uses: actions/checkout@v2
@@ -50,6 +50,7 @@ jobs:
           build_image=$APISIX_VERSION-${{ matrix.platform }}
 
           sed "s/$image/${build_image}/g" example/docker-compose.yml > example/docker-compose-cache.yml
+          cat example/docker-compose-cache.yml
 
           docker-compose -p docker-apisix -f example/docker-compose-cache.yml up -d
 
