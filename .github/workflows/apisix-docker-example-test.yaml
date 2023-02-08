@@ -15,17 +15,43 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - centos
+          - debian
+
+    env:
+      APISIX_VERSION: 3.1.0
+
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Verify exmaple image tag
+        run: |
+          image=$(cat example/docker-compose.yml | grep -Po apisix:\\d.\\d.\\d-\\w*)
+          (echo $image | grep $APISIX_VERSION-debian || echo $image | grep $APISIX_VERSION-centos) && exit 0
+
+          echo "Example image does not match the current image."
+          echo "Expect: apache/$APISIX_VERSION-debian or apache/$APISIX_VERSION-centos"
+          echo "Actual: apache/$image"
+
+          exit 1
 
       - name: Build image
-        env: 
-          APISIX_VERSION: 3.2.0
         run: |
-          make build-on-debian
+          make build-on-${{ matrix.platform }}
           
       - name: use docker-compose
-        run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
+        run: |
+          image=$(cat example/docker-compose.yml | grep -Po apisix:\\d.\\d.\\d-\\w*)
+          build_image=$APISIX_VERSION-${{ matrix.platform }}
+
+          sed "s/$image/${build_image}/g" example/docker-compose.yml > example/docker-compose-cache.yml
+
+          docker-compose -p docker-apisix -f example/docker-compose-cache.yml up -d
 
       - name: Test APISIX
         run: |
@@ -49,13 +75,3 @@ jobs:
                   printf "result_code: %s\n" "$result_code"
                   exit 125
           fi
-
-      - name: verify exmaple image
-        run: |
-          image_debian_numbers=$(docker images apache/apisix | grep apisix | wc -l)
-          (echo $image_debian_numbers | grep 1 ) && exit 0
-
-          echo "example image does not match the build image"
-
-          docker images apache/apisix
-          exit 1
