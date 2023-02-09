@@ -11,6 +11,8 @@ on:
   pull_request:
     branches:
       - master
+      - 'release/apisix-2.15.**'
+
 env:
   APISIX_VERSION: "3.1.0"
 
