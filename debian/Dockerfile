@@ -22,18 +22,18 @@ ARG APISIX_VERSION=3.1.0
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
     apt update; \
-    apt-get -y install --no-install-recommends gnupg ca-certificates curl; \
+    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl; \
     codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
-    curl -sSL https://openresty.org/package/pubkey.gpg | apt-key add -; \
+    wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -; \
     case "${arch}" in \
       amd64) \
         echo "deb http://openresty.org/package/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list \
-        && curl -sSL http://repos.apiseven.com/pubkey.gpg | apt-key add - \
+        && wget -O - http://repos.apiseven.com/pubkey.gpg | apt-key add - \
         && echo "deb http://repos.apiseven.com/packages/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
       arm64) \
         echo "deb http://openresty.org/package/arm64/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list \
-        && curl -sSL http://repos.apiseven.com/pubkey.gpg | apt-key add - \
+        && wget -O - http://repos.apiseven.com/pubkey.gpg | apt-key add - \
         && echo "deb http://repos.apiseven.com/packages/arm64/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
     esac; \
