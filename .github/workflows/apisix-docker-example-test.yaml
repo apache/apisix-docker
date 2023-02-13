@@ -11,13 +11,31 @@ on:
   pull_request:
     branches:
       - master
+      - 'release/apisix-2.15.**'
 
 env:
   APISIX_VERSION: "3.1.0"
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Set apisix version
+        id: apisix
+        run: |
+          branch=${{ github.base_ref }}
+          apisix_version=$( (echo ${branch} | grep -Po '\d*\.\d*\.\d*') || echo ${APISIX_VERSION} )
+          echo "version=${apisix_version}" >> $GITHUB_OUTPUT
+
+    outputs:
+      apisix-version: ${{ steps.apisix.outputs.version }}
+
   build:
     runs-on: ubuntu-latest
+    needs: prepare
+    env:
+      APISIX_VERSION: ${{ needs.prepare.outputs.apisix-version }}
 
     strategy:
       fail-fast: false
@@ -28,16 +46,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: set env apisix_version
-        if:  ${{ contains(${{ github.ref }}, 'master') }}
-        run: |
-          branch=release/apisix-2.15.0
-          apisix_version=$(echo ${branch} | grep -Po '\d*\.\d*\.\d*')
-          export APISIX_VERSION=$apisix_version
-      
-      - name: echo apisix_version
-        run: echo $APISIX_VERSION
 
       - name: Verify exmaple image tag
         run: |
