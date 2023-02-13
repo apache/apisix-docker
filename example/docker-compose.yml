@@ -29,7 +29,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:3.1.0-debian
+    image: apache/apisix:${APISIX_IMAGE_TAG:-3.1.0-debian}
     restart: always
     volumes:
       - ./apisix_log:/usr/local/apisix/logs
