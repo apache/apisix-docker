@@ -30,9 +30,9 @@ services:
 
   apisix:
     image: apache/apisix:3.1.0-debian
+    user: apisix
     restart: always
     volumes:
-      - ./apisix_log:/usr/local/apisix/logs
       - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
