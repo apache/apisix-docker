@@ -29,7 +29,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: set env apisix_version
+        if:  ${{ contains(${{ github.ref }}, 'master') }}
+        run: |
+          branch=release/apisix-2.15.0
+          apisix_version=$(echo ${branch} | grep -Po '\d*\.\d*\.\d*')
+          export APISIX_VERSION=$apisix_version
       
+      - name: echo apisix_version
+        run: echo $APISIX_VERSION
+
       - name: Verify exmaple image tag
         run: |
           apisix_image_centos=apisix:${APISIX_VERSION}-centos
