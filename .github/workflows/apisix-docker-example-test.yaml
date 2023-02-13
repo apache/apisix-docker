@@ -25,7 +25,6 @@ jobs:
         id: apisix
         run: |
           branch=${{ github.base_ref }}
-          branch=2.15.0
           apisix_version=$( (echo ${branch} | grep -Po '\d*\.\d*\.\d*') || echo ${APISIX_VERSION} )
           echo "version=${apisix_version}" >> $GITHUB_OUTPUT
 
