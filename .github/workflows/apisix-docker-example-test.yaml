@@ -9,16 +9,51 @@ on:
       - 'docs/**'
       - '**/*.md'
   pull_request:
-    paths:
-      - 'example/*'
+    branches:
+      - master
+      - 'release/apisix-2.15.**'
+
+env:
+  APISIX_VERSION: "3.1.0"
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Set apisix version
+        id: apisix
+        run: |
+          branch=${{ github.base_ref }}
+          apisix_version=$( (echo ${branch} | grep -Po '\d*\.\d*\.\d*') || echo ${APISIX_VERSION} )
+          echo "version=${apisix_version}" >> $GITHUB_OUTPUT
+
+    outputs:
+      apisix-version: ${{ steps.apisix.outputs.version }}
+
   build:
     runs-on: ubuntu-latest
+    needs: prepare
+    env:
+      APISIX_VERSION: ${{ needs.prepare.outputs.apisix-version }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - centos
+          - debian
+
     steps:
       - uses: actions/checkout@v2
 
+      - name: Build image
+        run: |
+          make build-on-${{ matrix.platform }}
+          
       - name: use docker-compose
+        env:
+          APISIX_IMAGE_TAG: ${{ format('{0}-{1}', env.APISIX_VERSION, matrix.platform) }}
         run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
 
       - name: Test APISIX
