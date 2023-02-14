@@ -22,7 +22,6 @@ services:
     image: "apache/apisix:${APISIX_DOCKER_TAG}"
     restart: always
     volumes:
-      - ./apisix_log:/usr/local/apisix/logs
       - ./apisix_conf/release/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
