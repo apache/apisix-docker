@@ -17,7 +17,7 @@
 
 FROM debian:bullseye-slim
 
-ARG APISIX_VERSION=2.15.2
+ARG APISIX_VERSION=2.15.3
 
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
