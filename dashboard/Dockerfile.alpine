@@ -59,6 +59,10 @@ FROM alpine:latest as prod
 
 WORKDIR /usr/local/apisix-dashboard
 
+RUN useradd -u 1001 apisix && chown -R apisix:apisix /usr/local/apisix-dashboard
+
+USER apisix
+
 COPY --from=api-builder /usr/local/apisix-dashboard/output/ ./
 
 COPY --from=fe-builder /usr/local/apisix-dashboard/output/ ./
