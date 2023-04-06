@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APISIX_DASHBOARD_VERSION: "2.15.1" # in semver
+      APISIX_DASHBOARD_VERSION: "3.0.1" # in semver
     
     steps:
       - uses: actions/checkout@v2
