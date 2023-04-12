@@ -27,14 +27,14 @@ RUN set -ex; \
     wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -; \
     case "${arch}" in \
       amd64) \
-        echo "deb http://openresty.org/package/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list \
-        && wget -O - http://repos.apiseven.com/pubkey.gpg | apt-key add - \
-        && echo "deb http://repos.apiseven.com/packages/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
+        echo "deb https://openresty.org/package/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list \
+        && wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
+        && echo "deb https://repos.apiseven.com/packages/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
       arm64) \
-        echo "deb http://openresty.org/package/arm64/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list \
-        && wget -O - http://repos.apiseven.com/pubkey.gpg | apt-key add - \
-        && echo "deb http://repos.apiseven.com/packages/arm64/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
+        echo "deb https://openresty.org/package/arm64/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list \
+        && wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
+        && echo "deb https://repos.apiseven.com/packages/arm64/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
     esac; \
     apt update \
