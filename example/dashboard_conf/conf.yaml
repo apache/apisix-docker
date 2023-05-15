@@ -28,10 +28,10 @@ conf:
                           # etcd basic auth info
     # username: "root"    # ignore etcd username if not enable etcd auth
     # password: "123456"  # ignore etcd password if not enable etcd auth
-    mtls:
-      key_file: ""          # Path of your self-signed client side key
-      cert_file: ""         # Path of your self-signed client side cert
-      ca_file: ""           # Path of your self-signed ca cert, the CA is used to sign callers' certificates
+    # mtls:
+    #   key_file: ""          # Path of your self-signed client side key
+    #   cert_file: ""         # Path of your self-signed client side cert
+    #   ca_file: ""           # Path of your self-signed ca cert, the CA is used to sign callers' certificates
     # prefix: /apisix     # apisix config's prefix in etcd, /apisix by default
   log:
     error_log:
@@ -110,3 +110,4 @@ plugins:                          # plugin list (sorted in alphabetical order)
   - zipkin
   - server-info
   - traffic-split
+  - test-plugin
