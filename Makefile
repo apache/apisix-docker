@@ -70,7 +70,7 @@ build-on-centos:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 ### build-on-redhat : Build apache/apisix:xx-redhat image
-.PHONY: build-on-centos
+.PHONY: build-on-redhat
 build-on-redhat:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-redhat -f ./redhat/Dockerfile redhat
