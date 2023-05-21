@@ -96,9 +96,10 @@ build-on-debian:
 .PHONY: push-x86-on-redhat
 push-x86-on-redhat:
 	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build --network=host --push \
+	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-redhat \
-		-redhat -f ./redhat/Dockerfile redhat
+		--platform linux/amd64 \
+		-f ./redhat/Dockerfile redhat
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
