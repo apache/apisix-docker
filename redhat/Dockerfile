@@ -19,7 +19,8 @@ FROM registry.access.redhat.com/ubi8/ubi:8.6
 
 ARG APISIX_VERSION=3.3.0
 LABEL apisix_version="${APISIX_VERSION}"
-COPY ./apache-apisix.repo /etc/yum.repos.d/apache-apisix.repo
+COPY ./yum.repos.d/apache-apisix.repo /etc/yum.repos.d/apache-apisix.repo
+COPY ./yum.repos.d/openresty.repo /etc/yum.repos.d/openresty.repo
 
 RUN yum update -y \
 	&& yum install -y apisix-${APISIX_VERSION} \
