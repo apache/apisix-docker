@@ -2,6 +2,7 @@ name: Push apisix to Docker image
 on:
   push:
     branches: ['release/apisix-**']
+  create:
 
 jobs:
   build:
