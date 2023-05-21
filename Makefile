@@ -92,6 +92,16 @@ build-on-debian:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
+### push-x86-on-redhat : Push apache/apisix:xx-redhat image
+.PHONY: push-x86-on-redhat
+push-x86-on-redhat:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER) build --network=host --push \
+		-t $(ENV_APISIX_IMAGE_TAG_NAME)-redhat \
+		-redhat -f ./redhat/Dockerfile redhat
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+
 ### push-on-alpine : Push apache/apisix:dev image
 .PHONY: push-multiarch-dev-on-debian
 push-multiarch-dev-on-debian:
