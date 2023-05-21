@@ -12,7 +12,6 @@ jobs:
         platform:
           - centos
           - debian
-          - redhat
     env:
       APISIX_DOCKER_TAG: 3.3.0-${{ matrix.platform }}
 
