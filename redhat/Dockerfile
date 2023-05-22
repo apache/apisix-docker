@@ -19,8 +19,10 @@ FROM registry.access.redhat.com/ubi8/ubi:8.6
 
 ARG APISIX_VERSION=3.3.0
 LABEL apisix_version="${APISIX_VERSION}"
+COPY ./yum.repos.d/apache-apisix.repo /etc/yum.repos.d/apache-apisix.repo
+COPY ./yum.repos.d/openresty.repo /etc/yum.repos.d/openresty.repo
 
-RUN yum install -y https://repos.apiseven.com/packages/redhat/apache-apisix-repo-1.0-1.noarch.rpm \
+RUN yum update -y \
 	&& yum install -y apisix-${APISIX_VERSION} \
 	&& yum clean all \
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
