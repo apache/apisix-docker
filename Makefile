@@ -130,7 +130,7 @@ push-multiarch-on-redhat:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-centos \
-		--platform linux/amd64,linux/arm64 \
+		--platform linux/amd64 \
 		-f ./redhat/Dockerfile redhat
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
