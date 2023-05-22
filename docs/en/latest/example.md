@@ -23,6 +23,15 @@ title: Example
 
 **This example is used for functional verification and is not recommended for performance testing. For performance testing, please refer to [benchmark](https://github.com/apache/apisix#benchmark).**
 
+
+### Pull
+
+```
+git clone git@github.com:apache/apisix-docker.git
+cd example/
+```
+
+
 ### Run
 
 ```
