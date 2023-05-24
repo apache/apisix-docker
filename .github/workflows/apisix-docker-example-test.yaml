@@ -43,6 +43,7 @@ jobs:
         platform:
           - centos
           - debian
+          - redhat
 
     steps:
       - uses: actions/checkout@v2
