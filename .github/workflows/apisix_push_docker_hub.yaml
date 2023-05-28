@@ -45,8 +45,8 @@ jobs:
 
           result_code=`curl -I -m 10 -o /dev/null -s -w %{http_code} http://127.0.0.1:9080/get`
           if [[ $result_code -ne 200 ]];then
-                  printf "result_code: %s\n" "$result_code"
-                  exit 125
+            printf "result_code: %s\n" "$result_code"
+            exit 125
           fi
 
       - name: Login to Docker Hub
