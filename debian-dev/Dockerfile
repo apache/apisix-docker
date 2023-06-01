@@ -21,6 +21,8 @@ ARG ENABLE_PROXY=false
 
 ENV DEBIAN_FRONTEND noninteractive
 
+SHELL ["/bin/bash", "-c"]
+
 RUN set -x \
     && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://deb.debian.org,https://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && apt-get -y update --fix-missing \
@@ -34,6 +36,8 @@ RUN set -x \
         sudo \
         unzip \
         wget \
+    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \ 
+    && source "$HOME/.cargo/env" \
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
