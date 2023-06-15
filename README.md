@@ -58,7 +58,7 @@ curl http://127.0.0.1:9080/
 ```shell
 Hello APISIX
 ```
-If you want to know more configuration examples, you can refer to [stand-alone](https://apisix.apache.org/docs/apisix/stand-alone).
+If you want to know more configuration examples, you can refer to [stand-alone](https://apisix.apache.org/docs/apisix/deployment-modes/#standalone).
 
 ### How to run APISIX using etcd as configuration center
 
