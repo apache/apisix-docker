@@ -48,7 +48,7 @@ WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
-RUN useradd -u 6336 apisix && chown -R apisix:apisix /usr/local/apisix
+RUN useradd --system --no-create-home --home /nonexistent --shell /bin/false --uid 636 apisix && chown -R apisix:apisix /usr/local/apisix
 
 USER apisix
 
