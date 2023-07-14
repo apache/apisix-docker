@@ -67,6 +67,8 @@ EXPOSE 9080 9443
 
 RUN wget https://raw.githubusercontent.com/apache/apisix-docker/master/debian-dev/docker-entrypoint.sh
 
+RUN ["chmod", "+x", "./docker-entrypoint.sh"]
+
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
 CMD ["docker-start"]
