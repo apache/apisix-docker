@@ -52,6 +52,9 @@ RUN set -x \
         libssl-dev \
     && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \ 
     && source "$HOME/.cargo/env" \
+    # rust version 1.69.0 required to compile lua-resty-ldap
+    && rustup install 1.69.0 \
+    && rustup default 1.69.0 \
     && bash ./linux-install-luarocks.sh \
     && luarocks config variables.OPENSSL_INCDIR /usr/include/ \ 
     && luarocks config variables.PCRE_DIR /usr/local/openresty/pcre \
@@ -62,9 +65,9 @@ ENV PATH=$PATH:/usr/local/openresty-debug/luajit/bin:/usr/local/openresty-debug/
 
 EXPOSE 9080 9443
 
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+RUN wget https://raw.githubusercontent.com/apache/apisix-docker/master/debian-dev/docker-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
 
 CMD ["docker-start"]
 
