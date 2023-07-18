@@ -25,9 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - centos
           - debian
-          - redhat
 
     steps:
       - uses: actions/checkout@v2
