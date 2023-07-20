@@ -1,0 +1,66 @@
+name: CI for docker image built from local source code
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  pull_request:
+    branches:
+      - master
+      - 'release/apisix-2.15.**'
+
+env:
+  APISIX_IMAGE_TAG: "local"
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - debian
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Checkout APISIX code
+        run: |
+          git clone https://github.com/apache/apisix.git
+
+      - name: Build image
+        run: |
+          cd apisix
+          tag="apache/apisix:$APISIX_IMAGE_TAG"
+          docker build -t $tag -f ../debian-dev/Dockerfile.local  .
+          
+      - name: use docker-compose
+        run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
+
+      - name: Test APISIX
+        run: |
+          sleep 30
+
+          curl http://127.0.0.1:9180/apisix/admin/routes/1 \
+          -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '
+            {
+            "uri": "/get",
+            "upstream": {
+                "type": "roundrobin",
+                "nodes": {
+                    "web1:80": 1
+                }
+            }
+          }'
+
+          result_code=`curl -I -m 10 -o /dev/null -s -w %{http_code} http://127.0.0.1:9080/get`
+          if [[ $result_code -ne 200 ]];then
+                  printf "result_code: %s\n" "$result_code"
+                  exit 125
+          fi
