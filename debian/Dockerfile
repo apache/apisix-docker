@@ -17,7 +17,7 @@
 
 FROM debian:bullseye-slim
 
-ARG APISIX_VERSION=3.4.0
+ARG APISIX_VERSION=3.4.1
 
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
