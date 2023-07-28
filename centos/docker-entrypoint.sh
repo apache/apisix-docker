@@ -29,11 +29,6 @@ deployment:
     config_provider: yaml
 _EOC_
 
-        cat > ${PREFIX}/conf/apisix.yaml << _EOC_
-routes:
-  -
-#END
-_EOC_
         /usr/bin/apisix init
     else
         /usr/bin/apisix init
