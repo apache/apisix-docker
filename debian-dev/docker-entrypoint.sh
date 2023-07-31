@@ -16,6 +16,7 @@
 # limitations under the License.
 #
 
+#!/usr/bin/env bash
 set -eo pipefail
 
 PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
@@ -29,13 +30,20 @@ deployment:
     config_provider: yaml
 _EOC_
 
+    if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
+        cat > ${PREFIX}/conf/apisix.yaml << _EOC_
+routes:
+  -
+#END
+_EOC_
+    fi
         /usr/bin/apisix init
     else
         /usr/bin/apisix init
         /usr/bin/apisix init_etcd
     fi
     
-    exec /usr/local/openresty-debug/bin/openresty -p /usr/local/apisix -g 'daemon off;'
+    exec /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'
 fi
 
 exec "$@"
