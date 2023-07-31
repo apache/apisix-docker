@@ -16,7 +16,6 @@
 # limitations under the License.
 #
 
-#!/usr/bin/env bash
 set -eo pipefail
 
 PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
