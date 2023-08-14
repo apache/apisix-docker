@@ -39,7 +39,7 @@ export APISIX_VERSION=master
 make build-on-debian
 ```
 
-### Build an image from customized/patched source code:
+### Build an image from customized/patched source code
 
 1. `cd` into the root of APISIX project.
 2. Use the provided [dockerfile](../../../debian-dev/Dockerfile.local) to build an image like so:
