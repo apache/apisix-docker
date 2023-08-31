@@ -29,7 +29,7 @@ deployment:
   role_data_plane:
     config_provider: yaml
 _EOC_
-      if
+      fi
 
       if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
         cat > ${PREFIX}/conf/apisix.yaml << _EOC_
