@@ -22,18 +22,22 @@ PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
 
 if [[ "$1" == "docker-start" ]]; then
     if [ "$APISIX_STAND_ALONE" = "true" ]; then
-        cat > ${PREFIX}/conf/config.yaml << _EOC_
+      if [ ! -f "${PREFIX}/conf/config.yaml" ]; then
+          cat > ${PREFIX}/conf/config.yaml << _EOC_
 deployment:
   role: data_plane
   role_data_plane:
     config_provider: yaml
 _EOC_
+      fi
 
+      if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
         cat > ${PREFIX}/conf/apisix.yaml << _EOC_
 routes:
   -
 #END
 _EOC_
+      fi
         /usr/bin/apisix init
     else
         /usr/bin/apisix init
