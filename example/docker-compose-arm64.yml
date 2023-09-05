@@ -45,7 +45,7 @@ services:
       apisix:
 
   etcd:
-    image: rancher/coreos-etcd:v3.5.05-arm64
+    image: rancher/coreos-etcd:v3.4.15-arm64
     user: root
     restart: always
     volumes:
