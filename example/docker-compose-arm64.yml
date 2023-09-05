@@ -29,7 +29,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:3.4.1-debian
+    image: apache/apisix:3.5.0-debian
     restart: always
     volumes:
       - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
@@ -45,7 +45,7 @@ services:
       apisix:
 
   etcd:
-    image: rancher/coreos-etcd:v3.4.15-arm64
+    image: rancher/coreos-etcd:v3.5.05-arm64
     user: root
     restart: always
     volumes:

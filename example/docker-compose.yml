@@ -29,7 +29,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:${APISIX_IMAGE_TAG:-3.4.1-debian}
+    image: apache/apisix:${APISIX_IMAGE_TAG:-3.5.0-debian}
     restart: always
     volumes:
       - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
@@ -46,7 +46,7 @@ services:
       apisix:
 
   etcd:
-    image: bitnami/etcd:3.4.15
+    image: bitnami/etcd:3.5.05
     restart: always
     volumes:
       - etcd_data:/bitnami/etcd

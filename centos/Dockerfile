@@ -17,7 +17,7 @@
 
 FROM centos:7
 
-ARG APISIX_VERSION=3.4.1
+ARG APISIX_VERSION=3.5.0
 LABEL apisix_version="${APISIX_VERSION}"
 
 RUN yum install -y https://repos.apiseven.com/packages/centos/apache-apisix-repo-1.0-1.noarch.rpm \
