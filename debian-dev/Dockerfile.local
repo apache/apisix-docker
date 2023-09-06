@@ -50,6 +50,7 @@ RUN set -x \
         wget \
         make \
         libssl-dev \
+        yq \
     && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \ 
     && source "$HOME/.cargo/env" \
     # rust version 1.69.0 required to compile lua-resty-ldap

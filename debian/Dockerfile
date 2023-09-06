@@ -22,7 +22,7 @@ ARG APISIX_VERSION=3.5.0
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
     apt update; \
-    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl; \
+    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl yq; \
     codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
     wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -; \
     case "${arch}" in \
