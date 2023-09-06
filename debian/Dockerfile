@@ -22,7 +22,7 @@ ARG APISIX_VERSION=3.5.0
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
     apt update; \
-    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl yq; \
+    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl wget;\
     codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
     wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -; \
     case "${arch}" in \
@@ -51,6 +51,9 @@ ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/
 RUN groupadd --system --gid 636 apisix \
     && useradd --system --gid apisix --no-create-home --shell /usr/sbin/nologin --uid 636 apisix \
     && chown -R apisix:apisix /usr/local/apisix
+
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+	&& chmod a+x /usr/local/bin/yq
 
 USER apisix
 

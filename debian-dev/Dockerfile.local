@@ -50,7 +50,6 @@ RUN set -x \
         wget \
         make \
         libssl-dev \
-        yq \
     && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \ 
     && source "$HOME/.cargo/env" \
     # rust version 1.69.0 required to compile lua-resty-ldap
@@ -67,6 +66,9 @@ ENV PATH=$PATH:/usr/local/openresty-debug/luajit/bin:/usr/local/openresty-debug/
 EXPOSE 9080 9443
 
 RUN wget https://raw.githubusercontent.com/apache/apisix-docker/master/debian-dev/docker-entrypoint.sh
+
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+	&& chmod a+x /usr/local/bin/yq
 
 RUN ["chmod", "+x", "./docker-entrypoint.sh"]
 

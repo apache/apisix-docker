@@ -34,7 +34,6 @@ RUN set -x \
         sudo \
         unzip \
         wget \
-        yq   \
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
     && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
@@ -53,6 +52,9 @@ RUN apt-get -y update --fix-missing \
     && apt-get install -y \
         libldap2-dev \
     && apt-get remove --purge --auto-remove -y
+
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+	&& chmod a+x /usr/local/bin/yq
 
 WORKDIR /usr/local/apisix
 

@@ -21,7 +21,7 @@ ARG APISIX_VERSION=3.5.0
 LABEL apisix_version="${APISIX_VERSION}"
 
 RUN yum install -y https://repos.apiseven.com/packages/centos/apache-apisix-repo-1.0-1.noarch.rpm \
-	&& yum install -y apisix-${APISIX_VERSION} \
+	&& yum install -y apisix-${APISIX_VERSION} wget \
 	&& yum clean all \
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
 
