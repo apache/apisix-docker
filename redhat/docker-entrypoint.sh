@@ -34,8 +34,8 @@ routes:
 #END
 _EOC_
       else
-          yq -i -y '.deployment.role = "data_plane"' ${PREFIX}/conf/config.yaml
-          yq  -i -y '.deployment.role_data_plane.config_provider = "yaml"' ${PREFIX}/conf/config.yaml 
+          yq -i '.deployment.role = "data_plane"' ${PREFIX}/conf/config.yaml
+          yq  -i '.deployment.role_data_plane.config_provider = "yaml"' ${PREFIX}/conf/config.yaml 
       fi
         /usr/bin/apisix init
     else
