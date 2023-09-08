@@ -52,9 +52,6 @@ RUN groupadd --system --gid 636 apisix \
     && useradd --system --gid apisix --no-create-home --shell /usr/sbin/nologin --uid 636 apisix \
     && chown -R apisix:apisix /usr/local/apisix
 
-RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
-	&& chmod a+x /usr/local/bin/yq
-
 USER apisix
 
 # forward request and error logs to docker log collector

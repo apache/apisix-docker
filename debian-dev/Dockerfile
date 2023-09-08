@@ -53,9 +53,6 @@ RUN apt-get -y update --fix-missing \
         libldap2-dev \
     && apt-get remove --purge --auto-remove -y
 
-RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
-	&& chmod a+x /usr/local/bin/yq
-
 WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty-debug/luajit/bin:/usr/local/openresty-debug/nginx/sbin:/usr/local/openresty-debug/bin

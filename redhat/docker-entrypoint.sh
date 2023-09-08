@@ -34,8 +34,11 @@ routes:
 #END
 _EOC_
       else
-          yq -i '.deployment.role = "data_plane"' ${PREFIX}/conf/config.yaml
-          yq  -i '.deployment.role_data_plane.config_provider = "yaml"' ${PREFIX}/conf/config.yaml 
+          wget -qO /usr/local/apisix/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+	        && chmod a+x /usr/local/apisix/yq
+          /usr/local/apisix/yq -i '.deployment.role = "data_plane"' ${PREFIX}/conf/config.yaml
+          /usr/local/apisix/yq -i '.deployment.role_data_plane.config_provider = "yaml"' ${PREFIX}/conf/config.yaml 
+          rm /usr/local/apisix/yq
       fi
         /usr/bin/apisix init
     else
