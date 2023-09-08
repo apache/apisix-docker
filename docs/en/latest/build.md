@@ -74,7 +74,7 @@ Check the built Docker images:
 docker images
 ```
 
-If the image was built sucessfully, you should see the image listed, similar to the following:
+If the image was built successfully, you should see the image listed, similar to the following:
 
 ```text
 REPOSITORY        TAG            IMAGE ID       CREATED              SIZE
