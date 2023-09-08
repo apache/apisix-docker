@@ -43,8 +43,9 @@ Find an APISIX [release version](https://github.com/apache/apisix/releases) to b
 Build a Docker image from the release:
 
 ```shell
-export APISIX_VERSION=3.5.0  # replace with your version
-make build-on-debian
+APISIX_VERSION=3.5.0    # specify release version
+DISTRO=debian           # debian, centos, redhat
+make build-on-$DISTRO
 ```
 
 ### Build an image from master branch
@@ -54,8 +55,9 @@ This is provided for developer's convenience.
 Build a Docker image from the master branch:
 
 ```shell
-export APISIX_VERSION=master
-make build-on-debian
+APISIX_VERSION=master   # master branch
+DISTRO=debian           # debian, centos, redhat
+make build-on-$DISTRO
 ```
 
 ### Build an image from locally customized/patched source code
