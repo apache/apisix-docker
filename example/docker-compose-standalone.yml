@@ -23,7 +23,6 @@ services:
     restart: always
     volumes:
       - ./apisix_conf/apisix-standalone.yaml:/usr/local/apisix/conf/apisix.yaml:ro
-    ##network_mode: host
     environment:
       - APISIX_STAND_ALONE=true
     ports:
