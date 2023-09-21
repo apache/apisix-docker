@@ -45,6 +45,10 @@ _EOC_
         /usr/bin/apisix init
         /usr/bin/apisix init_etcd
     fi
+
+    if [ -e "/usr/local/apisix/conf/config_listen.sock" ]; then
+        rm -f "/usr/local/apisix/conf/config_listen.sock"
+    fi
     
     exec /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'
 fi
