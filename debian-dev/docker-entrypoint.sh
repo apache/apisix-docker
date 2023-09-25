@@ -40,6 +40,14 @@ _EOC_
           /usr/local/apisix/yq -i '.deployment.role_data_plane.config_provider = "yaml"' ${PREFIX}/conf/config.yaml 
           rm /usr/local/apisix/yq      
       fi
+
+        if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
+          cat > ${PREFIX}/conf/apisix.yaml << _EOC_
+routes:
+  -
+#END
+_EOC_
+        fi
         /usr/bin/apisix init
     else
         /usr/bin/apisix init
