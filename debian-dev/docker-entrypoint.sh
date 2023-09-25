@@ -29,9 +29,6 @@ deployment:
   role: data_plane
   role_data_plane:
     config_provider: yaml
-routes:
-  -
-#END
 _EOC_
       else
           wget -qO /usr/local/apisix/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
