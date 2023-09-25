@@ -23,15 +23,19 @@ PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
 if [[ "$1" == "docker-start" ]]; then
     if [ "$APISIX_STAND_ALONE" = "true" ]; then
       # If the file is not present then initialise the content otherwise update relevant keys for standalone mode
+      if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
+        cat > ${PREFIX}/conf/apisix.yaml << _EOC_
+routes:
+  -
+#END
+_EOC_
+      fi
       if [ ! -f "${PREFIX}/conf/config.yaml" ]; then
           cat > ${PREFIX}/conf/config.yaml << _EOC_
 deployment:
   role: data_plane
   role_data_plane:
     config_provider: yaml
-routes:
-  -
-#END
 _EOC_
       else
           wget -qO /usr/local/apisix/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
