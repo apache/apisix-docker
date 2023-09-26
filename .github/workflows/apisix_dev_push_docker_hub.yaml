@@ -66,3 +66,9 @@ jobs:
       - name: Push apisix image to Docker Hub
         run: |
           make push-multiarch-dev-on-debian
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'apache/apisix:${{ APISIX_DOCKER_TAG }}'
+          severity: 'CRITICAL,HIGH'
