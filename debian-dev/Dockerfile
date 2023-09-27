@@ -51,7 +51,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y update --fix-missing \
     && apt-get install -y \
         libldap2-dev \
-    && apt-get remove --purge --auto-remove -y
+    && apt-get remove --purge --auto-remove -y \
+    && rm /usr/local/openresty/bin/etcdctl
 
 WORKDIR /usr/local/apisix
 
