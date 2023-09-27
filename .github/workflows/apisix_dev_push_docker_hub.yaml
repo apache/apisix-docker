@@ -72,3 +72,4 @@ jobs:
         with:
           image-ref: 'apache/apisix:${{ env.APISIX_DOCKER_TAG }}'
           severity: 'CRITICAL,HIGH'
+          exit-code: 1
