@@ -59,8 +59,7 @@ RUN set -x \
     && luarocks config variables.OPENSSL_INCDIR /usr/include/ \ 
     && luarocks config variables.PCRE_DIR /usr/local/openresty/pcre \
     && luarocks install rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps --deps-only \
-    && mkdir /usr/local/apisix/logs && touch /usr/local/apisix/logs/error.log && touch /usr/local/apisix/logs/access.log \
-    && rm /usr/local/openresty/bin/etcdctl
+    && mkdir /usr/local/apisix/logs && touch /usr/local/apisix/logs/error.log && touch /usr/local/apisix/logs/access.log
 
 ENV PATH=$PATH:/usr/local/openresty-debug/luajit/bin:/usr/local/openresty-debug/nginx/sbin:/usr/local/openresty-debug/bin
 
