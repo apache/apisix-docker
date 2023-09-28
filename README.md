@@ -155,7 +155,7 @@ The response indicates that apisix is running successfully:
 
 If you want to modify the default configuration of APISIX, you can use the following command to enter the APISIX container and modify the configuration file `./conf/config.yaml`, which will take effect after reloading APISIX. For details, please refer to `./conf/config-default.yaml`.
 
-```
+```shell
 docker exec -it apache-apisix bash
 ```
 
@@ -165,7 +165,7 @@ For more information, you can refer to the [APISIX Website](https://apisix.apach
 
 If you change your custom configuration, you can reload APISIX (without downtime) by issuing.
 
-```
+```shell
 docker exec -it apache-apisix apisix reload
 ```
 This will run the `apisix reload` command in your container.
