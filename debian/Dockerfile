@@ -22,8 +22,9 @@ ARG APISIX_VERSION=3.5.0
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
     apt update; \
-    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl;\
-    codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
+    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl;
+
+RUN codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
     wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -; \
     case "${arch}" in \
       amd64) \
@@ -36,8 +37,9 @@ RUN set -ex; \
         && wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
         && echo "deb https://repos.apiseven.com/packages/arm64/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
-    esac; \
-    apt update \
+    esac;
+
+RUN apt update \
     && apt install -y apisix=${APISIX_VERSION}-0 \
     && apt-get purge -y --auto-remove \
     && rm -f /etc/apt/sources.list.d/openresty.list /etc/apt/sources.list.d/apisix.list \
