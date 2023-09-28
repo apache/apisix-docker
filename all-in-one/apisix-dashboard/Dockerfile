@@ -53,7 +53,6 @@ RUN set -x \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
     && apk del .builddeps build-base make unzip
 
-
 # Build etcd
 FROM alpine:3.13 AS etcd-stage
 

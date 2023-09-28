@@ -33,7 +33,8 @@ ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
-    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
+    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
+    && rm /usr/local/openresty/bin/etcdctl
 
 EXPOSE 9080 9443
 
