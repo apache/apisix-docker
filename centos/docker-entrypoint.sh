@@ -31,8 +31,10 @@ deployment:
     config_provider: yaml
 _EOC_
       else
-          sed -i 's/role: traditional/role: data_plane/' config.yaml
-          sed -i 's/config_provider: etcd/config_provider: yaml/' config.yaml
+          # updating config.yaml for standalone mode
+          sed -i 's/role: traditional/role: data_plane/' ${PREFIX}/conf/config.yaml
+          sed -i 's/role_traditional:/role_data_plane:/' ${PREFIX}/conf/config.yaml
+          sed -i 's/config_provider: etcd/config_provider: yaml/' ${PREFIX}/conf/config.yaml
       fi
 
         if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
