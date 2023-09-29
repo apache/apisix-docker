@@ -20,12 +20,12 @@ FROM debian:bullseye-slim
 ARG APISIX_VERSION=3.5.0
 
 RUN set -ex; \
-    arch=$(dpkg --print-architecture); \
     apt update; \
     apt-get -y install --no-install-recommends wget gnupg ca-certificates curl;
 
 RUN codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
     wget -O - https://openresty.org/package/pubkey.gpg | apt-key add -; \
+    arch=$(dpkg --print-architecture); \
     case "${arch}" in \
       amd64) \
         echo "deb https://openresty.org/package/debian $codename openresty" | tee /etc/apt/sources.list.d/openresty.list \
