@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 ARG APISIX_VERSION=3.5.0
 
