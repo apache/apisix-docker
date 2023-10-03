@@ -31,7 +31,8 @@ USER root
 
 RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
     && tar -zxvf etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
-    && mv etcd-${ETCD_VERSION}-linux-amd64/* /usr/bin/
+    && mv etcd-${ETCD_VERSION}-linux-amd64/* /usr/bin/ \
+    && rm /usr/local/openresty/bin/etcdctl
 
 
 WORKDIR /usr/local/apisix

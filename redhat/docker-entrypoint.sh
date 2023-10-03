@@ -31,11 +31,10 @@ deployment:
     config_provider: yaml
 _EOC_
       else
-          wget -qO /usr/local/apisix/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
-	        && chmod a+x /usr/local/apisix/yq
-          /usr/local/apisix/yq -i '.deployment.role = "data_plane"' ${PREFIX}/conf/config.yaml
-          /usr/local/apisix/yq -i '.deployment.role_data_plane.config_provider = "yaml"' ${PREFIX}/conf/config.yaml 
-          rm /usr/local/apisix/yq
+          # updating config.yaml for standalone mode
+          sed -i 's/role: traditional/role: data_plane/' ${PREFIX}/conf/config.yaml
+          sed -i 's/role_traditional:/role_data_plane:/' ${PREFIX}/conf/config.yaml
+          sed -i 's/config_provider: etcd/config_provider: yaml/' ${PREFIX}/conf/config.yaml
       fi
 
         if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then

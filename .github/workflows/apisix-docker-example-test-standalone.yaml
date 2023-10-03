@@ -59,7 +59,7 @@ jobs:
 
       - name: Test APISIX
         run: |
-          sleep 50 #startup time maybe a little longer as the yq binary is downloaded for use at runtime
+          sleep 30
 
           result_code=`curl -I -m 10 -o /dev/null -s -w %{http_code} http://127.0.0.1:9080/get`
           if [[ $result_code -ne 200 ]];then

@@ -41,6 +41,7 @@ RUN set -ex; \
     && apt install -y apisix=${APISIX_VERSION}-0 \
     && apt-get purge -y --auto-remove \
     && rm -f /etc/apt/sources.list.d/openresty.list /etc/apt/sources.list.d/apisix.list \
+    && rm /usr/local/openresty/bin/etcdctl \
     && openresty -V \
     && apisix version
 
