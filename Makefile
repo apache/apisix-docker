@@ -61,14 +61,6 @@ define func_echo_success_status
 endef
 
 
-# Makefile target
-### build-on-centos : Build apache/apisix:xx-centos image
-.PHONY: build-on-centos
-build-on-centos:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-centos -f ./centos/Dockerfile centos
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
 ### build-on-redhat : Build apache/apisix:xx-redhat image
 .PHONY: build-on-redhat
 build-on-redhat:
@@ -114,16 +106,6 @@ push-multiarch-on-debian:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### push-multiarch-on-centos : Push apache/apisix:xx-centos image
-.PHONY: push-multiarch-on-centos
-push-multiarch-on-centos:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(ENV_APISIX_IMAGE_TAG_NAME)-centos \
-		--platform linux/amd64,linux/arm64 \
-		-f ./centos/Dockerfile centos
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
 ### push-multiarch-on-redhat : Push apache/apisix:xx-redhat image
 .PHONY: push-multiarch-on-redhat
 push-multiarch-on-redhat:
@@ -166,31 +148,12 @@ build-dashboard-all-in-one:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### save-centos-tar : tar apache/apisix:xx-centos image
-.PHONY: save-centos-tar
-save-centos-tar:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	mkdir -p package
-	$(ENV_DOCKER) save -o ./package/$(ENV_APISIX_TAR_NAME)-centos.tar $(ENV_APISIX_IMAGE_TAG_NAME)-centos
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
 ### save-debian-tar : tar apache/apisix:xx-debian image
 .PHONY: save-debian-tar
 save-debian-tar:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	mkdir -p package
 	$(ENV_DOCKER) save -o ./package/$(ENV_APISIX_TAR_NAME)-debian.tar $(ENV_APISIX_IMAGE_TAG_NAME)-debian
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
-### build-dashboard-centos : Build apache/dashboard:tag image on centos
-.PHONY: build-dashboard-centos
-build-dashboard-centos:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
-		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
-		-f ./dashboard/Dockerfile.centos .
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -201,37 +164,6 @@ build-dashboard-alpine:
 	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
 		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
 		-f ./dashboard/Dockerfile.alpine .
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
-### push-multiarch-dashboard : Build and push multiarch apache/dashboard:tag image
-.PHONY: push-multiarch-dashboard
-push-multiarch-dashboard:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) buildx build --push \
-		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)-alpine \
-		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
-		--platform linux/amd64,linux/arm64 \
-		-f ./dashboard/Dockerfile.alpine .
-	$(ENV_DOCKER) buildx build --push \
-		-t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)-centos \
-		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
-		--platform linux/amd64,linux/arm64 \
-		-f ./dashboard/Dockerfile.centos .
-	$(ENV_DOCKER) buildx build --push \
-		-t $(APISIX_DASHBOARD_IMAGE_NAME):latest \
-		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
-		--platform linux/amd64,linux/arm64 \
-		-f ./dashboard/Dockerfile.centos .
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
-### save-dashboard-centos-tar : tar apache/apisix-dashboard:tag image
-.PHONY: save-dashboard-centos-tar
-save-dashboard-centos-tar:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	mkdir -p package
-	$(ENV_DOCKER) save -o ./package/$(APISIX_DASHBOARD_IMAGE_TAR_NAME)_$(APISIX_DASHBOARD_VERSION)-centos.tar $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 

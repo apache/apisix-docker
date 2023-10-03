@@ -10,7 +10,6 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - centos
           - debian
           - redhat
     env:
