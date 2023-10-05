@@ -46,6 +46,7 @@ _EOC_
         /usr/bin/apisix init_etcd
     fi
 
+    # For versions below 3.5.0 whose conf_server has not been removed.
     if [ -e "/usr/local/apisix/conf/config_listen.sock" ]; then
         rm -f "/usr/local/apisix/conf/config_listen.sock"
     fi
