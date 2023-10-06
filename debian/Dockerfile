@@ -45,6 +45,8 @@ RUN set -ex; \
     && openresty -V \
     && apisix version
 
+RUN apt-get -y purge --auto-remove curl wget gnupg ca-certificates bash
+
 WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
