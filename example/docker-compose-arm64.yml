@@ -29,7 +29,7 @@ services:
       apisix:
 
   apisix:
-    image: apache/apisix:3.5.0-debian
+    image: apache/apisix:3.6.0-debian
     restart: always
     volumes:
       - ./apisix_conf/config.yaml:/usr/local/apisix/conf/config.yaml:ro
@@ -54,7 +54,7 @@ services:
       ETCD_UNSUPPORTED_ARCH: "arm64"
       ETCD_ENABLE_V2: "true"
       ALLOW_NONE_AUTHENTICATION: "yes"
-      ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
+      ETCD_ADVERTISE_CLIENT_URLS: "http://etcd:2379"
       ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
       ETCD_DATA_DIR: "/etcd-data"
     ports:
