@@ -44,7 +44,7 @@ Build a Docker image from the release:
 
 ```shell
 APISIX_VERSION=3.6.0    # specify release version
-DISTRO=debian           # debian, centos, redhat
+DISTRO=debian           # debian, redhat
 make build-on-$DISTRO
 ```
 
@@ -56,7 +56,7 @@ Build a Docker image from the master branch:
 
 ```shell
 APISIX_VERSION=master   # master branch
-DISTRO=debian           # debian, centos, redhat
+DISTRO=debian           # debian, redhat
 make build-on-$DISTRO
 ```
 
