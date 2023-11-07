@@ -26,10 +26,6 @@ MAX_APISIX_VERSION ?= 3.6.0
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 
-APISIX_DASHBOARD_VERSION ?= $(shell echo ${APISIX_DASHBOARD_VERSION:=3.0.1})
-APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
-APISIX_DASHBOARD_IMAGE_TAR_NAME = apache_apisix_dashboard
-
 
 # Makefile ENV
 ENV_OS_NAME                ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')
@@ -140,39 +136,12 @@ build-all-in-one:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
-### build-dashboard-all-in-one : Build All in one Docker container for Apache APISIX-dashboard
-.PHONY: build-dashboard-all-in-one
-build-dashboard-all-in-one:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):whole -f ./all-in-one/apisix-dashboard/Dockerfile .
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
 ### save-debian-tar : tar apache/apisix:xx-debian image
 .PHONY: save-debian-tar
 save-debian-tar:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	mkdir -p package
 	$(ENV_DOCKER) save -o ./package/$(ENV_APISIX_TAR_NAME)-debian.tar $(ENV_APISIX_IMAGE_TAG_NAME)-debian
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
-### build-dashboard-alpine : Build apache/dashboard:tag image on alpine
-.PHONY: build-dashboard-alpine
-build-dashboard-alpine:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) build -t $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION) \
-		--build-arg APISIX_DASHBOARD_TAG=v$(APISIX_DASHBOARD_VERSION) \
-		-f ./dashboard/Dockerfile.alpine .
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
-
-
-### save-dashboard-alpine-tar : tar apache/apisix-dashboard:tag image
-.PHONY: save-dashboard-alpine-tar
-save-dashboard-alpine-tar:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	mkdir -p package
-	$(ENV_DOCKER) save -o ./package/$(APISIX_DASHBOARD_IMAGE_TAR_NAME)_$(APISIX_DASHBOARD_VERSION)-alpine.tar $(APISIX_DASHBOARD_IMAGE_NAME):$(APISIX_DASHBOARD_VERSION)
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 

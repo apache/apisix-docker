@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Create a feature request for the Apache APISIX Dashboard
+about: Create a feature request for the Apache APISIX
 labels: 'feature'
 ---
 
