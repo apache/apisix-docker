@@ -28,7 +28,7 @@ title: Build an image from the source codes
 Clone the [apisix-docker](https://github.com/apache/apisix-docker) repository and navigate into the project directory:
 
 ```shell
-git clone git clone https://github.com/apache/apisix-docker.git
+git clone https://github.com/apache/apisix-docker.git
 cd apisix-docker
 ```
 
