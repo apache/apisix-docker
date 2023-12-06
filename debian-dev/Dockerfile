@@ -55,7 +55,7 @@ RUN apt-get -y update --fix-missing \
 
 WORKDIR /usr/local/apisix
 
-ENV PATH=$PATH:/usr/local/openresty-debug/luajit/bin:/usr/local/openresty-debug/nginx/sbin:/usr/local/openresty-debug/bin
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 EXPOSE 9080 9443
 

@@ -36,15 +36,17 @@ jobs:
 
       - name: Build image
         run: |
-          cd apisix
           tag="apache/apisix:$APISIX_IMAGE_TAG"
-          docker build -t $tag -f ../debian-dev/Dockerfile.local  .
+          docker build -t $tag -f debian-dev/Dockerfile.local  .
 
       - name: use docker-compose
         run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
 
       - name: Test APISIX
         run: |
+          sleep 2
+          docker logs docker-apisix_apisix_1
+
           sleep 30
 
           curl http://127.0.0.1:9180/apisix/admin/routes/1 \
