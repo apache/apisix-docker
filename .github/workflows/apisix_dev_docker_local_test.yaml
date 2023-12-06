@@ -39,7 +39,7 @@ jobs:
           cd apisix
           tag="apache/apisix:$APISIX_IMAGE_TAG"
           docker build -t $tag -f ../debian-dev/Dockerfile.local  .
-          
+
       - name: use docker-compose
         run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
 

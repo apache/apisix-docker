@@ -17,7 +17,7 @@
 
 # Use this dockerfile to create a docker image of your apisix local/patched codebase
 
-FROM api7/apisix-base:dev AS build
+FROM api7/apisix-runtime:dev AS build
 
 ARG ENABLE_PROXY=false
 
@@ -29,7 +29,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY ./apisix /usr/local/apisix/apisix
 COPY ./conf /usr/local/apisix/conf
 COPY ./bin/apisix /usr/bin/apisix
-COPY ./rockspec/apisix-master-0.rockspec /usr/local/apisix/rockspec/apisix-master-0.rockspec
+COPY ./apisix-master-0.rockspec /usr/local/apisix/rockspec/apisix-master-0.rockspec
 COPY ./utils/linux-install-luarocks.sh /usr/local/apisix/linux-install-luarocks.sh
 
 WORKDIR /usr/local/apisix
@@ -50,13 +50,13 @@ RUN set -x \
         wget \
         make \
         libssl-dev \
-    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \ 
+    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
     && source "$HOME/.cargo/env" \
     # rust version 1.69.0 required to compile lua-resty-ldap
     && rustup install 1.69.0 \
     && rustup default 1.69.0 \
     && bash ./linux-install-luarocks.sh \
-    && luarocks config variables.OPENSSL_INCDIR /usr/include/ \ 
+    && luarocks config variables.OPENSSL_INCDIR /usr/include/ \
     && luarocks config variables.PCRE_DIR /usr/local/openresty/pcre \
     && luarocks install rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps --deps-only \
     && mkdir /usr/local/apisix/logs && touch /usr/local/apisix/logs/error.log && touch /usr/local/apisix/logs/access.log

@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM api7/apisix-base:dev AS build
+FROM api7/apisix-runtime:dev AS build
 
 ARG ENABLE_PROXY=false
 
@@ -35,14 +35,14 @@ RUN set -x \
         unzip \
         wget \
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
-    && luarocks install https://github.com/apache/apisix/raw/master/rockspec/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
+    && luarocks install https://raw.githubusercontent.com/apache/apisix/master/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/master-0/bin/apisix /usr/bin/ \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
     # forward request and error logs to docker log collector
     && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
 
-FROM api7/apisix-base:dev AS production-stage
+FROM api7/apisix-runtime:dev AS production-stage
 
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
