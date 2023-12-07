@@ -54,8 +54,8 @@ _EOC_
     if [ -e "/usr/local/apisix/conf/config_listen.sock" ]; then
         rm -f "/usr/local/apisix/conf/config_listen.sock"
     fi
-    
-    exec /usr/local/openresty-debug/bin/openresty -p /usr/local/apisix -g 'daemon off;'
+
+    exec /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'
 fi
 
 exec "$@"
