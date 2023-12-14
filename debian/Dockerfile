@@ -45,7 +45,7 @@ RUN set -ex; \
     && openresty -V \
     && apisix version
 
-RUN apt-get -y purge --auto-remove curl wget gnupg ca-certificates --allow-remove-essential
+RUN apt-get -y purge --auto-remove curl wget gnupg --allow-remove-essential
 
 WORKDIR /usr/local/apisix
 
