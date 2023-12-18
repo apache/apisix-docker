@@ -1,0 +1,86 @@
+name: Docker image verification
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  pull_request:
+    branches:
+      - master
+
+env:
+  APISIX_VERSION: "3.7.0"
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set apisix version
+        id: apisix
+        run: |
+          branch=${{ github.base_ref }}
+          apisix_version=$( (echo ${branch} | grep -Po '\d*\.\d*\.\d*') || echo ${APISIX_VERSION} )
+          echo "version=${apisix_version}" >> $GITHUB_OUTPUT
+
+    outputs:
+      apisix-version: ${{ steps.apisix.outputs.version }}
+
+  build:
+    runs-on: ubuntu-latest
+    needs: prepare
+    env:
+      APISIX_VERSION: ${{ needs.prepare.outputs.apisix-version }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - debian
+          - redhat
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: |
+          make build-on-${{ matrix.platform }}
+
+      - name: use docker-compose
+        env:
+          APISIX_IMAGE_TAG: ${{ format('{0}-{1}', env.APISIX_VERSION, matrix.platform) }}
+        run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
+
+      - name: test ssl directory
+        run: |
+          docker exec  docker-apisix_apisix_1 bash -c 'if [ -d "/etc/ssl" ]; then \
+            echo "The /etc/ssl directory exists in the apisix container."; \
+          else \
+            echo "The /etc/ssl directory does not exist in the apisix container." && exit 125; \
+          fi'
+
+      - name: test gnupg package
+        run: |
+          docker exec docker-apisix_apisix_1 bash -c 'if [ ! -x "/usr/bin/gpg" ]; then \
+            echo "The gnupg package does not exist in the apisix container."; \
+          else \
+            echo "The gnupg package exists in the apisix container." && exit 125; \
+          fi'
+
+      - name: test curl command
+        run: |
+          docker exec docker-apisix_apisix_1 bash -c 'if [ ! -x "/usr/bin/curl" ]; then \
+            echo "The curl command does not exist in the apisix container."; \
+          else \
+            echo "The curl command exists in the apisix container." && exit 125; \
+          fi'
+
+      - name: test wget command
+        run: |
+          docker exec docker-apisix_apisix_1 bash -c 'if [ ! -x "/usr/bin/wget" ]; then \
+            echo "The wget command does not exist in the apisix container."; \
+          else \
+            echo "The wget command exists in the apisix container." && exit 125; \
+          fi'
