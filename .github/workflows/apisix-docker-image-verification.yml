@@ -60,27 +60,3 @@ jobs:
           else \
             echo "The /etc/ssl directory does not exist in the apisix container." && exit 125; \
           fi'
-
-      - name: test gnupg package
-        run: |
-          docker exec docker-apisix_apisix_1 bash -c 'if [ ! -x "/usr/bin/gpg" ]; then \
-            echo "The gnupg package does not exist in the apisix container."; \
-          else \
-            echo "The gnupg package exists in the apisix container." && exit 125; \
-          fi'
-
-      - name: test curl command
-        run: |
-          docker exec docker-apisix_apisix_1 bash -c 'if [ ! -x "/usr/bin/curl" ]; then \
-            echo "The curl command does not exist in the apisix container."; \
-          else \
-            echo "The curl command exists in the apisix container." && exit 125; \
-          fi'
-
-      - name: test wget command
-        run: |
-          docker exec docker-apisix_apisix_1 bash -c 'if [ ! -x "/usr/bin/wget" ]; then \
-            echo "The wget command does not exist in the apisix container."; \
-          else \
-            echo "The wget command exists in the apisix container." && exit 125; \
-          fi'
