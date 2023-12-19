@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - master
+      - 'release/apisix-*'
 
 env:
   APISIX_VERSION: "3.7.0"
