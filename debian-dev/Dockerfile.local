@@ -20,7 +20,6 @@
 FROM debian:bullseye-slim AS build
 
 ARG ENABLE_PROXY=false
-ARG ENTRYPOINT_PATH=./docker-entrypoint.sh
 ARG CODE_PATH
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -43,6 +42,8 @@ RUN set -x \
     && make install
 
 FROM debian:bullseye-slim
+
+ARG ENTRYPOINT_PATH=./docker-entrypoint.sh
 
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/local/openresty /usr/local/openresty

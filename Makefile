@@ -66,7 +66,7 @@ endef
 define build_image_dev
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev \
 		--build-arg CODE_PATH=$(1) \
-		--build-arg ENTRYPOINT=debian-dev/docker-entrypoint.sh \
+		--build-arg ENTRYPOINT_PATH=debian-dev/docker-entrypoint.sh \
 		-f ./debian-dev/Dockerfile.local .
 endef
 
