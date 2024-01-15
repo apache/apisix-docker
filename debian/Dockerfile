@@ -41,6 +41,10 @@ RUN set -ex; \
     && openresty -V \
     && apisix version
 
+COPY install-brotli.sh /install-brotli.sh
+RUN chmod +x /install-brotli.sh \  
+    && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
+
 RUN apt-get -y purge --auto-remove curl wget gnupg --allow-remove-essential
 
 WORKDIR /usr/local/apisix

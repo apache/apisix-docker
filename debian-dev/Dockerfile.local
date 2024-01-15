@@ -49,6 +49,10 @@ COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/local/openresty /usr/local/openresty
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
 
+COPY install-brotli.sh /install-brotli.sh
+RUN chmod +x /install-brotli.sh \  
+    && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
+
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 WORKDIR /usr/local/apisix
