@@ -53,7 +53,7 @@ RUN apt-get -y update --fix-missing \
         libldap2-dev \
     && apt-get remove --purge --auto-remove -y
 
-COPY install-brotli.sh /install-brotli.sh
+COPY ./install-brotli.sh /install-brotli.sh
 RUN chmod +x /install-brotli.sh \  
     && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
 
