@@ -27,6 +27,10 @@ RUN yum update -y \
 	&& yum clean all \
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
 
+COPY ./install-brotli.sh /install-brotli.sh
+RUN chmod +x /install-brotli.sh \
+    && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
+
 WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
