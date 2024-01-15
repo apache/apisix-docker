@@ -25,6 +25,9 @@ APISIX_VERSION ?= 3.7.0
 MAX_APISIX_VERSION ?= 3.7.0
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
+APISIX_REPO = https://github.com/apache/apisix
+APISIX_REPO_BRANCH = master
+LOCAL_CODE_PATH = 0
 
 APISIX_DASHBOARD_VERSION ?= $(shell echo ${APISIX_DASHBOARD_VERSION:=3.0.1})
 APISIX_DASHBOARD_IMAGE_NAME = apache/apisix-dashboard
@@ -60,6 +63,12 @@ define func_echo_success_status
 	printf "[$(_color_green) info $(_color_wipe)] %s\n" $(1)
 endef
 
+define build_image_dev
+	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev \
+		--build-arg CODE_PATH=$(1) \
+		--build-arg ENTRYPOINT_PATH=debian-dev/docker-entrypoint.sh \
+		-f ./debian-dev/Dockerfile.local .
+endef
 
 ### build-on-redhat : Build apache/apisix:xx-redhat image
 .PHONY: build-on-redhat
@@ -75,6 +84,19 @@ build-on-debian-dev:
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev -f ./debian-dev/Dockerfile debian-dev
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
+### build-on-debian-local-dev : Build apache/apisix:xx-debian-dev image
+.PHONY: build-on-debian-local-dev
+build-on-debian-local-dev:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+ifeq ($(LOCAL_CODE_PATH), 0)
+ifeq ($(shell test -d ./apisix && echo -n yes), )
+	git clone -b $(APISIX_REPO_BRANCH) $(APISIX_REPO) ./apisix
+endif
+	$(call build_image_dev,"./apisix")
+else
+	$(call build_image_dev,$(LOCAL_CODE_PATH))
+endif
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 ### build-on-debian : Build apache/apisix:xx-debian image
 .PHONY: build-on-debian

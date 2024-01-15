@@ -14,7 +14,8 @@ on:
       - 'release/apisix-2.15.**'
 
 env:
-  APISIX_IMAGE_TAG: "local"
+  APISIX_IMAGE_TAG: "local-debian-dev"
+  APISIX_VERSION: "local"
 
 jobs:
 
@@ -35,9 +36,10 @@ jobs:
           git clone https://github.com/apache/apisix.git
 
       - name: Build image
+        env:
+          LOCAL_CODE_PATH: ./apisix
         run: |
-          tag="apache/apisix:$APISIX_IMAGE_TAG"
-          docker build -t $tag -f debian-dev/Dockerfile.local  .
+          make build-on-debian-local-dev
 
       - name: use docker-compose
         run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d

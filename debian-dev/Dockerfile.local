@@ -17,71 +17,48 @@
 
 # Use this dockerfile to create a docker image of your apisix local/patched codebase
 
-FROM api7/apisix-runtime:dev AS build
+FROM debian:bullseye-slim AS build
 
 ARG ENABLE_PROXY=false
+ARG CODE_PATH
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV ENV_INST_LUADIR /usr/local/apisix
 
-# replace the source path with the location of apisix related directories in your host machine
-# refer: https://web.archive.org/web/20230604150902/https://www.jamestharpe.com/docker-include-files-outside-build-context/
+COPY ${CODE_PATH} /apisix
 
-COPY apisix/apisix /usr/local/apisix/apisix
-COPY apisix/conf /usr/local/apisix/conf
-COPY apisix/bin/apisix /usr/bin/apisix
-COPY apisix/apisix-master-0.rockspec /usr/local/apisix/apisix-master-0.rockspec
-COPY apisix/utils/linux-install-luarocks.sh /usr/local/apisix/linux-install-luarocks.sh
-COPY debian-dev/docker-entrypoint.sh /docker-entrypoint.sh
-
-
-WORKDIR /usr/local/apisix
-
-SHELL ["/bin/bash", "-c"]
+WORKDIR /apisix
 
 RUN set -x \
-    && DEBIAN_FRONTEND=noninteractive apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y libreadline-dev lsb-release libpcre3 libpcre3-dev libldap2-dev libssl-dev perl build-essential \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends wget gnupg ca-certificates
-
-RUN set -x \
-    && wget -O - https://openresty.org/package/pubkey.gpg | apt-key add - \
-    && wget -O - http://repos.apiseven.com/pubkey.gpg | apt-key add - \
-    && echo "deb http://openresty.org/package/debian bullseye openresty" | tee /etc/apt/sources.list.d/openresty.list \
-    && echo "deb http://repos.apiseven.com/packages/debian bullseye main" | tee /etc/apt/sources.list.d/apisix.list \
-    && DEBIAN_FRONTEND=noninteractive apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y apisix-runtime
-
-RUN set -x \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://deb.debian.org,http://mirrors.aliyun.com,g' /etc/apt/sources.list) \
     && apt-get -y update --fix-missing \
-    && apt-get install -y curl \
-        gawk \
-        git \
-        libldap2-dev \
-        liblua5.1-0-dev \
-        lua5.1 \
-        sudo \
-        unzip \
-        wget \
+    && apt-get install -y \
         make \
-        libssl-dev \
-    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
-    && source "$HOME/.cargo/env" \
-    # rust version 1.69.0 required to compile lua-resty-ldap
-    && rustup install 1.69.0 \
-    && rustup default 1.69.0 \
-    && bash ./linux-install-luarocks.sh \
-    && luarocks config variables.OPENSSL_INCDIR /usr/include/ \
-    && luarocks config variables.PCRE_DIR /usr/local/openresty/pcre \
-    && luarocks install apisix-master-0.rockspec --tree=/usr/local/apisix/deps --deps-only \
-    && mkdir /usr/local/apisix/logs && touch /usr/local/apisix/logs/error.log && touch /usr/local/apisix/logs/access.log
+        git  \
+        sudo \
+    && ls -al \
+    && make deps \
+    && mkdir -p ${ENV_INST_LUADIR} \
+    && cp -r deps ${ENV_INST_LUADIR} \
+    && make install
+
+FROM debian:bullseye-slim
+
+ARG ENTRYPOINT_PATH=./docker-entrypoint.sh
+
+COPY --from=build /usr/local/apisix /usr/local/apisix
+COPY --from=build /usr/local/openresty /usr/local/openresty
+COPY --from=build /usr/bin/apisix /usr/bin/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
+WORKDIR /usr/local/apisix
+
+RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log
+
 EXPOSE 9080 9443
 
-
-RUN ["chmod", "+x", "/docker-entrypoint.sh"]
+COPY ${ENTRYPOINT_PATH} /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
