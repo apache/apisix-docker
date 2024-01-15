@@ -13,7 +13,7 @@ jobs:
           - debian
           - redhat
     env:
-      APISIX_DOCKER_TAG: 3.7.0-${{ matrix.platform }}
+      APISIX_DOCKER_TAG: 3.8.0-${{ matrix.platform }}
 
     steps:
       - name: Check out the repo
