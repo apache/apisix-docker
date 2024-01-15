@@ -21,8 +21,8 @@ SHELL := bash
 
 
 # APISIX ARGS
-APISIX_VERSION ?= 3.7.0
-MAX_APISIX_VERSION ?= 3.7.0
+APISIX_VERSION ?= 3.8.0
+MAX_APISIX_VERSION ?= 3.8.0
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 APISIX_REPO = https://github.com/apache/apisix
@@ -112,7 +112,7 @@ push-multiarch-dev-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):dev \
-		--platform linux/amd64,linux/arm64 \
+		--platform linux/amd64 \
 		-f ./debian-dev/Dockerfile debian-dev
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
@@ -123,7 +123,7 @@ push-multiarch-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-debian \
-		--platform linux/amd64,linux/arm64 \
+		--platform linux/amd64 \
 		-f ./debian/Dockerfile debian
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
