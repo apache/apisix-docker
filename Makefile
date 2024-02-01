@@ -149,7 +149,7 @@ push-multiarch-on-latest:
 	@if [ "$(shell echo "$(APISIX_VERSION) $(MAX_APISIX_VERSION)" | tr " " "\n" | sort -rV | head -n 1)" == "$(APISIX_VERSION)" ]; then \
 		$(ENV_DOCKER) buildx build --network=host --push \
 			-t $(IMAGE_NAME):latest \
-			--platform linux/amd64,linux/arm64 \
+			--platform linux/amd64 \
 			-f ./debian/Dockerfile debian; \
 	fi
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
