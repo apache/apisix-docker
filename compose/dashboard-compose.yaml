@@ -22,7 +22,7 @@ services:
     image: "apache/apisix-dashboard:${APISIX_DASHBOARD_VERSION}"
     restart: always
     volumes:
-      - ../example/dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml:ro
+      - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml:ro
     depends_on:
       - etcd
     ports:

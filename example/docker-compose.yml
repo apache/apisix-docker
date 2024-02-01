@@ -18,6 +18,16 @@
 version: "3"
 
 services:
+  apisix-dashboard:
+    image: apache/apisix-dashboard:${APISIX_DASHBOARD_VERSION:-3.0.1-alpine}
+    restart: always
+    volumes:
+      - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    ports:
+      - "9000:9000"
+    networks:
+      apisix:
+
   apisix:
     image: apache/apisix:${APISIX_IMAGE_TAG:-3.8.0-debian}
     restart: always
