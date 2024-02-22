@@ -112,7 +112,7 @@ push-multiarch-dev-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):dev \
-		--platform linux/amd64 \
+		--platform linux/amd64,linux/arm64 \
 		-f ./debian-dev/Dockerfile debian-dev
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
@@ -123,7 +123,7 @@ push-multiarch-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-debian \
-		--platform linux/amd64 \
+		--platform linux/amd64,linux/arm64 \
 		-f ./debian/Dockerfile debian
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
@@ -134,7 +134,7 @@ push-multiarch-on-redhat:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-redhat \
-		--platform linux/amd64 \
+		--platform linux/amd64,linux/arm64 \
 		-f ./redhat/Dockerfile redhat
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
@@ -148,7 +148,7 @@ push-multiarch-on-latest:
 	@if [ "$(shell echo "$(APISIX_VERSION) $(MAX_APISIX_VERSION)" | tr " " "\n" | sort -rV | head -n 1)" == "$(APISIX_VERSION)" ]; then \
 		$(ENV_DOCKER) buildx build --network=host --push \
 			-t $(IMAGE_NAME):latest \
-			--platform linux/amd64 \
+			--platform linux/amd64,linux/arm64 \
 			-f ./debian/Dockerfile debian; \
 	fi
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
