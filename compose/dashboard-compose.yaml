@@ -31,7 +31,7 @@ services:
       - apisix
 
   etcd:
-    image: bitnami/etcd:3.4.9
+    image: bitnami/etcd:3.5.12
     user: root
     restart: always
     volumes:

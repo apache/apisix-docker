@@ -35,7 +35,7 @@ services:
       apisix:
 
   web1:
-    image: nginx:1.19.0-alpine
+    image: nginx:1.25.4-alpine
     restart: always
     volumes:
       - ./upstream/web1.conf:/etc/nginx/nginx.conf

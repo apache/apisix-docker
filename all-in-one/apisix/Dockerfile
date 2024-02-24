@@ -16,7 +16,7 @@
 #
 
 ARG ENABLE_PROXY=false
-ARG ETCD_VERSION=v3.5.4
+ARG ETCD_VERSION=v3.5.12
 
 # Build Apache APISIX
 FROM apache/apisix:latest
