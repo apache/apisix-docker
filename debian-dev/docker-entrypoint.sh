@@ -32,16 +32,19 @@ deployment:
 _EOC_
       else
           # checking config.yaml has required values for standalone mode, we don't fix the file since that causes issues with readonly dirs in Docker
-		  if ! grep -qz "role:\s*data_plane" ${PREFIX}/conf/config.yaml; then
+		  if ! grep -qz "role:\s*data_plane" "${PREFIX}/conf/config.yaml"; then
 			echo "Missing 'role: data_plane' entry in config.yaml";
+			exit 1
 		  fi
 
-		  if ! grep -qz "role_data_plane:" ${PREFIX}/conf/config.yaml; then
+		  if ! grep -qz "role_data_plane:" "${PREFIX}/conf/config.yaml"; then
 			echo "Missing 'role_data_plane:' entry in config.yaml";
+			exit 1
 		  fi
 
-		  if ! grep -qz "config_provider:\s*yaml" ${PREFIX}/conf/config.yaml; then
+		  if ! grep -qz "config_provider:\s*yaml" "${PREFIX}/conf/config.yaml"; then
 			echo "Missing 'config_provider: yaml' entry in config.yaml";
+			exit 1
 		  fi
       fi
 
