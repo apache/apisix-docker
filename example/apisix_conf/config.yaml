@@ -24,11 +24,10 @@ apisix:
     ip: "0.0.0.0"
     port: 9092
 
-deployment:
-  deployment:                  # Deployment entry with data plane role and yaml config provider is needed to start in stand-alone mode
-    role: data_plane
-    role_data_plane:
-      config_provider: yaml
+deployment:                    # Deployment entry with data plane role and yaml config provider is needed to start in stand-alone mode
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
   admin:
     allow_admin:               # https://nginx.org/en/docs/http/ngx_http_access_module.html#allow
       - 0.0.0.0/0              # We need to restrict ip access rules for security. 0.0.0.0/0 is for test.

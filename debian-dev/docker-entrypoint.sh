@@ -21,56 +21,54 @@ set -eo pipefail
 PREFIX=${APISIX_PREFIX:=/usr/local/apisix}
 
 if [[ "$1" == "docker-start" ]]; then
-    if [ "$APISIX_STAND_ALONE" = "true" ]; then
-      # If the file is not present then initialise the content otherwise update relevant keys for standalone mode
-      if [ ! -f "${PREFIX}/conf/config.yaml" ]; then
-          cat > ${PREFIX}/conf/config.yaml << _EOC_
+	if [ "$APISIX_STAND_ALONE" = "true" ]; then
+		# If the file is not present then initialise the content otherwise check relevant keys for standalone mode
+	  	if [ ! -f "${PREFIX}/conf/config.yaml" ]; then
+			cat > ${PREFIX}/conf/config.yaml << _EOC_
 deployment:
   role: data_plane
   role_data_plane:
-    config_provider: yaml
+	config_provider: yaml
 _EOC_
-      else
-          # checking config.yaml has required values for standalone mode, we don't fix the file since that causes issues with readonly dirs in Docker
-		  if ! grep -qz "role:\s*data_plane" "${PREFIX}/conf/config.yaml"; then
-			echo "Missing 'role: data_plane' entry in config.yaml";
-			exit 1
-		  fi
+		else
+			# checking config.yaml has required values for standalone mode, we don't fix the file since that causes issues with readonly dirs in Docker
+			if ! grep -qz "role:\s*data_plane" "${PREFIX}/conf/config.yaml"; then
+				echo "Missing 'role: data_plane' entry in config.yaml";
+				exit 1
+			fi
+			if ! grep -qz "role_data_plane:" "${PREFIX}/conf/config.yaml"; then
+				echo "Missing 'role_data_plane:' entry in config.yaml";
+				exit 1
+			fi
+			if ! grep -qz "config_provider:\s*yaml" "${PREFIX}/conf/config.yaml"; then
+				echo "Missing 'config_provider: yaml' entry in config.yaml";
+				exit 1
+			fi
+		fi
 
-		  if ! grep -qz "role_data_plane:" "${PREFIX}/conf/config.yaml"; then
-			echo "Missing 'role_data_plane:' entry in config.yaml";
-			exit 1
-		  fi
-
-		  if ! grep -qz "config_provider:\s*yaml" "${PREFIX}/conf/config.yaml"; then
-			echo "Missing 'config_provider: yaml' entry in config.yaml";
-			exit 1
-		  fi
-      fi
-
-        if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
-          cat > ${PREFIX}/conf/apisix.yaml << _EOC_
+		if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
+			cat > ${PREFIX}/conf/apisix.yaml << _EOC_
 routes:
   -
 #END
 _EOC_
-        fi
-        /usr/bin/apisix init
-    else
-        /usr/bin/apisix init
-        /usr/bin/apisix init_etcd
-    fi
+		fi
+		/usr/bin/apisix init
+	else
+		/usr/bin/apisix init
+		/usr/bin/apisix init_etcd
+	fi
 
-    # For versions below 3.5.0 whose conf_server has not been removed.
-    if [ -e "/usr/local/apisix/conf/config_listen.sock" ]; then
-        rm -f "/usr/local/apisix/conf/config_listen.sock"
-    fi
+	# For versions below 3.5.0 whose conf_server has not been removed.
+	if [ -e "/usr/local/apisix/conf/config_listen.sock" ]; then
+		rm -f "/usr/local/apisix/conf/config_listen.sock"
+	fi
 
-    if [ -e "/usr/local/apisix/logs/worker_events.sock" ]; then
-        rm -f "/usr/local/apisix/logs/worker_events.sock"
-    fi
+	if [ -e "/usr/local/apisix/logs/worker_events.sock" ]; then
+		rm -f "/usr/local/apisix/logs/worker_events.sock"
+	fi
 
-    exec /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'
+	exec /usr/local/openresty/bin/openresty -p /usr/local/apisix -g 'daemon off;'
 fi
 
 exec "$@"
