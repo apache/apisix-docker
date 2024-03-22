@@ -116,6 +116,12 @@ deployment:
     allow_admin:
       - 0.0.0.0/0  # Please set it to the subnet address you obtained.
                   # If not set, by default all IP access is allowed.
+    admin_key:
+      - name: "admin"
+# Please set this to a random 32 character alphanumeric. This is automatically set while using docker compose. 
+#If not provided then apisix will autogenerate one and write it here. In that case, make sure that this is the only apisix instance using this config
+        role: admin 
+        key: ''  
   etcd:
     host:
       - "http://etcd:2379"
@@ -141,7 +147,7 @@ Check that APISIX is running properly by running the following command on the ho
 
 ```
 curl "http://127.0.0.1:9180/apisix/admin/services/" \
--H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1'
+-H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' # Replace this key with the one either provided by you, or written by apisix in the config.yaml
 ```
 
 The response indicates that apisix is running successfully:
