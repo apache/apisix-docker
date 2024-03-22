@@ -118,9 +118,9 @@ deployment:
                   # If not set, by default all IP access is allowed.
     admin_key:
       - name: "admin"
-# Please set this to a random 32 character alphanumeric. This is automatically set while using docker compose. 
+# Please set this to a random 32 character alphanumeric. This is automatically set while using docker compose.
 #If not provided then apisix will autogenerate one and write it here. In that case, make sure that this is the only apisix instance using this config
-        role: admin 
+        role: admin
         key: ''  
   etcd:
     host:
