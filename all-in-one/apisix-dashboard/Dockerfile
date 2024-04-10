@@ -33,6 +33,7 @@ RUN set -x \
     automake \
     autoconf \
     libtool \
+    libyaml-dev \
     pkgconfig \
     cmake \
     git \

@@ -25,6 +25,7 @@ services:
       - ./apisix_conf/master/config.yaml:/usr/local/apisix/conf/config.yaml:ro
     depends_on:
       - etcd
+      - modify_config
     ports:
       - "9180:9180/tcp"
       - "9080:9080/tcp"
@@ -32,6 +33,13 @@ services:
       - "9443:9443/tcp"
     networks:
       - apisix
+
+  modify_config: # You can remove this service if you already have added your own key for admin api in the config
+      image: alpine:latest
+      volumes:
+        - ./apisix_conf/master/config.yaml:/config.yaml:rw
+        - ./modify_config.sh:/modify_config.sh:ro
+      command: ["/bin/sh", "/modify_config.sh"]
 
   etcd:
     image: bitnami/etcd:3.4.9
