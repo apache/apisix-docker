@@ -52,8 +52,8 @@ COPY --from=build /usr/local/openresty /usr/local/openresty
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
 
 COPY ${INSTALL_BROTLI} /install-brotli.sh
-RUN apt-get install -y libyaml-dev \
-    chmod +x /install-brotli.sh \  
+RUN apt-get -y update --fix-missing && apt-get install -y libyaml-dev \
+    && chmod +x /install-brotli.sh \  
     && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
