@@ -37,6 +37,7 @@ RUN set -x \
     cmake \
     git \
     openldap-dev \
+    libyaml-dev \
     sudo \
     && mkdir ~/.luarocks \
     && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
