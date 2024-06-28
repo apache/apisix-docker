@@ -40,9 +40,9 @@ authentication:
   expire_time: 3600     # jwt token expire time, in second
   users:
     - username: admin   # username and password for login `manager api`
-      password: admin
+      password: 
     - username: user
-      password: user
+      password: 
 
 plugin_attr:
   prometheus:
