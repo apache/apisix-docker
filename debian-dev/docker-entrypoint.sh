@@ -31,11 +31,24 @@ deployment:
     config_provider: yaml
 _EOC_
       else
-          # updating config.yaml for standalone mode
-          echo "$(sed 's/role: traditional/role: data_plane/g' ${PREFIX}/conf/config.yaml)" > ${PREFIX}/conf/config.yaml
-          echo "$(sed 's/role_traditional:/role_data_plane:/g' ${PREFIX}/conf/config.yaml)" > ${PREFIX}/conf/config.yaml
-          echo "$(sed 's/config_provider: etcd/config_provider: yaml/g' ${PREFIX}/conf/config.yaml)" > ${PREFIX}/conf/config.yaml
+          # Check if the deployment role is set to data_plane and config provider is set to yaml for standalone mode
+          if ! grep -q 'role: data_plane' "${PREFIX}/conf/config.yaml"; then
+            echo "Error: ${PREFIX}/conf/config.yaml does not contain 'role: data_plane'. Deployment role must be set to 'data_plane' for standalone mode."
+            echo "Please refer to the APISIX documentation for deployment modes: https://apisix.apache.org/docs/apisix/deployment-modes/"
+            exit 1
+          fi
 
+          if ! grep -q 'role_data_plane:' "${PREFIX}/conf/config.yaml"; then
+              echo "Error: ${PREFIX}/conf/config.yaml does not contain 'role_data_plane:'."
+              echo "Please refer to the APISIX documentation for deployment modes: https://apisix.apache.org/docs/apisix/deployment-modes/"
+              exit 1
+          fi
+
+          if ! grep -q 'config_provider: yaml' "${PREFIX}/conf/config.yaml"; then
+              echo "Error: ${PREFIX}/conf/config.yaml does not contain 'config_provider: yaml'. Config provider must be set to 'yaml' for standalone mode."
+              echo "Please refer to the APISIX documentation for deployment modes: https://apisix.apache.org/docs/apisix/deployment-modes/"
+              exit 1
+          fi
       fi
 
         if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
