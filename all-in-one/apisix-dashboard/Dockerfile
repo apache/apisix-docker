@@ -33,6 +33,7 @@ RUN set -x \
     automake \
     autoconf \
     libtool \
+    yaml-dev \
     pkgconfig \
     cmake \
     git \
@@ -46,6 +47,7 @@ RUN set -x \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
     && (if [ "$APISIX_VERSION" = "master" ] || [ "$APISIX_VERSION" \> "2.2" ]; then echo 'use shell ';else bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path'; sed -i "1s@.*@$bin@" /usr/bin/apisix ; fi;) \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
+    && cp -v /usr/lib/libyaml* /usr/local/apisix/deps/lib/lua/5.1/ \
     && apk del .builddeps build-base make unzip
 
 # Build etcd
@@ -121,7 +123,7 @@ COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
-
+ENV LD_LIBRARY_PATH="/usr/local/apisix/deps/lib/lua/5.1:${LD_LIBRARY_PATH}"
 # dashboard
 
 RUN if [ "$ENABLE_PROXY" = "true" ] ; then sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories ; fi \
