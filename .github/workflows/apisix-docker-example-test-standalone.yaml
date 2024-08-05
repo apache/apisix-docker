@@ -50,7 +50,13 @@ jobs:
       - name: Build image
         run: |
           make build-on-${{ matrix.platform }}
-          
+ 
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+          docker-compose --version
+         
       - name: use docker-compose
         env:
           APISIX_IMAGE_TAG: ${{ format('{0}-{1}', env.APISIX_VERSION, matrix.platform) }}
