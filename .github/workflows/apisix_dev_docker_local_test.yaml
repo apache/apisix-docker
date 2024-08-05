@@ -41,6 +41,12 @@ jobs:
         run: |
           make build-on-debian-local-dev
 
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+          docker-compose --version
+  
       - name: use docker-compose
         run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
 
