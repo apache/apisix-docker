@@ -47,7 +47,7 @@ jobs:
       - name: Test APISIX
         run: |
           sleep 2
-          docker logs docker-apisix_apisix_1
+          docker logs docker-apisix-apisix-1
 
           sleep 30
 
