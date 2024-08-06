@@ -35,15 +35,7 @@ RUN set -x \
         make \
         git  \
         sudo \
-        clang \
-        wget \
-    && wget https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz \
-    && tar -zxvf yaml-0.2.5.tar.gz \
-    && cd yaml-0.2.5 \
-    && ./configure \
-    && make \
-    && make install \
-    && cd /apisix \
+        libyaml-dev \
     && ls -al \
     && make deps \
     && mkdir -p ${ENV_INST_LUADIR} \
@@ -58,7 +50,7 @@ ARG INSTALL_BROTLI=./install-brotli.sh
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/local/openresty /usr/local/openresty
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
-COPY --from=build /usr/local/lib/libyaml* /usr/local/lib/
+COPY --from=build /usr/lib/x86_64-linux-gnu/libyaml* /usr/local/lib/
 
 COPY ${INSTALL_BROTLI} /install-brotli.sh
 RUN chmod +x /install-brotli.sh \  
