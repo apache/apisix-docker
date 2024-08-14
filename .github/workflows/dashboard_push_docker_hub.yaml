@@ -23,7 +23,7 @@ jobs:
       - name: Build and run
         run: |
           make build-dashboard-${{ matrix.os }}
-          docker-compose -f ./compose/dashboard-compose.yaml up -d
+          docker compose -f ./compose/dashboard-compose.yaml up -d
           sleep 30
           docker logs compose_dashboard_1
 

@@ -35,9 +35,18 @@ RUN set -x \
     libtool \
     pkgconfig \
     cmake \
+    make \
+    clang \
+    wget \
     git \
     openldap-dev \
     sudo \
+    && wget https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz \
+    && tar -zxvf yaml-0.2.5.tar.gz \
+    && cd yaml-0.2.5 \
+    && ./configure \
+    && make \
+    && make install \
     && mkdir ~/.luarocks \
     && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
     && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
@@ -46,7 +55,7 @@ RUN set -x \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
     && (if [ "$APISIX_VERSION" = "master" ] || [ "$APISIX_VERSION" \> "2.2" ]; then echo 'use shell ';else bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path'; sed -i "1s@.*@$bin@" /usr/bin/apisix ; fi;) \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
-    && apk del .builddeps build-base make unzip
+    && apk del .builddeps build-base make unzip clang wget
 
 # Build etcd
 FROM alpine:3.13 AS etcd-stage
@@ -116,6 +125,7 @@ WORKDIR /usr/local/apisix
 COPY --from=production-stage /usr/local/openresty/ /usr/local/openresty/
 COPY --from=production-stage /usr/local/apisix/ /usr/local/apisix/
 COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
+COPY --from=production-stage /usr/local/lib/libyaml* /usr/local/lib/
 
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl

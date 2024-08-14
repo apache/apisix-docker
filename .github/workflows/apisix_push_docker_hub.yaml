@@ -22,7 +22,7 @@ jobs:
       - name: Build and run
         run: |
           make build-on-${{ matrix.platform }}
-          docker-compose -f ./compose/docker-compose-release.yaml up -d
+          docker compose -f ./compose/docker-compose-release.yaml up -d
           sleep 30
           docker logs compose_apisix_1
 

@@ -42,12 +42,12 @@ jobs:
           make build-on-debian-local-dev
 
       - name: use docker-compose
-        run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
+        run: docker compose -p docker-apisix -f example/docker-compose.yml up -d
 
       - name: Test APISIX
         run: |
           sleep 2
-          docker logs docker-apisix_apisix_1
+          docker logs docker-apisix-apisix-1
 
           sleep 30
 

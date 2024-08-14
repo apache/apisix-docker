@@ -54,7 +54,7 @@ jobs:
       - name: use docker-compose
         env:
           APISIX_IMAGE_TAG: ${{ format('{0}-{1}', env.APISIX_VERSION, matrix.platform) }}
-        run: docker-compose -p docker-apisix -f example/docker-compose.yml up -d
+        run: docker compose -p docker-apisix -f example/docker-compose.yml up -d
 
       - name: Test APISIX
         run: |
