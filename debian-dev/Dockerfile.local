@@ -66,6 +66,7 @@ RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
 EXPOSE 9080 9443
 
 COPY ${ENTRYPOINT_PATH} /docker-entrypoint.sh
+COPY ../utils/check_standalone_config.sh /check_standalone_config.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
