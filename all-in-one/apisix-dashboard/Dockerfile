@@ -21,7 +21,7 @@ ARG APISIX_VERSION=master
 ARG APISIX_DASHBOARD_VERSION=master
 
 # Build Apache APISIX
-FROM openresty/openresty:1.25.3.1-2-alpine-fat AS production-stage
+FROM openresty/openresty:1.25.3.2-0-alpine-fat AS production-stage
 
 ARG APISIX_VERSION
 ARG ENABLE_PROXY
