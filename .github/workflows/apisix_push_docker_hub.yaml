@@ -24,7 +24,7 @@ jobs:
           make build-on-${{ matrix.platform }}
           docker compose -f ./compose/docker-compose-release.yaml up -d
           sleep 30
-          docker logs compose_apisix_1
+          docker logs compose-apisix-1
 
       - name: Test route
         run: |
