@@ -43,7 +43,7 @@ Find an APISIX [release version](https://github.com/apache/apisix/releases) to b
 Build a Docker image from the release:
 
 ```shell
-APISIX_VERSION=3.9.0    # specify release version
+APISIX_VERSION=3.10.0   # specify release version
 DISTRO=debian           # debian, redhat
 make build-on-$DISTRO
 ```

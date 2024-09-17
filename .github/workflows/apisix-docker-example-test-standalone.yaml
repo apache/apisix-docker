@@ -14,7 +14,7 @@ on:
       - 'release/apisix-2.15.**'
 
 env:
-  APISIX_VERSION: "3.9.0"
+  APISIX_VERSION: "3.10.0"
 
 jobs:
   prepare:
