@@ -25,7 +25,7 @@ jobs:
           make build-dashboard-${{ matrix.os }}
           docker compose -f ./compose/dashboard-compose.yaml up -d
           sleep 30
-          docker logs compose_dashboard_1
+          docker logs compose-dashboard-1
 
       - name: check
         run: |
