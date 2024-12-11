@@ -75,14 +75,18 @@ endef
 .PHONY: build-on-redhat
 build-on-redhat:
 	@$(call func_echo_status, "$@ -> [ Start ]")
+	cp ./utils/check_standalone_config.sh redhat/check_standalone_config.sh
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-redhat -f ./redhat/Dockerfile redhat
+	rm -f redhat/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 ### build-on-debian-dev : Build apache/apisix:xx-debian-dev image
 .PHONY: build-on-debian-dev
 build-on-debian-dev:
 	@$(call func_echo_status, "$@ -> [ Start ]")
+	cp ./utils/check_standalone_config.sh debian-dev/check_standalone_config.sh
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian-dev -f ./debian-dev/Dockerfile debian-dev
+	rm -f debian-dev/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 ### build-on-debian-local-dev : Build apache/apisix:xx-debian-dev image
@@ -103,7 +107,9 @@ endif
 .PHONY: build-on-debian
 build-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
+	cp ./utils/check_standalone_config.sh debian/check_standalone_config.sh
 	$(ENV_DOCKER) build -t $(ENV_APISIX_IMAGE_TAG_NAME)-debian -f ./debian/Dockerfile debian
+	rm -f debian/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -111,10 +117,12 @@ build-on-debian:
 .PHONY: push-multiarch-dev-on-debian
 push-multiarch-dev-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
+	cp ./utils/check_standalone_config.sh debian-dev/check_standalone_config.sh
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(IMAGE_NAME):dev \
 		--platform linux/amd64,linux/arm64 \
 		-f ./debian-dev/Dockerfile debian-dev
+	rm -f debian-dev/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -122,10 +130,12 @@ push-multiarch-dev-on-debian:
 .PHONY: push-multiarch-on-debian
 push-multiarch-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
+	cp ./utils/check_standalone_config.sh debian/check_standalone_config.sh
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-debian \
 		--platform linux/amd64,linux/arm64 \
 		-f ./debian/Dockerfile debian
+	rm -f debian/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
@@ -133,10 +143,12 @@ push-multiarch-on-debian:
 .PHONY: push-multiarch-on-redhat
 push-multiarch-on-redhat:
 	@$(call func_echo_status, "$@ -> [ Start ]")
+	cp ./utils/check_standalone_config.sh redhat/check_standalone_config.sh
 	$(ENV_DOCKER) buildx build --network=host --push \
 		-t $(ENV_APISIX_IMAGE_TAG_NAME)-redhat \
 		--platform linux/amd64,linux/arm64 \
 		-f ./redhat/Dockerfile redhat
+	rm -f redhat/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 ### push-multiarch-on-latest : Push apache/apisix:latest image
@@ -147,10 +159,12 @@ push-multiarch-on-redhat:
 push-multiarch-on-latest:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	@if [ "$(shell echo "$(APISIX_VERSION) $(MAX_APISIX_VERSION)" | tr " " "\n" | sort -rV | head -n 1)" == "$(APISIX_VERSION)" ]; then \
+		cp ./utils/check_standalone_config.sh debian/check_standalone_config.sh; \
 		$(ENV_DOCKER) buildx build --network=host --push \
 			-t $(IMAGE_NAME):latest \
 			--platform linux/amd64,linux/arm64 \
 			-f ./debian/Dockerfile debian; \
+		rm -f debian/check_standalone_config.sh; \
 	fi
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 

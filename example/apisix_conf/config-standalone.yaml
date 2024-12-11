@@ -15,41 +15,11 @@
 # limitations under the License.
 #
 
-version: "3"
+apisix:
+  node_listen: 9080              # APISIX listening port
+  enable_ipv6: false
 
-services:
-  apisix:
-    image: apache/apisix:${APISIX_IMAGE_TAG:-3.11.0-debian}
-    restart: always
-    volumes:
-      - ./apisix_conf/apisix-standalone.yaml:/usr/local/apisix/conf/apisix.yaml:ro
-      - ./apisix_conf/config-standalone.yaml:/usr/local/apisix/conf/config.yaml:ro
-    environment:
-      - APISIX_STAND_ALONE=true
-    ports:
-      - "9180:9180/tcp"
-      - "9080:9080/tcp"
-      - "9091:9091/tcp"
-      - "9443:9443/tcp"
-      - "9092:9092/tcp"
-    networks:
-      apisix:
-
-  web1:
-    image: nginx:1.19.0-alpine
-    restart: always
-    volumes:
-      - ./upstream/web1.conf:/etc/nginx/nginx.conf
-    ports:
-      - "9081:80/tcp"
-    environment:
-      - NGINX_PORT=80
-    networks:
-      apisix:
-
-
-networks:
-  apisix:
-    driver: bridge
-
-
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml

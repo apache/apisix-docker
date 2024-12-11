@@ -31,10 +31,8 @@ deployment:
     config_provider: yaml
 _EOC_
       else
-          # updating config.yaml for standalone mode
-          echo "$(sed 's/role: traditional/role: data_plane/g' ${PREFIX}/conf/config.yaml)" > ${PREFIX}/conf/config.yaml
-          echo "$(sed 's/role_traditional:/role_data_plane:/g' ${PREFIX}/conf/config.yaml)" > ${PREFIX}/conf/config.yaml
-          echo "$(sed 's/config_provider: etcd/config_provider: yaml/g' ${PREFIX}/conf/config.yaml)" > ${PREFIX}/conf/config.yaml
+          # Check if the deployment role is set to data_plane and config provider is set to yaml for standalone mode
+          source /check_standalone_config.sh
       fi
 
         if [ ! -f "${PREFIX}/conf/apisix.yaml" ]; then
