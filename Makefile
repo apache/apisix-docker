@@ -112,15 +112,15 @@ build-on-debian:
 	rm -f debian/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
-
+PLATFORM ?= linux/amd64
 ### push-on-alpine : Push apache/apisix:dev image
 .PHONY: push-multiarch-dev-on-debian
 push-multiarch-dev-on-debian:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	cp ./utils/check_standalone_config.sh debian-dev/check_standalone_config.sh
 	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(IMAGE_NAME):dev \
-		--platform linux/amd64,linux/arm64 \
+		-t $(IMAGE_NAME):dev-$(shell echo $(PLATFORM) | cut -d'/' -f2) \
+		--platform $(PLATFORM) \
 		-f ./debian-dev/Dockerfile debian-dev
 	rm -f debian-dev/check_standalone_config.sh
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
