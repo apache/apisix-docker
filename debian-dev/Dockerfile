@@ -45,6 +45,11 @@ RUN set -x \
 
 FROM api7/apisix-runtime:dev AS production-stage
 
+# Install the runtime libyaml package
+RUN apt-get -y update --fix-missing \
+    && apt-get install -y libldap2-dev libyaml-0-2 \
+    && apt-get remove --purge --auto-remove -y
+
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
 
