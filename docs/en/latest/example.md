@@ -66,14 +66,14 @@ curl http://127.0.0.1:9180/apisix/admin/routes/22 -H 'X-API-KEY: edd1c9f034335f1
     "service_id": "2"
 }'
 
-curl http://127.0.0.1:9180/apisix/admin/ssl/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d "
+curl http://127.0.0.1:9180/apisix/admin/ssls/1 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d "
 {
     \"cert\": \"$( cat './mkcert/lvh.me+1.pem')\",
     \"key\": \"$( cat './mkcert/lvh.me+1-key.pem')\",
     \"sni\": \"lvh.me\"
 }"
 
-curl http://127.0.0.1:9180/apisix/admin/ssl/2 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d "
+curl http://127.0.0.1:9180/apisix/admin/ssls/2 -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d "
 {
     \"cert\": \"$( cat './mkcert/lvh.me+1.pem')\",
     \"key\": \"$( cat './mkcert/lvh.me+1-key.pem')\",
