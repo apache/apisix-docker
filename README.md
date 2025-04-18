@@ -1,3 +1,7 @@
+## Roadmap
+
+Refer to [⚡️ Apache APISIX Projects Roadmap](https://github.com/apache/apisix/issues/12159)
+
 ## What is Apache APISIX API Gateway
 
 Apache APISIX is a dynamic, real-time, high-performance API Gateway.
