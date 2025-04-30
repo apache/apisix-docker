@@ -32,8 +32,6 @@ services:
       - "9091:9091/tcp"
       - "9443:9443/tcp"
       - "9092:9092/tcp"
-    networks:
-      apisix:
 
   etcd:
     image: bitnami/etcd:3.5.11
@@ -47,8 +45,6 @@ services:
       ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
     ports:
       - "2379:2379/tcp"
-    networks:
-      apisix:
 
   web1:
     image: nginx:1.19.0-alpine
@@ -59,8 +55,6 @@ services:
       - "9081:80/tcp"
     environment:
       - NGINX_PORT=80
-    networks:
-      apisix:
 
   web2:
     image: nginx:1.19.0-alpine
@@ -71,8 +65,6 @@ services:
       - "9082:80/tcp"
     environment:
       - NGINX_PORT=80
-    networks:
-      apisix:
 
   prometheus:
     image: prom/prometheus:v2.25.0
@@ -81,8 +73,6 @@ services:
       - ./prometheus_conf/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
-    networks:
-      apisix:
 
   grafana:
     image: grafana/grafana:7.3.7
@@ -93,12 +83,6 @@ services:
       - "./grafana_conf/provisioning:/etc/grafana/provisioning"
       - "./grafana_conf/dashboards:/var/lib/grafana/dashboards"
       - "./grafana_conf/config/grafana.ini:/etc/grafana/grafana.ini"
-    networks:
-      apisix:
-
-networks:
-  apisix:
-    driver: bridge
 
 volumes:
   etcd_data:
