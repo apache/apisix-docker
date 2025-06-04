@@ -42,7 +42,7 @@ RUN set -ex; \
     && apisix version
 
 COPY ./install-brotli.sh /install-brotli.sh
-RUN chmod +x /install-brotli.sh \  
+RUN chmod +x /install-brotli.sh \
     && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
 
 RUN apt-get -y purge --auto-remove curl wget gnupg --allow-remove-essential
@@ -64,7 +64,7 @@ RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
 EXPOSE 9080 9443
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-COPY ./check_standalone_config.sh /check_standalone_config.sh
+COPY --from=utils ./check_standalone_config.sh /check_standalone_config.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
