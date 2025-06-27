@@ -56,10 +56,6 @@ RUN set -x \
     && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
     && apk del .builddeps build-base make unzip clang wget
 
-RUN echo "print lyaml"
-RUN ls -la /usr
-RUN ls -la /usr/lib
-RUN ls -la /usr/lib/libyaml*
 # Build etcd
 FROM alpine:3.13 AS etcd-stage
 
@@ -132,6 +128,7 @@ COPY --from=production-stage /usr/lib/libyaml* /usr/lib/
 
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
+
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 # dashboard
