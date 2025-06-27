@@ -47,6 +47,7 @@ RUN set -x \
     && ./configure \
     && make \
     && make install \
+    && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
     && mkdir ~/.luarocks \
     && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
     && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
