@@ -44,7 +44,7 @@ RUN set -x \
     && wget https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz \
     && tar -zxvf yaml-0.2.5.tar.gz \
     && cd yaml-0.2.5 \
-    && ./configure \
+    && ./configure --prefix=/usr \
     && make \
     && make install \
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
