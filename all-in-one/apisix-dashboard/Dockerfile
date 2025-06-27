@@ -47,6 +47,7 @@ RUN set -x \
     && ./configure --prefix=/usr \
     && make \
     && make install \
+    && ln -s /usr/lib/libyaml-0.so.2 /usr/local/lib/libyaml-0.so.2
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
     && git config --global url.https://github.com/.insteadOf git://github.com/ \
     && luarocks install https://raw.githubusercontent.com/apache/apisix/master/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
