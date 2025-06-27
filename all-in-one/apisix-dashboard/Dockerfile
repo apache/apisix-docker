@@ -124,11 +124,11 @@ WORKDIR /usr/local/apisix
 COPY --from=production-stage /usr/local/openresty/ /usr/local/openresty/
 COPY --from=production-stage /usr/local/apisix/ /usr/local/apisix/
 COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
-COPY --from=production-stage /usr/local/lib/libyaml* /usr/local/lib/
+COPY --from=production-stage /usr/lib/libyaml* /usr/lib/
 
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
-
+RUN ldconfig
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 # dashboard
