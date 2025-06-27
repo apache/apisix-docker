@@ -128,7 +128,6 @@ COPY --from=production-stage /usr/lib/libyaml* /usr/lib/
 
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
-RUN ldconfig
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 # dashboard
