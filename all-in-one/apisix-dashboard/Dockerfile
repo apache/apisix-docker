@@ -48,9 +48,6 @@ RUN set -x \
     && make \
     && make install \
     && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
-    && mkdir ~/.luarocks \
-    && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
-    && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
     && git config --global url.https://github.com/.insteadOf git://github.com/ \
     && luarocks install https://raw.githubusercontent.com/apache/apisix/master/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
