@@ -44,12 +44,11 @@ RUN set -x \
     && wget https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz \
     && tar -zxvf yaml-0.2.5.tar.gz \
     && cd yaml-0.2.5 \
-    && ./configure \
+    && ./configure --prefix=/usr \
     && make \
     && make install \
-    && mkdir ~/.luarocks \
-    && luarocks config variables.OPENSSL_LIBDIR /usr/local/openresty/openssl/lib \
-    && luarocks config variables.OPENSSL_INCDIR /usr/local/openresty/openssl/include \
+    && ln -s /usr/lib/libyaml-0.so.2 /usr/local/lib/libyaml-0.so.2 \
+    && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
     && git config --global url.https://github.com/.insteadOf git://github.com/ \
     && luarocks install https://raw.githubusercontent.com/apache/apisix/master/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
     && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
@@ -125,7 +124,7 @@ WORKDIR /usr/local/apisix
 COPY --from=production-stage /usr/local/openresty/ /usr/local/openresty/
 COPY --from=production-stage /usr/local/apisix/ /usr/local/apisix/
 COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
-COPY --from=production-stage /usr/local/lib/libyaml* /usr/local/lib/
+COPY --from=production-stage /usr/lib/libyaml* /usr/lib/
 
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
