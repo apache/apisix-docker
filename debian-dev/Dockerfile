@@ -60,7 +60,7 @@ RUN apt-get -y update --fix-missing \
     && apt-get remove --purge --auto-remove -y
 
 COPY ./install-brotli.sh /install-brotli.sh
-RUN chmod +x /install-brotli.sh \  
+RUN chmod +x /install-brotli.sh \
     && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
 
 WORKDIR /usr/local/apisix
@@ -70,7 +70,7 @@ ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/
 EXPOSE 9080 9443
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-COPY ./check_standalone_config.sh /check_standalone_config.sh
+COPY --from=utils ./check_standalone_config.sh /check_standalone_config.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
