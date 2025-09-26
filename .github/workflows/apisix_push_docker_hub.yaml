@@ -8,9 +8,6 @@ on:
       - master
       - release/apisix-**
 
-env:
-  APISIX_DOCKER_TAG: 3.13.0-${{ matrix.platform }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,6 +18,9 @@ jobs:
           - ubuntu
           - debian
           - redhat
+    env:
+      APISIX_DOCKER_TAG: 3.13.0-${{ matrix.platform }}
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -64,6 +64,9 @@ jobs:
           - ubuntu
           - debian
           - redhat
+    env:
+      APISIX_DOCKER_TAG: 3.13.0-${{ matrix.platform }}
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
