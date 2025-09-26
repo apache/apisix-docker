@@ -1,4 +1,4 @@
-name: Push apisix to Docker image
+name: Docker image
 on:
   pull_request:
     branches:
@@ -55,6 +55,7 @@ jobs:
           fi
 
   push:
+    needs: build
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref_name, 'release/apisix') }}
     strategy:
