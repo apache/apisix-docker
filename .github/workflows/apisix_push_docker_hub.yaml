@@ -1,5 +1,8 @@
 name: Push apisix to Docker image
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - master
