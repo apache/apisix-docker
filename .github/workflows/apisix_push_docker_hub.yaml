@@ -1,7 +1,12 @@
 name: Push apisix to Docker image
 on:
   push:
-    branches: ['release/apisix-**']
+    branches:
+      - master
+      - release/apisix-**
+
+env:
+  APISIX_DOCKER_TAG: 3.13.0-${{ matrix.platform }}
 
 jobs:
   build:
@@ -13,9 +18,6 @@ jobs:
           - ubuntu
           - debian
           - redhat
-    env:
-      APISIX_DOCKER_TAG: 3.13.0-${{ matrix.platform }}
-
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -48,6 +50,20 @@ jobs:
             printf "result_code: %s\n" "$result_code"
             exit 125
           fi
+
+  push:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref_name, 'release/apisix') }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - ubuntu
+          - debian
+          - redhat
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
