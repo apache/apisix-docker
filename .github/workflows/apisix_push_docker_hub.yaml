@@ -1,7 +1,12 @@
-name: Push apisix to Docker image
+name: Docker image
 on:
+  pull_request:
+    branches:
+      - master
   push:
-    branches: ['release/apisix-**']
+    branches:
+      - master
+      - release/apisix-**
 
 jobs:
   build:
@@ -49,23 +54,25 @@ jobs:
             exit 125
           fi
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Login to Docker Hub
+        if: ${{ startsWith(github.ref_name, 'release/apisix') }}
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: push apisix:latest image to docker hub
-        if: matrix.platform == 'ubuntu'
+        if: ${{ startsWith(github.ref_name, 'release/apisix') && (matrix.platform == 'ubuntu') }}
         run: |
           make push-multiarch-on-latest
 
       - name: Push apisix:${{ matrix.os }} image to Docker Hub
+        if: ${{ startsWith(github.ref_name, 'release/apisix') }}
         run: |
           make push-multiarch-on-${{ matrix.platform }}
