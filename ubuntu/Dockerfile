@@ -17,7 +17,7 @@
 
 FROM ubuntu:24.04
 
-ARG APISIX_VERSION=3.13.0
+ARG APISIX_VERSION=3.14.0
 
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
