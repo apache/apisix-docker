@@ -17,7 +17,7 @@
 
 FROM registry.access.redhat.com/ubi9/ubi:9.6
 
-ARG APISIX_VERSION=3.13.0
+ARG APISIX_VERSION=3.14.0
 LABEL apisix_version="${APISIX_VERSION}"
 COPY ./yum.repos.d/apache-apisix.repo /etc/yum.repos.d/apache-apisix.repo
 COPY ./yum.repos.d/openresty.repo /etc/yum.repos.d/openresty.repo
