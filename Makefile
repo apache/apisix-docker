@@ -21,8 +21,8 @@ SHELL := bash
 
 
 # APISIX ARGS
-APISIX_VERSION ?= 3.14.0
-MAX_APISIX_VERSION ?= 3.14.0
+APISIX_VERSION ?= 3.14.1
+MAX_APISIX_VERSION ?= 3.14.1
 IMAGE_NAME = apache/apisix
 IMAGE_TAR_NAME = apache_apisix
 APISIX_REPO = https://github.com/apache/apisix
