@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM debian:bullseye-slim
+FROM debian:trixie-slim
 
 ARG APISIX_VERSION=3.14.1
 
