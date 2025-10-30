@@ -78,7 +78,7 @@ docker run -d \
   --net host \
   -e ALLOW_NONE_AUTHENTICATION=yes \
   -e ETCD_ADVERTISE_CLIENT_URLS=http://127.0.0.1:2379 \
-  bitnami/etcd:latest
+  bitnamilegacy/etcd:3.5.11
 ```
 
 2. Start APISIX.
@@ -105,7 +105,7 @@ docker run -d --name etcd \
   -p 2380:2380 \
   -e ALLOW_NONE_AUTHENTICATION=yes \
   -e ETCD_ADVERTISE_CLIENT_URLS=http://127.0.0.1:2379 \
-  bitnami/etcd:latest
+  bitnamilegacy/etcd:3.5.11
 ```
 
 2. View the return result of the previous step, we can see the `subnet` address. Create a APISIX configuration file in the current directory. You need to set `allow_admin` to the `subnet` address obtained in step1.
