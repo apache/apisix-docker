@@ -14,20 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-# Use this dockerfile to create a docker image of your apisix local/patched codebase
-
 FROM debian:bullseye-slim AS build
 
 ARG ENABLE_PROXY=false
 ARG CODE_PATH
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV ENV_INST_LUADIR /usr/local/apisix
-
-COPY ${CODE_PATH} /apisix
+ENV DEBIAN_FRONTEND=noninteractive
+ENV ENV_INST_LUADIR=/usr/local/apisix
 
 WORKDIR /apisix
+
+ARG INSTALL_BROTLI=./install-brotli.sh
 
 RUN set -x \
     && apt-get -y update --fix-missing \
@@ -36,25 +33,44 @@ RUN set -x \
         git  \
         sudo \
         libyaml-dev \
-    && ls -al \
-    && make deps \
+        cmake \
+        wget \
+        unzip
+
+COPY ${CODE_PATH}/Makefile ${CODE_PATH}/apisix-master-0.rockspec ${CODE_PATH}/.requirements /apisix/
+COPY ${CODE_PATH}/utils/install-dependencies.sh /apisix/utils/
+
+RUN make deps \
     && mkdir -p ${ENV_INST_LUADIR} \
-    && cp -r deps ${ENV_INST_LUADIR} \
-    && make install
+    && cp -r deps ${ENV_INST_LUADIR}
+
+COPY ${INSTALL_BROTLI} /install-brotli.sh
+RUN chmod +x /install-brotli.sh && /install-brotli.sh
+
+COPY ${CODE_PATH} /apisix
+
+RUN make install
 
 FROM debian:bullseye-slim
 
 ARG ENTRYPOINT_PATH=./docker-entrypoint.sh
-ARG INSTALL_BROTLI=./install-brotli.sh
+ARG CHECK_STANDALONE_CONFIG=./check_standalone_config.sh
+
+# Install the runtime libyaml package
+RUN apt-get -y update --fix-missing \
+    && apt-get install -y libldap2-dev libyaml-0-2 \
+    && apt-get remove --purge --auto-remove -y \
+    && mkdir -p /usr/local/apisix/ui
 
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/local/openresty /usr/local/openresty
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
-COPY --from=build /usr/lib/x86_64-linux-gnu/libyaml* /usr/local/lib/
+COPY --from=build /usr/local/brotli /usr/local/brotli
+COPY --chown=nobody:root ui/ /usr/local/apisix/ui/
 
-COPY ${INSTALL_BROTLI} /install-brotli.sh
-RUN chmod +x /install-brotli.sh \  
-    && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
+RUN echo /usr/local/brotli/lib | tee /etc/ld.so.conf.d/brotli.conf \
+    && ldconfig \
+    && ln -sf /usr/local/brotli/bin/brotli /usr/bin/brotli
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
@@ -66,7 +82,8 @@ RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
 EXPOSE 9080 9443
 
 COPY ${ENTRYPOINT_PATH} /docker-entrypoint.sh
-COPY ../utils/check_standalone_config.sh /check_standalone_config.sh
+COPY ${CHECK_STANDALONE_CONFIG} /check_standalone_config.sh
+RUN chmod +x /docker-entrypoint.sh /check_standalone_config.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
