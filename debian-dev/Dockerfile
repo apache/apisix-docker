@@ -67,6 +67,14 @@ WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
+RUN groupadd --system --gid 636 apisix \
+    && useradd --system --gid apisix --no-create-home --shell /usr/sbin/nologin --uid 636 apisix \
+    && chown -R apisix:apisix /usr/local/apisix \
+    && chgrp -R 0 /usr/local/apisix \
+    && chmod -R g=u /usr/local/apisix
+
+USER apisix
+
 EXPOSE 9080 9443
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
