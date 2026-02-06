@@ -40,6 +40,7 @@ RUN set -x \
     wget \
     git \
     openldap-dev \
+    pcre2-dev \
     sudo \
     && wget https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz \
     && tar -zxvf yaml-0.2.5.tar.gz \
