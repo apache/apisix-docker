@@ -70,7 +70,6 @@ ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/
 EXPOSE 9080 9443
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-COPY ./check_standalone_config.sh /check_standalone_config.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
