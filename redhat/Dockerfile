@@ -27,9 +27,12 @@ COPY ./yum.repos.d/openresty.repo /etc/yum.repos.d/openresty.repo
 COPY ./install-brotli.sh /install-brotli.sh
 COPY ./install-brotli.sh /install-brotli.sh
 
-RUN yum update -y \
-	&& yum install -y apisix-${APISIX_VERSION} wget\
-	&& yum clean all \
+RUN set -ex; \
+	yum makecache -y \
+	&& yum install -y \ 
+	--setopt=install_weak_deps=False \
+	--setopt=tsflags=nodocs \
+	apisix-${APISIX_VERSION} wget\
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs \
 	&& chmod +x /install-brotli.sh \
 	&& cd / && ./install-brotli.sh && rm -rf /install-brotli.sh \
@@ -40,7 +43,9 @@ RUN yum update -y \
 	# forward request and error logs to docker log collector
 	&& ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
 	&& ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
-	&& rm /usr/local/openresty/bin/etcdctl
+	&& rm /usr/local/openresty/bin/etcdctl \
+	&& yum clean all \
+	&& rm -rf /var/cache/dnf /var/cache/yum /var/lib/dnf/history.* /tmp/* /var/tmp/*
 
 USER apisix
 

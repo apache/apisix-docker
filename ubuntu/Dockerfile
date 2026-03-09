@@ -37,8 +37,8 @@ RUN set -ex; \
         wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
         && echo "deb https://repos.apiseven.com/packages/arm64/ubuntu $VERSION_CODENAME main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
-    esac; \
-    apt update \
+    esac \
+    && apt update \
     && apt install -y apisix=${APISIX_VERSION}-0 \
     && rm /usr/local/openresty/bin/etcdctl \
     && openresty -V \
