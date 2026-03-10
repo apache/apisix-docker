@@ -17,60 +17,56 @@
 
 ARG ENABLE_PROXY=false
 ARG ETCD_VERSION=v3.4.14
-ARG APISIX_VERSION=master
+ARG APISIX_VERSION=3.15.0
 ARG APISIX_DASHBOARD_VERSION=master
 
-# Build Apache APISIX
-FROM openresty/openresty:1.25.3.2-0-alpine-fat AS production-stage
+# Build Apache APISIX (using official package with apisix-nginx-module)
+FROM debian:bullseye-slim AS production-stage
 
 ARG APISIX_VERSION
 ARG ENABLE_PROXY
 LABEL apisix_version="${APISIX_VERSION}"
 
-RUN set -x \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache --virtual .builddeps \
-    automake \
-    autoconf \
-    libtool \
-    pkgconfig \
-    cmake \
-    make \
-    clang \
-    wget \
-    git \
-    openldap-dev \
-    pcre2-dev \
-    sudo \
-    && wget https://github.com/yaml/libyaml/releases/download/0.2.5/yaml-0.2.5.tar.gz \
-    && tar -zxvf yaml-0.2.5.tar.gz \
-    && cd yaml-0.2.5 \
-    && ./configure --prefix=/usr \
-    && make \
-    && make install \
-    && ln -s /usr/lib/libyaml-0.so.2 /usr/local/lib/libyaml-0.so.2 \
-    && curl https://raw.githubusercontent.com/apache/apisix/master/utils/linux-install-luarocks.sh -sL | bash - \
-    && git config --global url.https://github.com/.insteadOf git://github.com/ \
-    && luarocks install https://raw.githubusercontent.com/apache/apisix/master/apisix-master-0.rockspec --tree=/usr/local/apisix/deps PCRE_DIR=/usr/local/openresty/pcre \
-    && cp -v /usr/local/apisix/deps/lib/luarocks/rocks-5.1/apisix/${APISIX_VERSION}-0/bin/apisix /usr/bin/ \
-    && (if [ "$APISIX_VERSION" = "master" ] || [ "$APISIX_VERSION" \> "2.2" ]; then echo 'use shell ';else bin='#! /usr/local/openresty/luajit/bin/luajit\npackage.path = "/usr/local/apisix/?.lua;" .. package.path'; sed -i "1s@.*@$bin@" /usr/bin/apisix ; fi;) \
-    && mv /usr/local/apisix/deps/share/lua/5.1/apisix /usr/local/apisix \
-    && apk del .builddeps build-base make unzip clang wget
+RUN set -ex; \
+    arch=$(dpkg --print-architecture); \
+    apt-get update; \
+    apt-get -y install --no-install-recommends wget gnupg ca-certificates curl; \
+    codename=$(grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release); \
+    case "${arch}" in \
+      amd64) \
+        wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
+        && echo "deb https://repos.apiseven.com/packages/debian $codename main" \
+           | tee /etc/apt/sources.list.d/apisix.list ;; \
+      arm64) \
+        wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
+        && echo "deb https://repos.apiseven.com/packages/arm64/debian $codename main" \
+           | tee /etc/apt/sources.list.d/apisix.list ;; \
+    esac; \
+    apt-get update \
+    && apt-get install -y apisix=${APISIX_VERSION}-0 \
+    && apt-get purge -y --auto-remove wget gnupg \
+    && rm -rf /var/lib/apt/lists/* \
+    && openresty -V \
+    && apisix version
 
 # Build etcd
-FROM alpine:3.13 AS etcd-stage
+FROM debian:bullseye-slim AS etcd-stage
 
 ARG ETCD_VERSION
 LABEL etcd_version="${ETCD_VERSION}"
 
 WORKDIR /tmp
-RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
-    && tar -zxvf etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
-    && ln -s etcd-${ETCD_VERSION}-linux-amd64 etcd
+RUN set -ex; \
+    arch=$(dpkg --print-architecture); \
+    apt-get update \
+    && apt-get install -y --no-install-recommends wget ca-certificates \
+    && wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${arch}.tar.gz \
+    && tar -zxvf etcd-${ETCD_VERSION}-linux-${arch}.tar.gz \
+    && ln -s etcd-${ETCD_VERSION}-linux-${arch} etcd
 
 
 # Build APISIX Dashboard - 1. download source code from github
-FROM alpine:latest as pre-build
+FROM alpine:latest AS pre-build
 
 ARG APISIX_DASHBOARD_TAG
 
@@ -80,7 +76,7 @@ RUN set -x \
     && tar -xvf /tmp/apisix-dashboard.tar.gz -C /usr/local/apisix-dashboard --strip 1
 
 # Build APISIX Dashboard - 2. build manager-api from source code
-FROM golang:1.17 as api-builder
+FROM golang:1.17 AS api-builder
 
 ARG APISIX_DASHBOARD_VERSION
 ARG ENABLE_PROXY
@@ -94,7 +90,7 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then go env -w GOPROXY=https://goproxy.io,
     && CGO_ENABLED=0 ./api/build.sh
 
 # Build APISIX Dashboard - 3. build dashboard web-UI from source code
-FROM node:14-alpine as fe-builder
+FROM node:14-alpine AS fe-builder
 
 ARG ENABLE_PROXY
 
@@ -111,32 +107,31 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then yarn config set registry https://regi
     && yarn build
 
 # Finally combine all the resources into one image
-FROM alpine:3.13 AS last-stage
-
-ARG ENABLE_PROXY
+FROM debian:bullseye-slim AS last-stage
 
 # add runtime for Apache APISIX
-RUN set -x \
-    && (test "${ENABLE_PROXY}" != "true" || /bin/sed -i 's,http://dl-cdn.alpinelinux.org,https://mirrors.aliyun.com,g' /etc/apk/repositories) \
-    && apk add --no-cache bash libstdc++ curl
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       bash \
+       curl \
+       ca-certificates \
+       libyaml-0-2 \
+       lua5.1 \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/local/apisix
 
 COPY --from=production-stage /usr/local/openresty/ /usr/local/openresty/
 COPY --from=production-stage /usr/local/apisix/ /usr/local/apisix/
 COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
-COPY --from=production-stage /usr/lib/libyaml* /usr/lib/
 
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
 
-ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin \
+    ETCD_UNSUPPORTED_ARCH=arm64
 
 # dashboard
-
-RUN if [ "$ENABLE_PROXY" = "true" ] ; then sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories ; fi \
-    && apk add lua5.1
-
 WORKDIR /usr/local/apisix-dashboard
 
 COPY --from=api-builder /usr/local/apisix-dashboard/output/ ./
