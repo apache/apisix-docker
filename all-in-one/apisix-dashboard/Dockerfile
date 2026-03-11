@@ -29,40 +29,35 @@ LABEL apisix_version="${APISIX_VERSION}"
 
 RUN set -ex; \
     arch=$(dpkg --print-architecture); \
-    apt-get update; \
+    apt update; \
     apt-get -y install --no-install-recommends wget gnupg ca-certificates curl; \
-    codename=$(grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release); \
+    codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
     case "${arch}" in \
       amd64) \
         wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
-        && echo "deb https://repos.apiseven.com/packages/debian $codename main" \
-           | tee /etc/apt/sources.list.d/apisix.list ;; \
+        && echo "deb https://repos.apiseven.com/packages/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
+        ;; \
       arm64) \
         wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
-        && echo "deb https://repos.apiseven.com/packages/arm64/debian $codename main" \
-           | tee /etc/apt/sources.list.d/apisix.list ;; \
+        && echo "deb https://repos.apiseven.com/packages/arm64/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
+        ;; \
     esac; \
-    apt-get update \
-    && apt-get install -y apisix=${APISIX_VERSION}-0 \
-    && apt-get purge -y --auto-remove wget gnupg \
-    && rm -rf /var/lib/apt/lists/* \
+    apt update \
+    && apt install -y apisix=${APISIX_VERSION}-0 \
+    && apt-get purge -y --auto-remove \
     && openresty -V \
     && apisix version
 
 # Build etcd
-FROM debian:bullseye-slim AS etcd-stage
+FROM alpine:3.13 AS etcd-stage
 
 ARG ETCD_VERSION
 LABEL etcd_version="${ETCD_VERSION}"
 
 WORKDIR /tmp
-RUN set -ex; \
-    arch=$(dpkg --print-architecture); \
-    apt-get update \
-    && apt-get install -y --no-install-recommends wget ca-certificates \
-    && wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${arch}.tar.gz \
-    && tar -zxvf etcd-${ETCD_VERSION}-linux-${arch}.tar.gz \
-    && ln -s etcd-${ETCD_VERSION}-linux-${arch} etcd
+RUN wget https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
+    && tar -zxvf etcd-${ETCD_VERSION}-linux-amd64.tar.gz \
+    && ln -s etcd-${ETCD_VERSION}-linux-amd64 etcd
 
 
 # Build APISIX Dashboard - 1. download source code from github
@@ -110,8 +105,8 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then yarn config set registry https://regi
 FROM debian:bullseye-slim AS last-stage
 
 # add runtime for Apache APISIX
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN apt update \
+    && apt install -y --no-install-recommends \
        bash \
        curl \
        ca-certificates \
@@ -128,8 +123,7 @@ COPY --from=production-stage /usr/bin/apisix /usr/bin/apisix
 COPY --from=etcd-stage /tmp/etcd/etcd /usr/bin/etcd
 COPY --from=etcd-stage /tmp/etcd/etcdctl /usr/bin/etcdctl
 
-ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin \
-    ETCD_UNSUPPORTED_ARCH=arm64
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 # dashboard
 WORKDIR /usr/local/apisix-dashboard
