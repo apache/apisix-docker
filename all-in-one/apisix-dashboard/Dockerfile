@@ -24,7 +24,6 @@ ARG APISIX_DASHBOARD_VERSION=master
 FROM debian:bullseye-slim AS production-stage
 
 ARG APISIX_VERSION
-ARG ENABLE_PROXY
 LABEL apisix_version="${APISIX_VERSION}"
 
 RUN set -ex; \
