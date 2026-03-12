@@ -19,26 +19,30 @@ FROM registry.access.redhat.com/ubi9/ubi:9.6
 
 ARG APISIX_VERSION=3.15.0
 LABEL apisix_version="${APISIX_VERSION}"
-COPY ./yum.repos.d/apache-apisix.repo /etc/yum.repos.d/apache-apisix.repo
-COPY ./yum.repos.d/openresty.repo /etc/yum.repos.d/openresty.repo
-
-RUN yum update -y \
-	&& yum install -y apisix-${APISIX_VERSION} wget\
-	&& yum clean all \
-	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
-
-COPY ./install-brotli.sh /install-brotli.sh
-RUN chmod +x /install-brotli.sh \
-    && cd / && ./install-brotli.sh && rm -rf /install-brotli.sh
 
 WORKDIR /usr/local/apisix
 
-ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
+COPY ./yum.repos.d/apache-apisix.repo /etc/yum.repos.d/apache-apisix.repo
+COPY ./yum.repos.d/openresty.repo /etc/yum.repos.d/openresty.repo
+COPY ./install-brotli.sh /install-brotli.sh
 
+RUN set -ex; \
+  yum makecache -y \
+	&& yum install -y \ 
+    --setopt=install_weak_deps=False \
+    --setopt=tsflags=nodocs \
+    apisix-${APISIX_VERSION} wget\
+	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs \
+  && cd / && bash /install-brotli.sh \
+  && rm -rf /install-brotli.sh \
 # forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
-    && ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
-    && rm /usr/local/openresty/bin/etcdctl
+  && ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
+  && ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
+  && rm /usr/local/openresty/bin/etcdctl \
+	&& yum clean all \
+  && rm -rf /var/cache/dnf /var/cache/yum /var/lib/dnf/history.* /tmp/* /var/tmp/*
+
+ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
 EXPOSE 9080 9443
 
