@@ -53,6 +53,9 @@ RUN apt-get -y update --fix-missing \
 COPY --from=build /usr/local/apisix /usr/local/apisix
 COPY --from=build /usr/bin/apisix /usr/bin/apisix
 
+RUN chgrp -R 0 /usr/local/apisix \
+    && chmod -R g=u /usr/local/apisix
+
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y update --fix-missing \
     && apt-get install -y \

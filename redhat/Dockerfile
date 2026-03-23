@@ -35,6 +35,9 @@ WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
+RUN chgrp -R 0 /usr/local/apisix \
+    && chmod -R g=u /usr/local/apisix
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
