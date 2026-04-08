@@ -17,7 +17,7 @@
 
 ARG ENABLE_PROXY=false
 ARG ETCD_VERSION=v3.4.14
-ARG APISIX_VERSION=3.15.0
+ARG APISIX_VERSION=3.16.0
 ARG APISIX_DASHBOARD_VERSION=master
 
 # Build Apache APISIX (using official package with apisix-nginx-module)
