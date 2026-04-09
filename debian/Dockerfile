@@ -54,7 +54,6 @@ ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/
 RUN groupadd --system --gid 636 apisix \
     && useradd --system --gid apisix --no-create-home --shell /usr/sbin/nologin --uid 636 apisix \
     && chown -R apisix:0 /usr/local/apisix \
-    && chgrp -R 0 /usr/local/apisix \
     && chmod -R g=u /usr/local/apisix
 
 USER apisix
