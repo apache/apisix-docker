@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 ARG APISIX_VERSION=3.16.0
 
@@ -23,15 +23,15 @@ RUN set -ex; \
     arch=$(dpkg --print-architecture); \
     apt update; \
     apt-get -y install --no-install-recommends wget gnupg ca-certificates curl;\
-    codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
+    codename="debian12"; \
     case "${arch}" in \
       amd64) \
         wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
-        && echo "deb https://repos.apiseven.com/packages/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
+        && echo "deb https://repos.apiseven.com/packages/debian debian12 main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
       arm64) \
         wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
-        && echo "deb https://repos.apiseven.com/packages/arm64/debian $codename main" | tee /etc/apt/sources.list.d/apisix.list \
+        && echo "deb https://repos.apiseven.com/packages/arm64/debian debian12 main" | tee /etc/apt/sources.list.d/apisix.list \
         ;; \
     esac; \
     apt update \
