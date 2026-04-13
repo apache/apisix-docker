@@ -35,10 +35,17 @@ WORKDIR /usr/local/apisix
 
 ENV PATH=$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin
 
+RUN groupadd --system --gid 636 apisix \
+    && useradd --system --gid apisix --no-create-home --shell /usr/sbin/nologin --uid 636 apisix \
+    && chown -R apisix:0 /usr/local/apisix \
+    && chmod -R g=u /usr/local/apisix
+
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
     && rm /usr/local/openresty/bin/etcdctl
+
+USER apisix
 
 EXPOSE 9080 9443
 
