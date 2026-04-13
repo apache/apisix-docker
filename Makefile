@@ -134,41 +134,47 @@ push-multiarch-dev-on-debian:
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
 
 
+# $(1): platform, $(2): extra buildx flags (e.g. --push)
+define func_multiarch_build
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(if $(filter-out redhat,$(1)),cp ./utils/*.sh $(1)/)
+	$(ENV_DOCKER) buildx build --network=host $(2) \
+		-t $(ENV_APISIX_IMAGE_TAG_NAME)-$(1) \
+		--platform linux/amd64,linux/arm64 \
+		-f ./$(1)/Dockerfile $(1)
+	$(if $(filter-out redhat,$(1)),rm -f $(1)/*.sh)
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+endef
+
+### build-multiarch-on-ubuntu : Build apache/apisix:xx-ubuntu multiarch image
+.PHONY: build-multiarch-on-ubuntu
+build-multiarch-on-ubuntu:
+	$(call func_multiarch_build,ubuntu,)
+
 ### push-multiarch-on-ubuntu : Push apache/apisix:xx-ubuntu image
 .PHONY: push-multiarch-on-ubuntu
 push-multiarch-on-ubuntu:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	cp ./utils/*.sh ubuntu/
-	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(ENV_APISIX_IMAGE_TAG_NAME)-ubuntu \
-		--platform linux/amd64,linux/arm64 \
-		-f ./ubuntu/Dockerfile ubuntu
-	rm -f ubuntu/*.sh
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
+	$(call func_multiarch_build,ubuntu,--push)
 
+### build-multiarch-on-debian : Build apache/apisix:xx-debian multiarch image
+.PHONY: build-multiarch-on-debian
+build-multiarch-on-debian:
+	$(call func_multiarch_build,debian,)
 
 ### push-multiarch-on-debian : Push apache/apisix:xx-debian image
 .PHONY: push-multiarch-on-debian
 push-multiarch-on-debian:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	cp ./utils/*.sh debian/
-	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(ENV_APISIX_IMAGE_TAG_NAME)-debian \
-		--platform linux/amd64,linux/arm64 \
-		-f ./debian/Dockerfile debian
-	rm -f debian/*.sh
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
+	$(call func_multiarch_build,debian,--push)
 
+### build-multiarch-on-redhat : Build apache/apisix:xx-redhat multiarch image
+.PHONY: build-multiarch-on-redhat
+build-multiarch-on-redhat:
+	$(call func_multiarch_build,redhat,)
 
 ### push-multiarch-on-redhat : Push apache/apisix:xx-redhat image
 .PHONY: push-multiarch-on-redhat
 push-multiarch-on-redhat:
-	@$(call func_echo_status, "$@ -> [ Start ]")
-	$(ENV_DOCKER) buildx build --network=host --push \
-		-t $(ENV_APISIX_IMAGE_TAG_NAME)-redhat \
-		--platform linux/amd64,linux/arm64 \
-		-f ./redhat/Dockerfile redhat
-	@$(call func_echo_success_status, "$@ -> [ Done ]")
+	$(call func_multiarch_build,redhat,--push)
 
 ### push-multiarch-on-latest : Push apache/apisix:latest image
 .PHONY: push-multiarch-on-latest

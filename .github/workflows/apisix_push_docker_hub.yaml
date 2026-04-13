@@ -67,7 +67,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: push apisix:latest image to docker hub
+      - name: Build multiarch image
+        if: ${{ !startsWith(github.ref_name, 'release/apisix') }}
+        run: |
+          make build-multiarch-on-${{ matrix.platform }}
+
+      - name: Push apisix:latest image to Docker Hub
         if: ${{ startsWith(github.ref_name, 'release/apisix') && (matrix.platform == 'ubuntu') }}
         run: |
           make push-multiarch-on-latest
