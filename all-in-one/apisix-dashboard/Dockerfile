@@ -21,7 +21,7 @@ ARG APISIX_VERSION=3.17.0
 ARG APISIX_DASHBOARD_VERSION=master
 
 # Build Apache APISIX (using official package with apisix-nginx-module)
-FROM debian:bullseye-slim AS production-stage
+FROM debian:bookworm-slim AS production-stage
 
 ARG APISIX_VERSION
 LABEL apisix_version="${APISIX_VERSION}"
@@ -30,7 +30,7 @@ RUN set -ex; \
     arch=$(dpkg --print-architecture); \
     apt update; \
     apt-get -y install --no-install-recommends wget gnupg ca-certificates curl; \
-    codename=`grep -Po 'VERSION="[0-9]+ \(\K[^)]+' /etc/os-release`; \
+    codename="debian12"; \
     case "${arch}" in \
       amd64) \
         wget -O - https://repos.apiseven.com/pubkey.gpg | apt-key add - \
