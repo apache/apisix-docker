@@ -50,6 +50,13 @@ services:
     networks:
       - apisix
 
+  # local upstream for CI route tests, avoids the flaky public httpbin.org
+  httpbin:
+    image: kennethreitz/httpbin
+    restart: always
+    networks:
+      - apisix
+
 networks:
   apisix:
     driver: bridge

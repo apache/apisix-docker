@@ -40,7 +40,7 @@ jobs:
             "upstream": {
                 "type": "roundrobin",
                 "nodes": {
-                    "httpbin.org:80": 1
+                    "httpbin:80": 1
                 }
             }
           }'
