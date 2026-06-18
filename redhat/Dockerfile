@@ -43,7 +43,7 @@ RUN groupadd --system --gid 636 apisix \
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /usr/local/apisix/logs/access.log \
     && ln -sf /dev/stderr /usr/local/apisix/logs/error.log \
-    && rm /usr/local/openresty/bin/etcdctl
+    && rm -f /usr/local/openresty/bin/etcdctl
 
 USER apisix
 
