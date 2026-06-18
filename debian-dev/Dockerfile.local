@@ -33,6 +33,8 @@ RUN set -x \
     && apt-get -y update --fix-missing \
     && apt-get install -y \
         make \
+        cmake \
+        g++ \
         git  \
         sudo \
         libyaml-dev \
