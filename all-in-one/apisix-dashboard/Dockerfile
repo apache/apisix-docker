@@ -101,7 +101,7 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then yarn config set registry https://regi
     && yarn build
 
 # Finally combine all the resources into one image
-FROM debian:bullseye-slim AS last-stage
+FROM debian:bookworm-slim AS last-stage
 
 # add runtime for Apache APISIX
 RUN apt update \
