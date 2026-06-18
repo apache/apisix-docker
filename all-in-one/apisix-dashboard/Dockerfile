@@ -110,6 +110,7 @@ RUN apt update \
        curl \
        ca-certificates \
        libyaml-0-2 \
+       libpcre3 \
        lua5.1 \
     && rm -rf /var/lib/apt/lists/*
 
