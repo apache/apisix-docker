@@ -23,7 +23,7 @@ COPY ./yum.repos.d/apache-apisix.repo /etc/yum.repos.d/apache-apisix.repo
 COPY ./yum.repos.d/openresty.repo /etc/yum.repos.d/openresty.repo
 
 RUN yum update -y \
-	&& yum install -y apisix-${APISIX_VERSION} wget\
+	&& yum install -y apisix-${APISIX_VERSION} wget libxml2 libxslt\
 	&& yum clean all \
 	&& sed -i 's/PASS_MAX_DAYS\t99999/PASS_MAX_DAYS\t60/g' /etc/login.defs
 

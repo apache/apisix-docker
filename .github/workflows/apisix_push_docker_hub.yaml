@@ -34,7 +34,11 @@ jobs:
 
       - name: Test route
         run: |
-          grep -C 3 '\[error\]' compose/apisix_log/error.log && exit 1
+          # error.log is symlinked to stderr, so check the container logs
+          if docker logs compose-apisix-1 2>&1 | grep -C 3 '\[error\]'; then
+            echo "found errors in apisix startup logs"
+            exit 1
+          fi
 
           curl http://127.0.0.1:9180/apisix/admin/routes/1 \
           -H 'X-API-KEY: edd1c9f034335f136f87ad84b625c8f1' -X PUT -d '

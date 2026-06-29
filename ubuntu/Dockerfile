@@ -35,7 +35,7 @@ RUN set -ex; \
         ;; \
     esac; \
     apt update \
-    && apt install -y apisix=${APISIX_VERSION}-0 \
+    && apt install -y apisix=${APISIX_VERSION}-0 libxml2 libxslt1.1 \
     && apt-get purge -y --auto-remove \
     && rm -f /usr/local/openresty/bin/etcdctl \
     && openresty -V \
