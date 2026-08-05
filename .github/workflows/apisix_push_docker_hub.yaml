@@ -66,7 +66,7 @@ jobs:
 
       - name: Login to Docker Hub
         if: ${{ startsWith(github.ref_name, 'release/apisix') }}
-        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
