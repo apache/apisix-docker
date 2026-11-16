@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM registry.access.redhat.com/ubi9/ubi:9.6
+FROM registry.access.redhat.com/ubi9/ubi:9.9
 
 ARG APISIX_VERSION=3.20.0
 LABEL apisix_version="${APISIX_VERSION}"
