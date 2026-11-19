@@ -38,15 +38,13 @@ Choose one of the following approaches to build a Docker image based on your req
 
 ### Build an image from a release
   
-Find an APISIX [release version](https://github.com/apache/apisix/releases) to build an image of.
-
-Build a Docker image from the release:
+The release Dockerfiles in this checkout install APISIX 3.21.0. Build the Debian image with the following command.
 
 ```shell
-APISIX_VERSION=3.21.0   # specify release version
-DISTRO=debian           # debian, redhat
-make build-on-$DISTRO
+make build-on-debian
 ```
+
+Use `make build-on-ubuntu` or `make build-on-redhat` for the other distributions.
 
 ### Build an image from master branch
 
